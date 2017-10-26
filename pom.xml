@@ -11,11 +11,11 @@
 
     <artifactId>vaadin-text-field-flow</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    
+
     <properties>
         <flow.version>1.0-SNAPSHOT</flow.version>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.webjars.bower</groupId>
@@ -26,7 +26,7 @@
             <artifactId>flow-server</artifactId>
             <version>${flow.version}</version>
         </dependency>
-        
+
         <!-- Dependencies for the demo -->
         <dependency>
             <groupId>com.vaadin</groupId>
