@@ -40,5 +40,5 @@
             <version>${flow.version}</version>
             <scope>test</scope>
         </dependency>
-    </dependencies>      
+    </dependencies>
 </project>
