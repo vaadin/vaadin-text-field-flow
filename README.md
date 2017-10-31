@@ -24,7 +24,7 @@ add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>com.vaadin</groupId>
     <artifactId>vaadin-text-field-flow</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${component.version}</version>
 </dependency>
 ```
 Right now the usage requires the component to be locally built and installed through `mvn install`
