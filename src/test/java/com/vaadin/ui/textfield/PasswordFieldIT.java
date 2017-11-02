@@ -36,7 +36,7 @@ public class PasswordFieldIT extends ComponentDemoTest {
 
     @Override
     protected String getTestPath() {
-        return "/vaadin-password-field";
+        return "/password-field";
     }
 
     @Test

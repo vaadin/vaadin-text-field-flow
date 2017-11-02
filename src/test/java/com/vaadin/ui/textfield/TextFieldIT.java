@@ -35,7 +35,7 @@ public class TextFieldIT extends ComponentDemoTest {
 
     @Override
     protected String getTestPath() {
-        return "/vaadin-text-field";
+        return "/text-field";
     }
 
     @Test

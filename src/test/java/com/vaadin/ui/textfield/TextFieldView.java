@@ -26,7 +26,7 @@ import com.vaadin.ui.html.Div;
  * 
  * @author Vaadin Ltd
  */
-@Route("vaadin-text-field")
+@Route("text-field")
 @HtmlImport("bower_components/vaadin-valo-theme/vaadin-text-field.html")
 public class TextFieldView extends DemoView {
 	

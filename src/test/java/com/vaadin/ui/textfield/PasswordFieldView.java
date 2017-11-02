@@ -28,7 +28,7 @@ import com.vaadin.ui.passwordfield.PasswordField;
  * 
  * @author Vaadin Ltd
  */
-@Route("vaadin-password-field")
+@Route("password-field")
 @HtmlImport("bower_components/vaadin-valo-theme/vaadin-text-field.html")
 @HtmlImport("bower_components/vaadin-valo-theme/vaadin-button.html")
 public class PasswordFieldView extends DemoView {
