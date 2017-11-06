@@ -17,11 +17,11 @@
     </properties>
 
     <repositories>
-<!--     TODO: Remove this once we don't depend on Flow-snapshot anymore. -->
         <repository>
             <id>flow</id>
             <url>https://repo.vaadin.com/nexus/content/repositories/flow/</url>
         </repository>
+        <!-- TODO: Remove this once we don't depend on Flow-snapshot anymore. -->
         <repository>
             <id>flow-snapshots</id>
             <url>https://repo.vaadin.com/nexus/content/repositories/flow-snapshots/</url>
