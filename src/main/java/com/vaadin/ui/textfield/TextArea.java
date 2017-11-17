@@ -15,6 +15,8 @@
  */
 package com.vaadin.ui.textfield;
 
+import java.util.Objects;
+
 import com.vaadin.ui.common.HasSize;
 import com.vaadin.ui.common.HasValidation;
 import com.vaadin.ui.common.HasValue;
@@ -140,6 +142,13 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
     @Override
     public boolean hasValue() {
         return !isEmpty();
+    }
+
+    @Override
+    public void setValue(String value) {
+        if (!Objects.equals(value, getValue())) {
+            super.setValue(value);
+        }
     }
 
     @Override
