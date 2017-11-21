@@ -15,12 +15,8 @@
  */
 package com.vaadin.ui.textfield;
 
-import java.util.Objects;
-
 import com.vaadin.ui.common.HasSize;
 import com.vaadin.ui.common.HasValidation;
-import com.vaadin.ui.common.HasValue;
-import com.vaadin.ui.event.Synchronize;
 
 /**
  * Server-side component for the {@code vaadin-text-area} element.
@@ -28,7 +24,7 @@ import com.vaadin.ui.event.Synchronize;
  * @author Vaadin Ltd.
  */
 public class TextArea extends GeneratedVaadinTextArea<TextArea>
-        implements HasSize, HasValidation, HasValue<TextArea, String> {
+        implements HasSize, HasValidation {
 
     /**
      * Constructs an empty {@code TextArea}.
@@ -137,24 +133,5 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
     @Override
     public String getEmptyValue() {
         return "";
-    }
-
-    @Override
-    public boolean hasValue() {
-        return !isEmpty();
-    }
-
-    @Override
-    public void setValue(String value) {
-        if (!Objects.equals(value, getValue())) {
-            super.setValue(value);
-        }
-    }
-
-    @Override
-    @Synchronize("value-changed")
-    public String getValue() {
-        String value = super.getValue();
-        return value == null ? getEmptyValue() : value;
     }
 }
