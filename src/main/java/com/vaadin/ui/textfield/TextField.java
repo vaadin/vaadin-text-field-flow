@@ -30,7 +30,6 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      * Constructs an empty {@code TextField}.
      */
     public TextField() {
-        getElement().synchronizeProperty("hasValue", "value-changed");
     }
 
     /**
@@ -40,7 +39,6 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      *            the text to set as the label
      */
     public TextField(String label) {
-        this();
         setLabel(label);
     }
 
@@ -87,7 +85,6 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
      */
     public TextField(ValueChangeListener<TextField, String> listener) {
-        this();
         addValueChangeListener(listener);
     }
 

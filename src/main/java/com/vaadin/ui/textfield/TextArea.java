@@ -30,7 +30,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      * Constructs an empty {@code TextArea}.
      */
     public TextArea() {
-        getElement().synchronizeProperty("hasValue", "value-changed");
     }
 
     /**
@@ -40,7 +39,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      *            the text to set as the label
      */
     public TextArea(String label) {
-        this();
         setLabel(label);
     }
 
@@ -87,7 +85,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
      */
     public TextArea(ValueChangeListener<TextArea, String> listener) {
-        this();
         addValueChangeListener(listener);
     }
 
