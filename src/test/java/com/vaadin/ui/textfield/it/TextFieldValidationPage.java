@@ -16,12 +16,14 @@
 package com.vaadin.ui.textfield.it;
 
 import com.vaadin.flow.testutil.ValidationTestView;
+import com.vaadin.router.Route;
 import com.vaadin.ui.common.HasValidation;
 import com.vaadin.ui.textfield.TextField;
 
 /**
  * View for testing validation with {@link TextField}.
  */
+@Route("text-field-validation")
 public class TextFieldValidationPage extends ValidationTestView {
 
     @Override
