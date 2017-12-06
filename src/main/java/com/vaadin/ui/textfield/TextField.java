@@ -15,6 +15,8 @@
  */
 package com.vaadin.ui.textfield;
 
+import java.util.Objects;
+
 import com.vaadin.ui.common.HasSize;
 import com.vaadin.ui.common.HasValidation;
 
@@ -130,5 +132,11 @@ public class TextField extends GeneratedVaadinTextField<TextField>
     @Override
     public String getEmptyValue() {
         return "";
+    }
+
+    @Override
+    public void setValue(String value) {
+        Objects.requireNonNull(value, "value cannot be null");
+        super.setValue(value);
     }
 }
