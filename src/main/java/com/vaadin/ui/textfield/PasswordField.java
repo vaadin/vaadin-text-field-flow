@@ -116,6 +116,12 @@ public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         return "";
     }
 
+    /**
+     * Sets the value of the {@link PasswordField}.
+     * 
+     * @param value
+     *            the value to set, not {@code null}
+     */
     @Override
     public void setValue(String value) {
         Objects.requireNonNull(value, "value cannot be null");
