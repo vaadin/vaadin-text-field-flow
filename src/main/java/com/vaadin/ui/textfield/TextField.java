@@ -142,7 +142,6 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      */
     @Override
     public void setValue(String value) {
-        Objects.requireNonNull(value, "value cannot be null");
-        super.setValue(value);
+        super.setValue(Objects.requireNonNull(value, "value cannot be null"));
     }
 }
