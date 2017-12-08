@@ -15,8 +15,6 @@
  */
 package com.vaadin.ui.textfield;
 
-import java.util.Objects;
-
 import com.vaadin.ui.common.HasSize;
 import com.vaadin.ui.common.HasValidation;
 
@@ -127,21 +125,5 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
-    }
-
-    @Override
-    public String getEmptyValue() {
-        return "";
-    }
-
-    /**
-     * Sets the value of the {@link TextArea}.
-     * 
-     * @param value
-     *            the value to set, not {@code null}
-     */
-    @Override
-    public void setValue(String value) {
-        super.setValue(Objects.requireNonNull(value, "value cannot be null"));
     }
 }

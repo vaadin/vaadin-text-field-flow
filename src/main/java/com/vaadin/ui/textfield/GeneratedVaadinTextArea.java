@@ -15,21 +15,24 @@
  */
 package com.vaadin.ui.textfield;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.common.HasStyle;
-import com.vaadin.ui.common.Focusable;
 import javax.annotation.Generated;
-import com.vaadin.ui.Tag;
-import com.vaadin.ui.common.HtmlImport;
-import com.vaadin.ui.event.Synchronize;
-import com.vaadin.ui.common.HasValue;
+
 import java.util.Objects;
+
+import com.vaadin.flow.dom.Element;
+import com.vaadin.shared.Registration;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Tag;
+import com.vaadin.ui.common.Focusable;
+import com.vaadin.ui.common.HasStyle;
+import com.vaadin.ui.common.HasValue;
+import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.common.NotSupported;
-import com.vaadin.ui.event.DomEvent;
 import com.vaadin.ui.event.ComponentEvent;
 import com.vaadin.ui.event.ComponentEventListener;
-import com.vaadin.shared.Registration;
+import com.vaadin.ui.event.DomEvent;
 import com.vaadin.ui.event.EventData;
+import com.vaadin.ui.event.Synchronize;
 
 /**
  * <p>
@@ -514,8 +517,13 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
     @Synchronize(property = "value", value = "value-changed")
     @Override
     public String getValue() {
-        return getElement().getProperty("value") == null ? getEmptyValue()
-                : getElement().getProperty("value");
+        String value = getElement().getProperty("value");
+        return value == null ? getEmptyValue() : value;
+    }
+
+    @Override
+    public String getEmptyValue() {
+        return "";
     }
 
     /**
@@ -532,8 +540,9 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      */
     @Override
     public void setValue(String value) {
+        Objects.requireNonNull(value, "value cannot be null");
         if (!Objects.equals(value, getValue())) {
-            getElement().setProperty("value", value == null ? "" : value);
+            getElement().setProperty("value", value);
         }
     }
 
@@ -648,7 +657,9 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      * 
      * @param listener
      *            the listener
+     * @return a {@link Registration} for removing the event listener
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Registration addIronFormElementRegisterListener(
             ComponentEventListener<IronFormElementRegisterEvent<R>> listener) {
         return addListener(IronFormElementRegisterEvent.class,
@@ -669,7 +680,9 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      * 
      * @param listener
      *            the listener
+     * @return a {@link Registration} for removing the event listener
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Registration addIronFormElementUnregisterListener(
             ComponentEventListener<IronFormElementUnregisterEvent<R>> listener) {
         return addListener(IronFormElementUnregisterEvent.class,
@@ -698,7 +711,9 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      * 
      * @param listener
      *            the listener
+     * @return a {@link Registration} for removing the event listener
      */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public Registration addInvalidChangeListener(
             ComponentEventListener<InvalidChangeEvent<R>> listener) {
         return addListener(InvalidChangeEvent.class,
@@ -719,7 +734,7 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      *      website about slots</a>
      * @return this instance, for method chaining
      */
-    public R addToPrefix(com.vaadin.ui.Component... components) {
+    public R addToPrefix(Component... components) {
         for (Component component : components) {
             component.getElement().setAttribute("slot", "prefix");
             getElement().appendChild(component.getElement());
@@ -741,7 +756,7 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      *      website about slots</a>
      * @return this instance, for method chaining
      */
-    public R addToSuffix(com.vaadin.ui.Component... components) {
+    public R addToSuffix(Component... components) {
         for (Component component : components) {
             component.getElement().setAttribute("slot", "suffix");
             getElement().appendChild(component.getElement());
@@ -757,7 +772,7 @@ public class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R>>
      * @throws IllegalArgumentException
      *             if any of the components is not a child of this component.
      */
-    public void remove(com.vaadin.ui.Component... components) {
+    public void remove(Component... components) {
         for (Component component : components) {
             if (getElement().equals(component.getElement().getParent())) {
                 component.getElement().removeAttribute("slot");
