@@ -59,7 +59,7 @@ public class TextAreaIT extends ComponentDemoTest {
 
         IntStream.range(0, 20).forEach(i -> textArea.sendKeys("foobarbaz"));
 
-        Assert.assertEquals(125, textArea.getSize().getHeight());
+        Assert.assertEquals(112, textArea.getSize().getHeight());
     }
 
     @Test
@@ -69,12 +69,12 @@ public class TextAreaIT extends ComponentDemoTest {
 
         IntStream.range(0, 20).forEach(i -> textArea.sendKeys("foobarbaz"));
 
-        Assert.assertNotEquals(125, textArea.getSize().getHeight());
+        Assert.assertNotEquals(112, textArea.getSize().getHeight());
 
         IntStream.range(0, 20 * "foobarbaz".length())
                 .forEach(i -> textArea.sendKeys(Keys.BACK_SPACE));
 
-        Assert.assertEquals(125, textArea.getSize().getHeight());
+        Assert.assertEquals(112, textArea.getSize().getHeight());
     }
 
     @Test
