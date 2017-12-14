@@ -13,12 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.ui.textfield.tests;
+package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.router.Route;
 import com.vaadin.ui.button.Button;
 import com.vaadin.ui.html.Div;
-import com.vaadin.ui.textfield.PasswordField;
 
 /**
  * Test view for {@link PasswordField}.
