@@ -13,59 +13,41 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.ui.textfield.tests;
+package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.router.Route;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.html.Div;
-import com.vaadin.ui.html.Label;
-import com.vaadin.ui.textfield.TextField;
 
 /**
- * Test view for {@link TextField}.
+ * Test view for {@link PasswordField}.
  */
-@Route("text-field-test")
-public class TextFieldPage extends Div {
+@Route("password-field-test")
+public class PasswordFieldPage extends Div {
 
     /**
      * Constructs a basic layout with a text field.
      */
-    public TextFieldPage() {
-        initView();
-    }
-
-    private void initView() {
+    public PasswordFieldPage() {
         Div message = new Div();
-        TextField textField = new TextField();
-        textField.addValueChangeListener(event -> message
+        PasswordField passwordField = new PasswordField();
+        passwordField.addValueChangeListener(event -> message
                 .setText(String.format("Old value: '%s'. New value: '%s'.",
                         event.getOldValue(), event.getValue())));
-        add(textField, message);
+        add(passwordField, message);
 
         Button button = new Button("Set/unset text field read-only");
         button.setId("read-only");
-        button.addClickListener(
-                event -> textField.setReadOnly(!textField.isReadOnly()));
+        button.addClickListener(event -> passwordField
+                .setReadOnly(!passwordField.isReadOnly()));
         add(button);
 
         Button required = new Button("Set/unset field required property");
         required.setId("required");
         required.addClickListener(
-                event -> textField.setRequiredIndicatorVisible(
-                        !textField.isRequiredIndicatorVisible()));
+                event -> passwordField.setRequiredIndicatorVisible(
+                        !passwordField.isRequiredIndicatorVisible()));
         add(required);
-
-        TextField valueChangeSource = new TextField();
-        valueChangeSource.setId("value-change");
-        Button valueChange = new Button("Get text field value",
-                event -> handleTextFieldValue(valueChangeSource));
-        valueChange.setId("get-value");
-        add(valueChangeSource, valueChange);
-    }
-
-    private void handleTextFieldValue(TextField field) {
-        Label label = new Label(field.getValue());
-        label.addClassName("text-field-value");
-        add(label);
     }
 }

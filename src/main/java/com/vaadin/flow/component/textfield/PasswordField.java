@@ -13,37 +13,38 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.ui.textfield;
+
+package com.vaadin.flow.component.textfield;
 
 import com.vaadin.ui.common.HasSize;
 import com.vaadin.ui.common.HasValidation;
 
 /**
- * Server-side component for the {@code vaadin-text-field} element.
+ * Server-side component for the {@code vaadin-password-field} element.
  *
- * @author Vaadin Ltd
+ * @author Vaadin Ltd.
  */
-public class TextField extends GeneratedVaadinTextField<TextField>
+public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         implements HasSize, HasValidation {
 
     /**
-     * Constructs an empty {@code TextField}.
+     * Constructs an empty {@code PasswordField}.
      */
-    public TextField() {
+    public PasswordField() {
     }
 
     /**
-     * Constructs an empty {@code TextField} with the given label.
+     * Constructs an empty {@code PasswordField} with the given label.
      *
      * @param label
      *            the text to set as the label
      */
-    public TextField(String label) {
+    public PasswordField(String label) {
         setLabel(label);
     }
 
     /**
-     * Constructs an empty {@code TextField} with the given label and
+     * Constructs an empty {@code PasswordField} with the given label and
      * placeholder text.
      *
      * @param label
@@ -51,63 +52,44 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      * @param placeholder
      *            the placeholder text to set
      */
-    public TextField(String label, String placeholder) {
+    public PasswordField(String label, String placeholder) {
         this(label);
         setPlaceholder(placeholder);
     }
 
     /**
-     * Constructs a {@code TextField} with the given label, an initial value and
-     * placeholder text.
-     *
-     * @param label
-     *            the text to set as the label
-     * @param initialValue
-     *            the initial value
-     * @param placeholder
-     *            the placeholder text to set
-     *
-     * @see #setValue(String)
-     * @see #setPlaceholder(String)
-     */
-    public TextField(String label, String initialValue, String placeholder) {
-        this(label);
-        setValue(initialValue);
-        setPlaceholder(placeholder);
-    }
-
-    /**
-     * Constructs an empty {@code TextField} with a value change listener.
+     * Constructs an empty {@code PasswordField} with a value change listener.
      *
      * @param listener
      *            the value change listener
      *
      * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
      */
-    public TextField(ValueChangeListener<TextField, String> listener) {
+    public PasswordField(ValueChangeListener<PasswordField, String> listener) {
         addValueChangeListener(listener);
     }
 
     /**
-     * Constructs an empty {@code TextField} with a label and a value change
-     * listener.
+     * Constructs an empty {@code PasswordField} with a value change listener
+     * and a label.
      *
      * @param label
      *            the text to set as the label
      * @param listener
      *            the value change listener
+     *
      * @see #setLabel(String)
      * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
      */
-    public TextField(String label,
-            ValueChangeListener<TextField, String> listener) {
+    public PasswordField(String label,
+            ValueChangeListener<PasswordField, String> listener) {
         this(label);
         addValueChangeListener(listener);
     }
 
     /**
-     * Constructs an empty {@code TextField} with a label,a value change
-     * listener and an initial value.
+     * Constructs a {@code PasswordField} with a value change listener, a label
+     * and an initial value.
      *
      * @param label
      *            the text to set as the label
@@ -120,8 +102,8 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      * @see #setValue(String)
      * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
      */
-    public TextField(String label, String initialValue,
-            ValueChangeListener<TextField, String> listener) {
+    public PasswordField(String label, String initialValue,
+            ValueChangeListener<PasswordField, String> listener) {
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
