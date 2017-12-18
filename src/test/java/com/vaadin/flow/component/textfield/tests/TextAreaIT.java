@@ -57,9 +57,9 @@ public class TextAreaIT extends ComponentDemoTest {
         WebElement textArea = layout
                 .findElement(By.id("text-area-with-max-height"));
 
-        IntStream.range(0, 20).forEach(i -> textArea.sendKeys("foobarbaz"));
+        IntStream.range(0, 20).forEach(i -> textArea.sendKeys("foobarbaz\n"));
 
-        Assert.assertEquals(125, textArea.getSize().getHeight());
+        Assert.assertTrue(textArea.getSize().getHeight() <= 125);
     }
 
     @Test
@@ -67,11 +67,11 @@ public class TextAreaIT extends ComponentDemoTest {
         WebElement textArea = layout
                 .findElement(By.id("text-area-with-min-height"));
 
-        IntStream.range(0, 20).forEach(i -> textArea.sendKeys("foobarbaz"));
+        IntStream.range(0, 20).forEach(i -> textArea.sendKeys("foobarbaz\n"));
 
-        Assert.assertNotEquals(125, textArea.getSize().getHeight());
+        Assert.assertTrue(textArea.getSize().getHeight() >= 125);
 
-        IntStream.range(0, 20 * "foobarbaz".length())
+        IntStream.range(0, 20 * "foobarbaz\n".length())
                 .forEach(i -> textArea.sendKeys(Keys.BACK_SPACE));
 
         Assert.assertEquals(125, textArea.getSize().getHeight());

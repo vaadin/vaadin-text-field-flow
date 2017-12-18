@@ -15,10 +15,10 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.testutil.ValidationTestView;
-import com.vaadin.router.Route;
-import com.vaadin.ui.common.HasValidation;
 
 /**
  * View for testing validation with {@link TextField}.
