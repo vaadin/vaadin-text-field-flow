@@ -126,9 +126,4 @@ public class TextField extends GeneratedVaadinTextField<TextField>
         setValue(initialValue);
         addValueChangeListener(listener);
     }
-
-    @Override
-    public String getEmptyValue() {
-        return "";
-    }
 }

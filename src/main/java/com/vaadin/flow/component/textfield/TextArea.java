@@ -126,9 +126,4 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
         setValue(initialValue);
         addValueChangeListener(listener);
     }
-
-    @Override
-    public String getEmptyValue() {
-        return "";
-    }
 }

@@ -108,9 +108,4 @@ public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         setValue(initialValue);
         addValueChangeListener(listener);
     }
-
-    @Override
-    public String getEmptyValue() {
-        return "";
-    }
 }
