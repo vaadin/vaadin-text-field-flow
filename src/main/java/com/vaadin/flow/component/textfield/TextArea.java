@@ -82,7 +82,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      * @param listener
      *            the value change listener
      *
-     * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(com.vaadin.flow.component.HasValue.ValueChangeListener)
      */
     public TextArea(ValueChangeListener<TextArea, String> listener) {
         addValueChangeListener(listener);
@@ -97,7 +97,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      * @param listener
      *            the value change listener
      * @see #setLabel(String)
-     * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(com.vaadin.flow.component.HasValue.ValueChangeListener)
      */
     public TextArea(String label,
             ValueChangeListener<TextArea, String> listener) {
@@ -118,7 +118,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      *
      * @see #setLabel(String)
      * @see #setValue(String)
-     * @see #addValueChangeListener(com.vaadin.ui.common.HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(com.vaadin.flow.component.HasValue.ValueChangeListener)
      */
     public TextArea(String label, String initialValue,
             ValueChangeListener<TextArea, String> listener) {
