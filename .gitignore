@@ -6,6 +6,10 @@ target/
 .settings
 .classpath
 
+# Idea files
+.idea/
+*.iml
+
 # Selenium
 error-screenshots
 reference-screenshots
