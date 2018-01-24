@@ -58,6 +58,7 @@ public class PasswordFieldView extends DemoView {
         message.setId("password-field-value");
         button.setId("toggle-button");
 
-        addCard("Basic password field", button, passwordField, message);
+        addCard("Basic password field", button, passwordField,
+                new HasValueChangeModeButtonProvider(passwordField).getToggleValueSyncButton(), message);
     }
 }
