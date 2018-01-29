@@ -30,7 +30,6 @@ import com.vaadin.flow.router.Route;
  */
 @Route("vaadin-password-field")
 @HtmlImport("frontend://bower_components/vaadin-text-field/theme/lumo/vaadin-password-field.html")
-@HtmlImport("frontend://bower_components/vaadin-button/theme/lumo/vaadin-button.html")
 public class PasswordFieldView extends DemoView {
 
     @Override
