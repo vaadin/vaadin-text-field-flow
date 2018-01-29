@@ -24,7 +24,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.demo.HasValueChangeModeButtonProvider;
+import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.demo.ComponentDemoTest;
 
 /**
@@ -45,7 +45,7 @@ public class TextAreaIT extends ComponentDemoTest {
                 .findElement(By.id("text-area-with-value-change-listener"));
 
         updateValues(textFieldValueDiv, textArea, true);
-        layout.findElement(By.id(HasValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+        layout.findElement(By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
         updateValues(textFieldValueDiv, textArea, false);
     }
 

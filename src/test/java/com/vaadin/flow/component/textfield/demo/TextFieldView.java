@@ -49,6 +49,6 @@ public class TextFieldView extends DemoView {
         message.setId("text-field-value");
 
         addCard("Basic text field", textField,
-                new HasValueChangeModeButtonProvider(textField).getToggleValueSyncButton(), message);
+                new ValueChangeModeButtonProvider(textField).getToggleValueSyncButton(), message);
     }
 }

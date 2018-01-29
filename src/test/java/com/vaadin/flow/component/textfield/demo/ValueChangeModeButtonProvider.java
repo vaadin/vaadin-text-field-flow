@@ -19,12 +19,12 @@ import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
-public class HasValueChangeModeButtonProvider {
+public class ValueChangeModeButtonProvider {
     public static final String TOGGLE_BUTTON_ID = "toggleValueChangeMode";
 
     private final HasValueChangeMode<?, ?> elementWithChangeMode;
 
-    HasValueChangeModeButtonProvider(HasValueChangeMode<?, ?> elementWithChangeMode) {
+    ValueChangeModeButtonProvider(HasValueChangeMode<?, ?> elementWithChangeMode) {
         this.elementWithChangeMode = elementWithChangeMode;
     }
 

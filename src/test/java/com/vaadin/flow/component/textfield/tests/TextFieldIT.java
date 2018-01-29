@@ -22,7 +22,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.demo.HasValueChangeModeButtonProvider;
+import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.demo.ComponentDemoTest;
 
 /**
@@ -43,7 +43,7 @@ public class TextFieldIT extends ComponentDemoTest {
                 .findElement(By.id("text-field-with-value-change-listener"));
 
         updateValues(textFieldValueDiv, textField, true);
-        layout.findElement(By.id(HasValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+        layout.findElement(By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
         updateValues(textFieldValueDiv, textField, false);
     }
 
