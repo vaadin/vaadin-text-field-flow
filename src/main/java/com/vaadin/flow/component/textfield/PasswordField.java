@@ -20,7 +20,6 @@ import java.util.Objects;
 
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
-import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
@@ -31,8 +30,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  */
 public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         implements HasSize, HasValidation,
-        HasValueChangeMode<PasswordField, String>,
-        HasValue<PasswordField, String> {
+        HasValueChangeMode<PasswordField, String> {
     private ValueChangeMode currentMode;
 
     /**

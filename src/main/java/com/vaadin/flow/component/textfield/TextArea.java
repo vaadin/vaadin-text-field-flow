@@ -19,7 +19,6 @@ import java.util.Objects;
 
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
-import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
@@ -28,9 +27,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  *
  * @author Vaadin Ltd.
  */
-public class TextArea extends GeneratedVaadinTextArea<TextArea>
-        implements HasSize, HasValidation, HasValueChangeMode<TextArea, String>,
-        HasValue<TextArea, String> {
+public class TextArea extends GeneratedVaadinTextArea<TextArea> implements
+        HasSize, HasValidation, HasValueChangeMode<TextArea, String> {
     private ValueChangeMode currentMode;
 
     /**
