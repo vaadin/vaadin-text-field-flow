@@ -28,7 +28,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  * @author Vaadin Ltd
  */
 public class TextField extends GeneratedVaadinTextField<TextField> implements
-        HasSize, HasValidation, HasValueChangeMode<TextField, String> {
+        HasSize, HasValidation, HasValueChangeMode<TextField, String>,
+        HasCompletion, HasCapitalization, HasCorrection {
     private ValueChangeMode currentMode;
 
     /**
@@ -240,23 +241,6 @@ public class TextField extends GeneratedVaadinTextField<TextField> implements
      */
     public boolean isEnabled() {
         return !isDisabledBoolean();
-    }
-
-    @Override
-    public void setAutocomplete(String autocomplete) {
-        super.setAutocomplete(autocomplete);
-    }
-
-    /**
-     * Whether the value of the control can be automatically completed by the
-     * browser. List of available options at:
-     * https://developer.mozilla.org/en/docs
-     * /Web/HTML/Element/input#attr-autocomplete
-     *
-     * @return the {@code autocomplete} property from the webcomponent
-     */
-    public String getAutocomplete() {
-        return getAutocompleteString();
     }
 
     /**

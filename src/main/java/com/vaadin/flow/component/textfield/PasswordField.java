@@ -30,7 +30,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  */
 public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         implements HasSize, HasValidation,
-        HasValueChangeMode<PasswordField, String> {
+        HasValueChangeMode<PasswordField, String>, HasCompletion,
+        HasCapitalization, HasCorrection {
     private ValueChangeMode currentMode;
 
     /**
@@ -238,31 +239,6 @@ public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
      */
     public boolean isEnabled() {
         return !isDisabledBoolean();
-    }
-
-    @Override
-    public void setAutocomplete(String autocomplete) {
-        super.setAutocomplete(autocomplete);
-    }
-
-    /**
-     * <p>
-     * Description copied from corresponding location in WebComponent:
-     * </p>
-     * <p>
-     * Whether the value of the control can be automatically completed by the
-     * browser. List of available options at:
-     * https://developer.mozilla.org/en/docs
-     * /Web/HTML/Element/input#attr-autocomplete
-     * <p>
-     * This property is not synchronized automatically from the client side, so
-     * the returned value may not be the same as in client side.
-     * </p>
-     *
-     * @return the {@code autocomplete} property from the webcomponent
-     */
-    public String getAutocomplete() {
-        return getAutocompleteString();
     }
 
     /**
