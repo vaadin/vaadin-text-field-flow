@@ -15,11 +15,8 @@
  */
 package com.vaadin.flow.component.textfield;
 
-import java.util.Optional;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
-import com.vaadin.flow.dom.Element;
 
 /**
  * Mixin interface for text-field components that have prefix and suffix slots
@@ -28,10 +25,6 @@ import com.vaadin.flow.dom.Element;
  * @author Vaadin Ltd
  */
 public interface HasPrefixAndSuffix extends HasElement {
-
-    public static final String SLOT = "slot";
-    public static final String PREFIX = "prefix";
-    public static final String SUFFIX = "suffix";
 
     /**
      * Adds the given component into this field before the content, replacing
@@ -45,12 +38,10 @@ public interface HasPrefixAndSuffix extends HasElement {
      *            prefix component
      */
     default void setPrefixComponent(Component component) {
-        getElement().getChildren()
-                .filter(child -> PREFIX.equals(child.getAttribute(SLOT)))
-                .forEach(getElement()::removeChild);
+        SlotHelpers.clearSlot(this, "prefix");
 
         if (component != null) {
-            component.getElement().setAttribute(SLOT, PREFIX);
+            component.getElement().setAttribute("slot", "prefix");
             getElement().appendChild(component.getElement());
         }
     }
@@ -63,13 +54,7 @@ public interface HasPrefixAndSuffix extends HasElement {
      * @see #setPrefixComponent(Component)
      */
     default Component getPrefixComponent() {
-        Optional<Element> element = getElement().getChildren()
-                .filter(child -> PREFIX.equals(child.getAttribute(SLOT)))
-                .findFirst();
-        if (element.isPresent()) {
-            return element.get().getComponent().get();
-        }
-        return null;
+        return SlotHelpers.getChildInSlot(this, "prefix");
     }
 
     /**
@@ -84,12 +69,10 @@ public interface HasPrefixAndSuffix extends HasElement {
      *            suffix component
      */
     default void setSuffixComponent(Component component) {
-        getElement().getChildren()
-                .filter(child -> SUFFIX.equals(child.getAttribute(SLOT)))
-                .forEach(getElement()::removeChild);
+        SlotHelpers.clearSlot(this, "suffix");
 
         if (component != null) {
-            component.getElement().setAttribute(SLOT, SUFFIX);
+            component.getElement().setAttribute("slot", "suffix");
             getElement().appendChild(component.getElement());
         }
     }
@@ -102,9 +85,6 @@ public interface HasPrefixAndSuffix extends HasElement {
      * @see #setPrefixComponent(Component)
      */
     default Component getSuffixComponent() {
-        return getElement().getChildren()
-                .filter(child -> SUFFIX.equals(child.getAttribute(SLOT)))
-                .findFirst().map(Element::getComponent).orElse(null)
-                .orElse(null);
+        return SlotHelpers.getChildInSlot(this, "suffix");
     }
 }
