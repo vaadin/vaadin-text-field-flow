@@ -17,6 +17,9 @@ package com.vaadin.flow.component.textfield;
 
 import java.util.Objects;
 
+import com.vaadin.flow.component.HasCapitalization;
+import com.vaadin.flow.component.HasCompletion;
+import com.vaadin.flow.component.HasCorrection;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.data.value.HasValueChangeMode;
@@ -314,7 +317,7 @@ public class TextField extends GeneratedVaadinTextField<TextField>
     /**
      * When set to <code>true</code>, user is prevented from typing a value that
      * conflicts with the given {@code pattern}.
-     * 
+     *
      * @return the {@code preventInvalidInput} property from the webcomponent
      */
     public boolean isPreventInvalidInput() {
