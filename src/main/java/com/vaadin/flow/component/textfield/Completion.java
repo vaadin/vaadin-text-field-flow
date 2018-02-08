@@ -44,7 +44,7 @@ public enum Completion {
     /**
      * Prefix or title (e.g. "Mr.", "Ms.", "Dr.", "Mlle").
      */
-    HONORIFIX_PREFIX("honorific-prefix"),
+    HONORIFIC_PREFIX("honorific-prefix"),
 
     /**
      * First name.
@@ -64,7 +64,7 @@ public enum Completion {
     /**
      * Suffix (e.g. "Jr.", "B.Sc.", "MBASW", "II").
      */
-    HONORIFIX_SUFFIX("honorifix-suffix"),
+    HONORIFIC_SUFFIX("honorific-suffix"),
 
     /**
      * Nickname.
