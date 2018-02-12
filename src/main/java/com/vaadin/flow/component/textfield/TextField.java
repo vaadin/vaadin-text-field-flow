@@ -17,11 +17,14 @@ package com.vaadin.flow.component.textfield;
 
 import java.util.Objects;
 
+import com.vaadin.flow.component.CompositionNotifier;
 import com.vaadin.flow.component.HasCapitalization;
 import com.vaadin.flow.component.HasCompletion;
 import com.vaadin.flow.component.HasCorrection;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
+import com.vaadin.flow.component.InputNotifier;
+import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
@@ -30,10 +33,10 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  *
  * @author Vaadin Ltd
  */
-public class TextField extends GeneratedVaadinTextField<TextField>
-        implements HasSize, HasValidation,
-        HasValueChangeMode<TextField, String>, HasPrefixAndSuffix,
-        HasCompletion, HasCapitalization, HasCorrection {
+public class TextField extends GeneratedVaadinTextField<TextField> implements
+        HasSize, HasValidation, HasValueChangeMode<TextField, String>,
+        HasPrefixAndSuffix, HasCompletion, HasCapitalization, HasCorrection,
+        InputNotifier, KeyNotifier, CompositionNotifier {
 
     private ValueChangeMode currentMode;
 
