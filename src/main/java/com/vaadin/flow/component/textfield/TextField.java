@@ -137,6 +137,11 @@ public class TextField extends GeneratedVaadinTextField<TextField>
         addValueChangeListener(listener);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The default value is {@link ValueChangeMode#ON_CHANGE}.
+     */
     @Override
     public ValueChangeMode getValueChangeMode() {
         return currentMode;

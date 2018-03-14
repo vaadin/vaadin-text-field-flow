@@ -119,6 +119,11 @@ public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         addValueChangeListener(listener);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The default value is {@link ValueChangeMode#ON_CHANGE}.
+     */
     @Override
     public ValueChangeMode getValueChangeMode() {
         return currentMode;
