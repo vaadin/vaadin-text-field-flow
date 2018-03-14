@@ -44,25 +44,25 @@ public class ValueChangeModeButtonProvider {
 
     private ValueChangeMode getDifferentMode(ValueChangeMode valueChangeMode) {
         switch (valueChangeMode) {
-        case EAGER:
-            return ValueChangeMode.ON_CHANGE;
-        case ON_CHANGE:
-            return ValueChangeMode.EAGER;
-        default:
-            throw new IllegalArgumentException(
-                    "Unexpected value change mode: " + valueChangeMode);
+            case EAGER:
+                return ValueChangeMode.ON_CHANGE;
+            case ON_CHANGE:
+                return ValueChangeMode.EAGER;
+            default:
+                throw new IllegalArgumentException(
+                        "Unexpected value change mode: " + valueChangeMode);
         }
     }
 
     private String getToggleButtonText(ValueChangeMode valueChangeMode) {
         switch (valueChangeMode) {
-        case EAGER:
-            return "Sync value only on committed changes";
-        case ON_CHANGE:
-            return "Sync value eagerly on each change";
-        default:
-            throw new IllegalArgumentException(
-                    "Unexpected value change mode: " + valueChangeMode);
+            case EAGER:
+                return "Sync value only on committed changes";
+            case ON_CHANGE:
+                return "Sync value eagerly on each change";
+            default:
+                throw new IllegalArgumentException(
+                        "Unexpected value change mode: " + valueChangeMode);
         }
     }
 }
