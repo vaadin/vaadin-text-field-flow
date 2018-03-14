@@ -37,7 +37,7 @@ public class TextField extends GeneratedVaadinTextField<TextField>
      */
     public TextField() {
         super.setValue(getEmptyValue());
-        setValueChangeMode(ValueChangeMode.ON_BLUR);
+        setValueChangeMode(ValueChangeMode.ON_CHANGE);
     }
 
     /**

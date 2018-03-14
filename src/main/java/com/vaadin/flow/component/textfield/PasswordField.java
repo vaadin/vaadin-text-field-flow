@@ -38,7 +38,7 @@ public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
      */
     public PasswordField() {
         super.setValue(getEmptyValue());
-        setValueChangeMode(ValueChangeMode.ON_BLUR);
+        setValueChangeMode(ValueChangeMode.ON_CHANGE);
     }
 
     /**

@@ -37,7 +37,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea>
      */
     public TextArea() {
         super.setValue(getEmptyValue());
-        setValueChangeMode(ValueChangeMode.ON_BLUR);
+        setValueChangeMode(ValueChangeMode.ON_CHANGE);
     }
 
     /**
