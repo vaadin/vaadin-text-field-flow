@@ -20,7 +20,7 @@ import com.vaadin.flow.component.HasElement;
 /**
  * Mixin interface for fields with {@code autocapitalize} attribute.
  */
-public interface HasCapitalization extends HasElement {
+public interface HasAutocapitalize extends HasElement {
 
     /**
      * Name of @{code autocapitalize} attribute.
@@ -28,22 +28,34 @@ public interface HasCapitalization extends HasElement {
     String AUTOCAPITALIZE_ATTRIBUTE = "autocapitalize";
 
     /**
-     * Sets the {@link Capitalization} option of the field.
+     * Sets the {@link Autocapitalize} attribute for indicating whether the
+     * value of this component can be automatically completed by the browser.
+     * <p>
+     * If not set, devices may apply their own default.
+     * <p>
+     * <em>Note:</em> <a href=
+     * "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-autocapitalize">This
+     * is only supported by Chrome and Safari</a>.
      *
-     * @param capitalization
-     *            the capitalization option
+     * @param autocapitalize
+     *            the {@code autocapitalize} value, or {@code null} to unset
      */
-    default void setAutocapitalize(Capitalization capitalization) {
-        getElement().setAttribute(AUTOCAPITALIZE_ATTRIBUTE,
-                capitalization.value);
+    default void setAutocapitalize(Autocapitalize autocapitalize) {
+        if (autocapitalize == null) {
+            getElement().removeAttribute(AUTOCAPITALIZE_ATTRIBUTE);
+        } else {
+            getElement().setAttribute(AUTOCAPITALIZE_ATTRIBUTE,
+                    autocapitalize.value);
+        }
     }
 
     /**
-     * Gets the {@link Capitalization} option of the field.
+     * Gets the {@link Autocapitalize} for indicating whether the value of this
+     * component can be automatically completed by the browser.
      *
-     * @return the capitalization option
+     * @return the {@code autocapitalize} value, or {@code null} if not set
      */
-    default Capitalization getAutocapitalize() {
+    default Autocapitalize getAutocapitalize() {
         String autocapitalize = getElement()
                 .getAttribute(AUTOCAPITALIZE_ATTRIBUTE);
         if (autocapitalize == null) {
@@ -51,9 +63,9 @@ public interface HasCapitalization extends HasElement {
             return null;
         } else if ("".equals(autocapitalize)) {
             // Default behavior for empty attribute.
-            return Capitalization.SENTENCES;
+            return Autocapitalize.SENTENCES;
         } else {
-            return Capitalization.valueOf(autocapitalize.toUpperCase());
+            return Autocapitalize.valueOf(autocapitalize.toUpperCase());
         }
     }
 }

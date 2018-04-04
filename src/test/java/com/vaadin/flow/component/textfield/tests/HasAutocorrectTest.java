@@ -20,31 +20,31 @@ import org.junit.Test;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.textfield.HasCorrection;
+import com.vaadin.flow.component.textfield.HasAutocorrect;
 
-public class HasCorrectionTest {
+public class HasAutocorrectTest {
 
     @Tag("div")
-    public static class HasCorrectionComponent extends Component implements HasCorrection {
+    public static class HasAutocorrectComponent extends Component implements HasAutocorrect {
 
     }
 
     @Test
     public void defaultValue() {
-        HasCorrectionComponent c = new HasCorrectionComponent();
+        HasAutocorrectComponent c = new HasAutocorrectComponent();
         Assert.assertFalse(c.isAutocorrect());
     }
 
     @Test
-    public void activateCorrection() {
-        HasCorrectionComponent c = new HasCorrectionComponent();
+    public void enableAutocorrect() {
+        HasAutocorrectComponent c = new HasAutocorrectComponent();
         c.setAutocorrect(true);
         Assert.assertTrue(c.isAutocorrect());
     }
 
     @Test
-    public void deactivateCorrection() {
-        HasCorrectionComponent c = new HasCorrectionComponent();
+    public void disableAutocorrect() {
+        HasAutocorrectComponent c = new HasAutocorrectComponent();
         c.setAutocorrect(true);
         c.setAutocorrect(false);
     }

@@ -34,8 +34,8 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 public class PasswordField extends GeneratedVaadinPasswordField<PasswordField>
         implements HasSize, HasValidation,
         HasValueChangeMode<PasswordField, String>, HasPrefixAndSuffix,
-        InputNotifier, KeyNotifier, CompositionNotifier, HasCompletion,
-        HasCapitalization, HasCorrection {
+        InputNotifier, KeyNotifier, CompositionNotifier, HasAutocomplete,
+        HasAutocapitalize, HasAutocorrect {
     private ValueChangeMode currentMode;
 
     /**

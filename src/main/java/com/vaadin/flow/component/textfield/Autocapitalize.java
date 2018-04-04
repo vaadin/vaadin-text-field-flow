@@ -18,7 +18,7 @@ package com.vaadin.flow.component.textfield;
 /**
  * Capitalization options for the {@code autocapitalize} attribute.
  */
-public enum Capitalization {
+public enum Autocapitalize {
 
     /**
      * Completely disable automatic capitalization.
@@ -42,7 +42,7 @@ public enum Capitalization {
 
     final String value;
 
-    Capitalization(String value) {
+    Autocapitalize(String value) {
         this.value = value;
     }
 }

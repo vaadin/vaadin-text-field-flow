@@ -20,7 +20,7 @@ import com.vaadin.flow.component.HasElement;
 /**
  * Mixin interface for fields with {@code autocomplete} attribute.
  */
-public interface HasCompletion extends HasElement {
+public interface HasAutocomplete extends HasElement {
 
     /**
      * Name of @{code autocomplete} attribute.
@@ -28,30 +28,41 @@ public interface HasCompletion extends HasElement {
     String AUTOCOMPLETE_ATTRIBUTE = "autocomplete";
 
     /**
-     * Sets the {@link Completion} option of the field.
+     * Sets the {@link Autocomplete} attribute for indicating whether the value
+     * of this component can be automatically completed by the browser.
+     * <p>
+     * If not set, devices may apply their own defaults.
+     * <p>
+     * See <a href=
+     * "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-autocomplete">autocomplete
+     * attribute</a> for more information.
      *
-     * @param completion
-     *            the completion option
+     * @param autocomplete
+     *            the {@code autocomplete} value, or {@code null} to unset
      */
-    default void setAutocomplete(Completion completion) {
-        getElement().setAttribute(AUTOCOMPLETE_ATTRIBUTE, completion.value);
+    default void setAutocomplete(Autocomplete autocomplete) {
+        if (autocomplete == null) {
+            getElement().removeAttribute(AUTOCOMPLETE_ATTRIBUTE);
+        } else {
+            getElement().setAttribute(AUTOCOMPLETE_ATTRIBUTE,
+                    autocomplete.value);
+        }
     }
 
     /**
-     * Gets the {@link Completion} option of the field.
+     * Gets the {@link Autocomplete} option of the field.
      *
-     * @return the completion option
+     * @return the {@code autocomplete} value, or {@code null} if not set
      */
-    default Completion getAutocomplete() {
+    default Autocomplete getAutocomplete() {
         String autocomplete = getElement().getAttribute(AUTOCOMPLETE_ATTRIBUTE);
         if (autocomplete == null) {
-            // Not set, may inherit behavior from parent form.
             return null;
         } else if ("".equals(autocomplete)) {
             // Default behavior for empty attribute.
-            return Completion.OFF;
+            return Autocomplete.OFF;
         } else {
-            return Completion
+            return Autocomplete
                     .valueOf(autocomplete.toUpperCase().replaceAll("-", "_"));
         }
     }

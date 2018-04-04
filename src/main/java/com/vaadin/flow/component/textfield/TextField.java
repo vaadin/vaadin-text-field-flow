@@ -33,7 +33,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 public class TextField extends GeneratedVaadinTextField<TextField> implements
         HasSize, HasValidation, HasValueChangeMode<TextField, String>,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
-        HasCompletion, HasCapitalization, HasCorrection {
+        HasAutocomplete, HasAutocapitalize, HasAutocorrect {
     private ValueChangeMode currentMode;
 
     /**

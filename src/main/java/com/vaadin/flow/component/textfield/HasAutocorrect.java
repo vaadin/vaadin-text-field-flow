@@ -20,18 +20,24 @@ import com.vaadin.flow.component.HasElement;
 /**
  * Mixin interface for fields with {@code autocorrect} attribute.
  */
-public interface HasCorrection extends HasElement {
+public interface HasAutocorrect extends HasElement {
 
     /**
-     * Name of @{code autocorrect} attribute.
+     * Name of {@code autocorrect} attribute.
      */
     String AUTOCORRECT_ATTRIBUTE = "autocorrect";
 
     /**
-     * Enable or disable auto correction for the field.
+     * Enable or disable {@code autocorrect} for the field.
+     * <p>
+     * If not set, devices may apply their own defaults.
+     * <p>
+     * <em>Note:</em> <a href=
+     * "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#attr-autocorrect">This
+     * only supported by Safari</a>.
      *
      * @param autocorrect
-     *            true to enable auto correction, false to disable
+     *            true to enable {@code autocorrect}, false to disable
      */
     default void setAutocorrect(boolean autocorrect) {
         if (autocorrect) {
@@ -42,9 +48,9 @@ public interface HasCorrection extends HasElement {
     }
 
     /**
-     * Checks if the field has auto correction enabled.
+     * Checks if the field has {@code autocorrect} enabled.
      *
-     * @return true if the field has auto correction enabled
+     * @return true if the field has {@code autocorrect} enabled
      */
     default boolean isAutocorrect() {
         String autocorrect = getElement().getAttribute(AUTOCORRECT_ATTRIBUTE);

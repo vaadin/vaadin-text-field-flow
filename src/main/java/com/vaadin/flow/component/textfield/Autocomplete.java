@@ -16,14 +16,14 @@
 package com.vaadin.flow.component.textfield;
 
 /**
- * Completion options for the {@code autocomplete} attribute.
+ * Values for the {@code autocomplete} attribute.
  */
-public enum Completion {
+public enum Autocomplete {
 
     /**
      * The user must explicitly enter a value into this field for every use, or
-     * the document provides its own auto-completion method. The browser does
-     * not automatically complete the entry.
+     * the document provides its own autocomplete method. The browser does not
+     * automatically complete the entry.
      */
     OFF("off"),
 
@@ -302,7 +302,7 @@ public enum Completion {
 
     final String value;
 
-    Completion(String value) {
+    Autocomplete(String value) {
         this.value = value;
     }
 }
