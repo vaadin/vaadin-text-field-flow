@@ -20,6 +20,7 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.InputNotifier;
 import com.vaadin.flow.component.KeyNotifier;
+import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
@@ -28,6 +29,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  *
  * @author Vaadin Ltd
  */
+@JavaScript("frontend://textConnector.js")
 public class TextField extends GeneratedVaadinTextField<TextField, String>
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
@@ -332,5 +334,12 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
     @Override
     public String getEmptyValue() {
         return "";
+    }
+
+    @Override
+    public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
+        super.setRequiredIndicatorVisible(requiredIndicatorVisible);
+        RequiredValidaitonUtil.updateClientValidation(requiredIndicatorVisible,
+                this);
     }
 }
