@@ -23,7 +23,7 @@ public class PasswordFieldRequiredValidationPage
         extends AbstractRequiredValidationPage<PasswordField> {
 
     @Override
-    protected void setRequied(PasswordField field) {
+    protected void setRequired(PasswordField field) {
         field.setRequired(true);
     }
 

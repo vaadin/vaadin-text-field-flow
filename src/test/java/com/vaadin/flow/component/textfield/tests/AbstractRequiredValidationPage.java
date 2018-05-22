@@ -20,7 +20,6 @@ import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
-import com.vaadin.flow.data.binder.Binder;
 
 public abstract class AbstractRequiredValidationPage<T extends HasValue<?, ?>>
         extends Div {
@@ -29,7 +28,8 @@ public abstract class AbstractRequiredValidationPage<T extends HasValue<?, ?>>
         T name = createTextField();
 
         Entity entity = new Entity();
-        Binder<Entity> binder = new BeanValidationBinder<>(Entity.class);
+        BeanValidationBinder<Entity> binder = new BeanValidationBinder<>(
+                Entity.class);
         binder.forField((HasValue<?, ?>) name).bind("name");
 
         Component nameComponent = (Component) name;
@@ -43,13 +43,13 @@ public abstract class AbstractRequiredValidationPage<T extends HasValue<?, ?>>
         NativeButton off = new NativeButton(
                 "Make required indicator invisible and set requied", event -> {
                     name.setRequiredIndicatorVisible(false);
-                    setRequied(name);
+                    setRequired(name);
                 });
         off.setId("hide");
         add(off);
     }
 
-    protected abstract void setRequied(T field);
+    protected abstract void setRequired(T field);
 
     protected abstract T createTextField();
 }

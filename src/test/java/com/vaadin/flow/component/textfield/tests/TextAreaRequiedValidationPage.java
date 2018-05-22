@@ -28,7 +28,7 @@ public class TextAreaRequiedValidationPage
     }
 
     @Override
-    protected void setRequied(TextArea field) {
+    protected void setRequired(TextArea field) {
         field.setRequired(true);
     }
 

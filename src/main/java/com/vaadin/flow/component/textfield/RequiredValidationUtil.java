@@ -21,13 +21,13 @@ import com.vaadin.flow.internal.StateNode;
 /**
  * Utility class for text field mixin web components to disable/enable client
  * side validation.
- * 
+ *
  * @author Vaadin Ltd
  *
  */
-final class RequiredValidaitonUtil {
+final class RequiredValidationUtil {
 
-    RequiredValidaitonUtil() {
+    RequiredValidationUtil() {
         // utility class should not be instantiated
     }
 
