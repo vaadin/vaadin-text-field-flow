@@ -7,7 +7,7 @@ The repository contains implementations for `TextField`, `PasswordField` and `Te
 
 ## Running the component demo
 Run from the command line:
-- `mvn jetty:run -Pruntests`
+- `mvn jetty:run -PrunTests`
 
 Then navigate to `http://localhost:9998/vaadin-text-field` for the demo of TextField,
 to `http://localhost:9998/vaadin-password-field` for the demo of PasswordField and to
