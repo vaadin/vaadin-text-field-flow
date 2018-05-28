@@ -11,7 +11,7 @@ Run from the command line:
 
 ## Installing the component
 Run from the command line:
-- `mvn clean install -PrunTests`
+- `mvn clean install -DskipTests`
 
 Then navigate to `http://localhost:9998/vaadin-text-field` for the demo of TextField,
 to `http://localhost:9998/vaadin-password-field` for the demo of PasswordField and to
