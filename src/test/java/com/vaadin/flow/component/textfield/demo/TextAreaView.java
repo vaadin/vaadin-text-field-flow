@@ -18,6 +18,7 @@ package com.vaadin.flow.component.textfield.demo;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextArea;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.textfield.TextAreaVariant;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 
@@ -35,6 +36,14 @@ public class TextAreaView extends DemoView {
         addMaxHeightFeature();
         addMinHeightFeature();
         addDisabledField();
+        addVariantsFeature();
+    }
+
+    private void addVariantsFeature() {
+        addVariantsDemo(TextArea::new,
+                GeneratedVaadinTextArea::addThemeVariants,
+                GeneratedVaadinTextArea::removeThemeVariants,
+                TextAreaVariant::getVariantName, TextAreaVariant.LUMO_SMALL);
     }
 
     private void addMaxHeightFeature() {
@@ -86,7 +95,9 @@ public class TextAreaView extends DemoView {
         message.setId("text-area-value");
 
         addCard("Basic text area", textArea,
-                new ValueChangeModeButtonProvider(textArea).getToggleValueSyncButton(), message);
+                new ValueChangeModeButtonProvider(textArea)
+                        .getToggleValueSyncButton(),
+                message);
     }
 
     private void addDisabledField() {
@@ -101,7 +112,8 @@ public class TextAreaView extends DemoView {
         textArea.setId("disabled-text-area");
         Div message = new Div();
         message.setId("disabled-text-area-message");
-        textArea.addValueChangeListener(change -> message.setText("Value changed"));
+        textArea.addValueChangeListener(
+                change -> message.setText("Value changed"));
 
         addCard("Disabled text area", textArea, message);
     }

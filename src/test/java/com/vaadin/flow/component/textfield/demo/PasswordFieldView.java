@@ -18,7 +18,9 @@ package com.vaadin.flow.component.textfield.demo;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.GeneratedVaadinPasswordField;
+import com.vaadin.flow.component.textfield.GeneratedVaadinTextField;
 import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 
@@ -34,6 +36,14 @@ public class PasswordFieldView extends DemoView {
     public void initView() {
         addBasicField();
         addDisabledField();
+        addVariantsFeature();
+    }
+
+    private void addVariantsFeature() {
+        addVariantsDemo(PasswordField::new,
+                GeneratedVaadinTextField::addThemeVariants,
+                GeneratedVaadinTextField::removeThemeVariants,
+                TextFieldVariant::getVariantName, TextFieldVariant.LUMO_SMALL);
     }
 
     private void addBasicField() {
@@ -75,7 +85,8 @@ public class PasswordFieldView extends DemoView {
         passwordField.setId("disabled-password-field");
         Div message = new Div();
         message.setId("disabled-password-field-message");
-        passwordField.addValueChangeListener(change -> message.setText("password changed"));
+        passwordField.addValueChangeListener(
+                change -> message.setText("password changed"));
 
         addCard("Disabled password field", passwordField, message);
     }
