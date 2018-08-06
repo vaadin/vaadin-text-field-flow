@@ -343,7 +343,7 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
      * {@code NullPointerException}, if the value is null.
      * 
      * @param value
-     *            the new value
+     *            the new value, not {@code null}
      */
     @Override
     public void setValue(String value) {
