@@ -349,6 +349,30 @@ public class PasswordField
         return "";
     }
 
+    /**
+     * Sets the value of this password field. If the new value is not equal to
+     * {@code getValue()}, fires a value change event. Throws
+     * {@code NullPointerException}, if the value is null.
+     * 
+     * @param value
+     *            the new value
+     */
+    @Override
+    public void setValue(String value) {
+        super.setValue(value);
+    }
+
+    /**
+     * Returns the current value of the password field. By default, the empty
+     * password field will return an empty string.
+     * 
+     * @return the current value.
+     */
+    @Override
+    public String getValue() {
+        return super.getValue();
+    }
+
     @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);

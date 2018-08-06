@@ -298,6 +298,30 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         return "";
     }
 
+    /**
+     * Sets the value of this text area. If the new value is not equal to
+     * {@code getValue()}, fires a value change event. Throws
+     * {@code NullPointerException}, if the value is null.
+     * 
+     * @param value
+     *            the new value
+     */
+    @Override
+    public void setValue(String value) {
+        super.setValue(value);
+    }
+
+    /**
+     * Returns the current value of the text area. By default, the empty text
+     * area will return an empty string.
+     * 
+     * @return the current value.
+     */
+    @Override
+    public String getValue() {
+        return super.getValue();
+    }
+
     @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
