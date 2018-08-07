@@ -341,6 +341,9 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
      * Sets the value of this text field. If the new value is not equal to
      * {@code getValue()}, fires a value change event. Throws
      * {@code NullPointerException}, if the value is null.
+     * <p>
+     * Note: Binder will take care of the {@code null} conversion when
+     * integrates with text field, as long as no new converter is defined.
      * 
      * @param value
      *            the new value, not {@code null}
