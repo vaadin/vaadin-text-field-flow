@@ -352,7 +352,7 @@ public class PasswordField
      *         otherwise
      */
     public boolean isClearButtonVisible() {
-        return getElement().getProperty("clearButtonVisible", false);
+        return !isClearButtonVisibleBoolean();
     }
 
     /**
@@ -363,8 +363,9 @@ public class PasswordField
      *            <code>true</code> to set the button visible,
      *            <code>false</code> otherwise
      */
+    @Override
     public void setClearButtonVisible(boolean clearButtonVisible) {
-        getElement().setProperty("clearButtonVisible", clearButtonVisible);
+        super.setClearButtonVisible(!clearButtonVisible);
     }
 
     @Override
