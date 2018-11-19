@@ -344,6 +344,29 @@ public class PasswordField
         setRevealButtonHidden(!revealButtonVisible);
     }
 
+    /**
+     * Set to <code>false</code> to hide the clear button which clears the text
+     * area.
+     *
+     * @return <code>true</code> if the button is visible, <code>false</code>
+     *         otherwise
+     */
+    public boolean isClearButtonVisible() {
+        return getElement().getProperty("clearButtonVisible", false);
+    }
+
+    /**
+     * Set to <code>false</code> to hide the clear button which clears the text
+     * area.
+     *
+     * @param clearButtonVisible
+     *            <code>true</code> to set the button visible,
+     *            <code>false</code> otherwise
+     */
+    public void setClearButtonVisible(boolean clearButtonVisible) {
+        getElement().setProperty("clearButtonVisible", clearButtonVisible);
+    }
+
     @Override
     public String getEmptyValue() {
         return "";
