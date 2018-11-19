@@ -16,6 +16,7 @@
 package com.vaadin.flow.component.textfield.demo;
 
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextArea;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextAreaVariant;
@@ -95,12 +96,17 @@ public class TextAreaView extends DemoView {
         textArea.addValueChangeListener(event -> message.setText(
                 String.format("Text area value changed from '%s' to '%s'",
                         event.getOldValue(), event.getValue())));
+        NativeButton button = new NativeButton("Toggle clear button", event -> {
+            textArea.setClearButtonVisible(
+                    !textArea.isClearButtonVisible());
+        });
         // end-source-example
 
         textArea.setId("text-area-with-value-change-listener");
         message.setId("text-area-value");
+        button.setId("toggle-button");
 
-        addCard("Basic text area", textArea,
+        addCard("Basic text area", button, textArea,
                 new ValueChangeModeButtonProvider(textArea)
                         .getToggleValueSyncButton(),
                 message);

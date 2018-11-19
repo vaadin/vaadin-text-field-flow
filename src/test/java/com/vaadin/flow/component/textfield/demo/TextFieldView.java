@@ -16,6 +16,7 @@
 package com.vaadin.flow.component.textfield.demo;
 
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -63,12 +64,17 @@ public class TextFieldView extends DemoView {
         textField.addValueChangeListener(event -> message.setText(
                 String.format("Text field value changed from '%s' to '%s'",
                         event.getOldValue(), event.getValue())));
+        NativeButton button = new NativeButton("Toggle clear button", event -> {
+            textField.setClearButtonVisible(
+                    !textField.isClearButtonVisible());
+        });
         // end-source-example
 
         textField.setId("text-field-with-value-change-listener");
         message.setId("text-field-value");
+        button.setId("toggle-button");
 
-        addCard("Basic text field", textField,
+        addCard("Basic text field", button, textField,
                 new ValueChangeModeButtonProvider(textField)
                         .getToggleValueSyncButton(),
                 message);

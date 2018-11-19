@@ -67,13 +67,18 @@ public class PasswordFieldView extends DemoView {
             passwordField.setRevealButtonVisible(
                     !passwordField.isRevealButtonVisible());
         });
+        NativeButton clearButton = new NativeButton("Toggle clear button", event -> {
+            passwordField.setClearButtonVisible(
+                    !passwordField.isClearButtonVisible());
+        });
         // end-source-example
 
         passwordField.setId("password-field-with-value-change-listener");
         message.setId("password-field-value");
         button.setId("toggle-button");
+        clearButton.setId("clear-button");
 
-        addCard("Basic password field", button, passwordField,
+        addCard("Basic password field", clearButton, button, passwordField,
                 new ValueChangeModeButtonProvider(passwordField)
                         .getToggleValueSyncButton(),
                 message);
