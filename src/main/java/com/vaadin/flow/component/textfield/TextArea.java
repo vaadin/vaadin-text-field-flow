@@ -216,7 +216,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      *         otherwise
      */
     public boolean isClearButtonVisible() {
-        return !isClearButtonVisibleBoolean();
+        return isClearButtonVisibleBoolean();
     }
 
     /**
@@ -229,7 +229,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      */
     @Override
     public void setClearButtonVisible(boolean clearButtonVisible) {
-        super.setClearButtonVisible(!clearButtonVisible);
+        super.setClearButtonVisible(clearButtonVisible);
     }
 
     @Override

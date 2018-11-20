@@ -352,7 +352,7 @@ public class PasswordField
      *         otherwise
      */
     public boolean isClearButtonVisible() {
-        return !isClearButtonVisibleBoolean();
+        return isClearButtonVisibleBoolean();
     }
 
     /**
@@ -365,7 +365,7 @@ public class PasswordField
      */
     @Override
     public void setClearButtonVisible(boolean clearButtonVisible) {
-        super.setClearButtonVisible(!clearButtonVisible);
+        super.setClearButtonVisible(clearButtonVisible);
     }
 
     @Override

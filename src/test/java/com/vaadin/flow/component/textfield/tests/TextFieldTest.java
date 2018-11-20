@@ -50,4 +50,19 @@ public class TextFieldTest {
         Assert.assertEquals(textField.getEmptyValue(),
                 textField.getElement().getProperty("value"));
     }
+
+    @Test
+    public void clearButtonVisiblePropertyValue() {
+        TextField textField = new TextField();
+
+        assertClearButtonPropertyValueEquals(textField, true);
+        assertClearButtonPropertyValueEquals(textField, false);
+    }
+
+    public void assertClearButtonPropertyValueEquals(TextField textField, Boolean value) {
+        textField.setClearButtonVisible(value);
+        Assert.assertEquals(textField.isClearButtonVisible(), value);
+        Assert.assertEquals(textField.isClearButtonVisible(),
+                textField.getElement().getProperty("clearButtonVisible", false));
+    }
 }
