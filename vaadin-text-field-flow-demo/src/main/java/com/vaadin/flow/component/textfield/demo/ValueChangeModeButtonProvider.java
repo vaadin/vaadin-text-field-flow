@@ -15,54 +15,83 @@
  */
 package com.vaadin.flow.component.textfield.demo;
 
-import com.vaadin.flow.component.html.NativeButton;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Input;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 
-public class ValueChangeModeButtonProvider {
-    public static final String TOGGLE_BUTTON_ID = "toggleValueChangeMode";
+import static com.vaadin.flow.component.textfield.TextFieldVariant.LUMO_ALIGN_RIGHT;
+import static com.vaadin.flow.component.textfield.TextFieldVariant.LUMO_SMALL;
 
+public class ValueChangeModeButtonProvider {
     private final HasValueChangeMode elementWithChangeMode;
+
+    public static String getRadioId(ValueChangeMode mode, String prefix) {
+        return prefix + "-" + mode.name();
+    }
 
     ValueChangeModeButtonProvider(
             HasValueChangeMode elementWithChangeMode) {
         this.elementWithChangeMode = elementWithChangeMode;
     }
 
-    NativeButton getToggleValueSyncButton() {
-        NativeButton toggleValueSync = new NativeButton(getToggleButtonText(
-                elementWithChangeMode.getValueChangeMode()));
-        toggleValueSync.setId(TOGGLE_BUTTON_ID);
-        toggleValueSync.addClickListener(event -> {
-            ValueChangeMode newMode = getDifferentMode(
-                    elementWithChangeMode.getValueChangeMode());
-            elementWithChangeMode.setValueChangeMode(newMode);
-            toggleValueSync.setText(getToggleButtonText(newMode));
-        });
-        return toggleValueSync;
+    private Div addRadio(ValueChangeMode changeMode) {
+        Input radioBtn = new Input();
+        radioBtn.setType("radio");
+        String simpleName = elementWithChangeMode.getClass().getSimpleName();
+        radioBtn.setId(getRadioId(changeMode, simpleName));
+        radioBtn.getElement().setAttribute("name", simpleName + "-change-mode");
+        if (elementWithChangeMode.getValueChangeMode() == changeMode) {
+            radioBtn.getElement().setAttribute("checked", "on");
+        }
+
+        Label label = new Label(changeMode.name());
+        label.setFor(radioBtn);
+
+        radioBtn.getElement().addEventListener("change",
+                event -> elementWithChangeMode.setValueChangeMode(changeMode));
+        return new Div(radioBtn, label);
     }
 
-    private ValueChangeMode getDifferentMode(ValueChangeMode valueChangeMode) {
-        switch (valueChangeMode) {
-            case EAGER:
-                return ValueChangeMode.ON_CHANGE;
-            case ON_CHANGE:
-                return ValueChangeMode.EAGER;
-            default:
-                throw new IllegalArgumentException(
-                        "Unexpected value change mode: " + valueChangeMode);
+    private Component getTimeoutInput() {
+        TextField field = new TextField("Value change timeout");
+        field.setSuffixComponent(new Span("msec"));
+        field.setTitle("ValueChangeTimeout");
+        field.setPattern("[0-9]*");
+        field.setMaxLength(4);
+        field.setPreventInvalidInput(true);
+        field.addThemeVariants(LUMO_ALIGN_RIGHT, LUMO_SMALL);
+        field.setValue(elementWithChangeMode.getValueChangeTimeout() + "");
+        field.addValueChangeListener(this::onTimeoutChange);
+        field.getStyle().set("vertical-align", "bottom");
+        field.getStyle().set("padding-left", "50px");
+        return field;
+    }
+
+    private void onTimeoutChange(HasValue.ValueChangeEvent<String> event) {
+        try {
+            elementWithChangeMode.setValueChangeTimeout(new Integer(event.getValue()));
+        } catch (NumberFormatException e) {
+            event.getHasValue().setValue(elementWithChangeMode.getValueChangeTimeout() + "");
         }
     }
 
-    private String getToggleButtonText(ValueChangeMode valueChangeMode) {
-        switch (valueChangeMode) {
-            case EAGER:
-            return "Switch to sync value only on committed changes";
-            case ON_CHANGE:
-            return "Switch to sync value eagerly on each change";
-            default:
-                throw new IllegalArgumentException(
-                        "Unexpected value change mode: " + valueChangeMode);
+    Component getValueChangeModeRadios() {
+        Div container = new Div();
+        Div radios = new Div();
+        for (ValueChangeMode changeMode : ValueChangeMode.values()) {
+            Div radioLine = addRadio(changeMode);
+            radios.add(radioLine);
         }
+        radios.getStyle().set("display", "inline-block");
+        container.add(radios, getTimeoutInput());
+
+        return container;
     }
+
 }

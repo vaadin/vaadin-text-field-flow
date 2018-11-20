@@ -20,6 +20,7 @@ import java.util.Arrays;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -80,5 +81,11 @@ public class ValueChangeModePage extends Div {
                     .replace('_', '-'));
             add(button);
         });
+        TextField timeoutField = new TextField();
+        timeoutField.addValueChangeListener(event ->
+                component.setValueChangeTimeout(new Integer(event.getValue())));
+        timeoutField.setId(name.toLowerCase() + "-set-change-timeout");
+        add(timeoutField);
     }
+
 }

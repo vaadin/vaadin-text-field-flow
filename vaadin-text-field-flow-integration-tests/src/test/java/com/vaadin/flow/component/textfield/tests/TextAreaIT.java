@@ -27,6 +27,8 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.demo.ComponentDemoTest;
 
+import static com.vaadin.flow.data.value.ValueChangeMode.EAGER;
+
 /**
  * Integration tests for the {@link TextArea}.
  */
@@ -46,7 +48,8 @@ public class TextAreaIT extends ComponentDemoTest {
 
         updateValues(textFieldValueDiv, textArea, true);
         layout.findElement(
-                By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+                By.id(ValueChangeModeButtonProvider.getRadioId(
+                        EAGER, TextArea.class.getSimpleName()))).click();
         updateValues(textFieldValueDiv, textArea, false);
     }
 

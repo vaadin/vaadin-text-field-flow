@@ -25,6 +25,8 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.demo.ComponentDemoTest;
 
+import static com.vaadin.flow.data.value.ValueChangeMode.EAGER;
+
 /**
  * Integration tests for the {@link PasswordField}.
  */
@@ -44,7 +46,8 @@ public class PasswordFieldIT extends ComponentDemoTest {
 
         updateValues(passwordFieldValueDiv, passwordField, true);
         layout.findElement(
-                By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+                By.id(ValueChangeModeButtonProvider.getRadioId(
+                        EAGER, PasswordField.class.getSimpleName()))).click();
         updateValues(passwordFieldValueDiv, passwordField, false);
     }
 
