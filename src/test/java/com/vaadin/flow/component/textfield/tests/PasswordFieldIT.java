@@ -15,6 +15,7 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.testbench.TestBenchElement;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -46,6 +47,37 @@ public class PasswordFieldIT extends ComponentDemoTest {
         layout.findElement(
                 By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
         updateValues(passwordFieldValueDiv, passwordField, false);
+    }
+
+    @Test
+    public void valueChangeListenerReportsCorrectValuesOnClear() {
+        WebElement passwordFieldValueDiv = layout
+                .findElement(By.id("password-field-value"));
+        WebElement passwordField = layout.findElement(
+                By.id("password-field-with-value-change-listener"));
+        WebElement clearButton = layout
+                .findElement(By.id("toggle-button"));
+
+        clearButton.click();
+
+        updateValueAndClear(passwordFieldValueDiv, passwordField, true);
+        layout.findElement(
+                By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+        updateValueAndClear(passwordFieldValueDiv, passwordField, false);
+    }
+
+    private void updateValueAndClear(WebElement passwordFieldValueDiv, WebElement passwordField,
+                                     boolean toggleBlur) {
+        passwordField.sendKeys("a");
+        if (toggleBlur) {
+            blur();
+        }
+        waitUntilTextsEqual("Password field value changed from '' to 'a'",
+                passwordFieldValueDiv.getText());
+
+        ((TestBenchElement) passwordField).$("[part='clear-button']").get(0).click();
+        waitUntilTextsEqual("Password field value changed from 'a' to ''",
+                passwordFieldValueDiv.getText());
     }
 
     private void updateValues(WebElement passwordFieldValueDiv,

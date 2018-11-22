@@ -17,6 +17,7 @@ package com.vaadin.flow.component.textfield.tests;
 
 import java.util.stream.IntStream;
 
+import com.vaadin.testbench.TestBenchElement;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -48,6 +49,37 @@ public class TextAreaIT extends ComponentDemoTest {
         layout.findElement(
                 By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
         updateValues(textFieldValueDiv, textArea, false);
+    }
+
+    @Test
+    public void valueChangeListenerReportsCorrectValuesOnClear() {
+        WebElement textAreaValueDiv = layout
+                .findElement(By.id("text-area-value"));
+        WebElement textArea = layout
+                .findElement(By.id("text-area-with-value-change-listener"));
+        WebElement clearButton = layout
+                .findElement(By.id("toggle-button"));
+
+        clearButton.click();
+
+        updateValueAndClear(textAreaValueDiv, textArea, true);
+        layout.findElement(
+                By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+        updateValueAndClear(textAreaValueDiv, textArea, false);
+    }
+
+    private void updateValueAndClear(WebElement textAreaValueDiv, WebElement textArea,
+                                     boolean toggleBlur) {
+        textArea.sendKeys("a");
+        if (toggleBlur) {
+            blur();
+        }
+        waitUntilTextsEqual("Text area value changed from '' to 'a'",
+                textAreaValueDiv.getText());
+
+        ((TestBenchElement) textArea).$("[part='clear-button']").get(0).click();
+        waitUntilTextsEqual("Text area value changed from 'a' to ''",
+                textAreaValueDiv.getText());
     }
 
     private void updateValues(WebElement textFieldValueDiv, WebElement textArea,

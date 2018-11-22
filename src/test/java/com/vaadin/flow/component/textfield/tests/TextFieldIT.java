@@ -15,6 +15,7 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.testbench.TestBenchElement;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -46,6 +47,37 @@ public class TextFieldIT extends ComponentDemoTest {
         layout.findElement(
                 By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
         updateValues(textFieldValueDiv, textField, false);
+    }
+
+    @Test
+    public void valueChangeListenerReportsCorrectValuesOnClear() {
+        WebElement textFieldValueDiv = layout
+                .findElement(By.id("text-field-value"));
+        WebElement textField = layout
+                .findElement(By.id("text-field-with-value-change-listener"));
+        WebElement clearButton = layout
+                .findElement(By.id("toggle-button"));
+
+        clearButton.click();
+
+        updateValueAndClear(textFieldValueDiv, textField, true);
+        layout.findElement(
+                By.id(ValueChangeModeButtonProvider.TOGGLE_BUTTON_ID)).click();
+        updateValueAndClear(textFieldValueDiv, textField, false);
+    }
+
+    private void updateValueAndClear(WebElement textFieldValueDiv,
+                                     WebElement textField, boolean toggleBlur) {
+        textField.sendKeys("a");
+        if (toggleBlur) {
+            blur();
+        }
+        waitUntilTextsEqual("Text field value changed from '' to 'a'",
+                textFieldValueDiv.getText());
+
+        ((TestBenchElement) textField).$("[part='clear-button']").get(0).click();
+        waitUntilTextsEqual("Text field value changed from 'a' to ''",
+                textFieldValueDiv.getText());
     }
 
     private void updateValues(WebElement textFieldValueDiv,
