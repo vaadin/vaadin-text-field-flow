@@ -35,6 +35,7 @@ public class TextFieldView extends DemoView {
     @Override
     public void initView() {
         addBasicFeatures();
+        addClearButtonFeature();
         addNumberFields();
         addDisabledField();
         addVariantsFeature();
@@ -64,20 +65,30 @@ public class TextFieldView extends DemoView {
         textField.addValueChangeListener(event -> message.setText(
                 String.format("Text field value changed from '%s' to '%s'",
                         event.getOldValue(), event.getValue())));
-        NativeButton button = new NativeButton("Toggle clear button", event -> {
+        // end-source-example
+
+        textField.setId("text-field-with-value-change-listener");
+        message.setId("text-field-value");
+
+        addCard("Basic text field", textField,
+                new ValueChangeModeButtonProvider(textField)
+                        .getToggleValueSyncButton(),
+                message);
+    }
+
+    private void addClearButtonFeature() {
+        // begin-source-example
+        // source-example-heading: Text field with clear button
+        TextField textField = new TextField();
+        textField.setLabel("Text field label");
+        textField.setPlaceholder("placeholder text");
+        NativeButton clearButton = new NativeButton("Toggle clear button", event -> {
             textField.setClearButtonVisible(
                     !textField.isClearButtonVisible());
         });
         // end-source-example
 
-        textField.setId("text-field-with-value-change-listener");
-        message.setId("text-field-value");
-        button.setId("toggle-button");
-
-        addCard("Basic text field", button, textField,
-                new ValueChangeModeButtonProvider(textField)
-                        .getToggleValueSyncButton(),
-                message);
+        addCard("Text field with clear button", textField, clearButton);
     }
 
     private void addNumberFields() {

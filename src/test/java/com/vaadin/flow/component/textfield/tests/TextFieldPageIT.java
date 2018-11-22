@@ -88,4 +88,18 @@ public class TextFieldPageIT extends AbstractComponentIT {
         String value = findElement(By.className("text-field-value")).getText();
         Assert.assertEquals("foo", value);
     }
+
+    @Test
+    public void assertClearValue() throws InterruptedException {
+       WebElement field = findElement(By.id("clear-text-field"));
+
+       WebElement input = getInShadowRoot(field, By.cssSelector("input"));
+       input.sendKeys("foo");
+
+       WebElement clearButton = getInShadowRoot(field, By.cssSelector("[part~='clear-button']"));
+       clearButton.click();
+
+       String value = findElement(By.id("clear-message")).getText();
+       Assert.assertEquals("", value);
+    }
 }

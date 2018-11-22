@@ -71,4 +71,18 @@ public class PasswordFieldPageIT extends AbstractComponentIT {
         waitUntil(driver -> "false"
                 .equals(getProperty(webComponent, "required")));
     }
+
+    @Test
+    public void assertClearValue() throws InterruptedException {
+        WebElement field = findElement(By.id("clear-password-field"));
+
+        WebElement input = getInShadowRoot(field, By.cssSelector("input"));
+        input.sendKeys("foo");
+
+        WebElement clearButton = getInShadowRoot(field, By.cssSelector("[part~='clear-button']"));
+        clearButton.click();
+
+        String value = findElement(By.id("clear-message")).getText();
+        Assert.assertEquals("", value);
+    }
 }

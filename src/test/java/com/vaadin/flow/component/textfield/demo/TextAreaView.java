@@ -34,6 +34,7 @@ public class TextAreaView extends DemoView {
     @Override
     public void initView() {
         addBasicFeatures();
+        addClearButtonFeature();
         addMaxHeightFeature();
         addMinHeightFeature();
         addDisabledField();
@@ -96,20 +97,30 @@ public class TextAreaView extends DemoView {
         textArea.addValueChangeListener(event -> message.setText(
                 String.format("Text area value changed from '%s' to '%s'",
                         event.getOldValue(), event.getValue())));
-        NativeButton button = new NativeButton("Toggle clear button", event -> {
+        // end-source-example
+
+        textArea.setId("text-area-with-value-change-listener");
+        message.setId("text-area-value");
+
+        addCard("Basic text area", textArea,
+                new ValueChangeModeButtonProvider(textArea)
+                        .getToggleValueSyncButton(),
+                message);
+    }
+
+    private void addClearButtonFeature() {
+        // begin-source-example
+        // source-example-heading: Text area with clear button
+        TextArea textArea = new TextArea();
+        textArea.setLabel("Text area label");
+        textArea.setPlaceholder("placeholder text");
+        NativeButton clearButton = new NativeButton("Toggle clear button", event -> {
             textArea.setClearButtonVisible(
                     !textArea.isClearButtonVisible());
         });
         // end-source-example
 
-        textArea.setId("text-area-with-value-change-listener");
-        message.setId("text-area-value");
-        button.setId("toggle-button");
-
-        addCard("Basic text area", button, textArea,
-                new ValueChangeModeButtonProvider(textArea)
-                        .getToggleValueSyncButton(),
-                message);
+        addCard("Text area with clear button", textArea, clearButton);
     }
 
     private void addDisabledField() {
