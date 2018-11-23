@@ -42,11 +42,12 @@ public class TextAreaPageIT extends AbstractComponentIT {
 
         WebElement input = getInShadowRoot(field, By.cssSelector("textarea"));
         input.sendKeys("foo");
+        blur();
 
         WebElement clearButton = getInShadowRoot(field, By.cssSelector("[part~='clear-button']"));
         clearButton.click();
 
         String value = findElement(By.id("clear-message")).getText();
-        Assert.assertEquals("", value);
+        Assert.assertEquals("Old value: 'foo'. New value: ''.", value);
     }
 }
