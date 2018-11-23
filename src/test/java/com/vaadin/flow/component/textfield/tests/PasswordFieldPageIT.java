@@ -73,16 +73,17 @@ public class PasswordFieldPageIT extends AbstractComponentIT {
     }
 
     @Test
-    public void assertClearValue() throws InterruptedException {
+    public void assertClearValue() {
         WebElement field = findElement(By.id("clear-password-field"));
 
         WebElement input = getInShadowRoot(field, By.cssSelector("input"));
         input.sendKeys("foo");
+        blur();
 
         WebElement clearButton = getInShadowRoot(field, By.cssSelector("[part~='clear-button']"));
         clearButton.click();
 
         String value = findElement(By.id("clear-message")).getText();
-        Assert.assertEquals("", value);
+        Assert.assertEquals("Old value: 'foo'. New value: ''.", value);
     }
 }
