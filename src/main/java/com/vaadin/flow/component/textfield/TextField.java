@@ -209,8 +209,8 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
     }
 
     /**
-     * Set to <code>false</code> to hide the clear button which clears the text
-     * field.
+     * Gets the visibility state of the button which clears the text
+     * area.
      *
      * @return <code>true</code> if the button is visible, <code>false</code>
      *         otherwise
