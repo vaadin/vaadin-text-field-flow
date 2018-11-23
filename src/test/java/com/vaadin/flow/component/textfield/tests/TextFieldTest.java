@@ -61,8 +61,8 @@ public class TextFieldTest {
 
     public void assertClearButtonPropertyValueEquals(TextField textField, Boolean value) {
         textField.setClearButtonVisible(value);
-        Assert.assertEquals(textField.isClearButtonVisible(), value);
+        Assert.assertEquals(value, textField.isClearButtonVisible());
         Assert.assertEquals(textField.isClearButtonVisible(),
-                textField.getElement().getProperty("clearButtonVisible", false));
+                textField.getElement().getProperty("clearButtonVisible", value));
     }
 }

@@ -345,8 +345,8 @@ public class PasswordField
     }
 
     /**
-     * Set to <code>false</code> to hide the clear button which clears the text
-     * area.
+     * Gets the visibility   state of the button which clears the password
+     * field.
      *
      * @return <code>true</code> if the button is visible, <code>false</code>
      *         otherwise
@@ -356,8 +356,8 @@ public class PasswordField
     }
 
     /**
-     * Set to <code>false</code> to hide the clear button which clears the text
-     * area.
+     * Set to <code>false</code> to hide the clear button which clears the password
+     * field.
      *
      * @param clearButtonVisible
      *            <code>true</code> to set the button visible,
