@@ -132,14 +132,19 @@ public class TextFieldView extends DemoView {
         disabledTextField.setId("disabled-text-field");
         enabledTextField.setId("read-only-text-field");
 
-        Div div = new Div(enabledTextField, disabledTextField,
+        Div message = new Div();
+        message.setId("disabled-text-field-message");
+        disabledTextField.addValueChangeListener(
+                change -> message.setText("Value changed"));
+
+        Div textFieldsContainer = new Div(enabledTextField, disabledTextField,
                 readOnlyTextField);
-        div.getChildren().forEach(child -> {
+        textFieldsContainer.getChildren().forEach(child -> {
             child.getElement().getStyle().set("margin",
                     "var(--lumo-space-s,8)");
         });
 
-        addCard("Text field states", div);
+        addCard("Text field states", textFieldsContainer, message);
     }
 
     private void addPasswordVariantsFeature() {
