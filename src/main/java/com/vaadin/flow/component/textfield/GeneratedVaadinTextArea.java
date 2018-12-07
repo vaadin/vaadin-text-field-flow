@@ -62,7 +62,7 @@ import com.vaadin.flow.component.AbstractSinglePropertyField;
  * <p>
  * The following shadow DOM parts are available for styling:
  * </p>
- * <table>
+ * <table summary="Parts available for styling">
  * <thead>
  * <tr>
  * <th>Part name</th>
@@ -90,7 +90,7 @@ import com.vaadin.flow.component.AbstractSinglePropertyField;
  * <p>
  * The following state attributes are available for styling:
  * </p>
- * <table>
+ * <table summary="State attributes available for styling">
  * <thead>
  * <tr>
  * <th>Attribute</th>

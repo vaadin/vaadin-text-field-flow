@@ -63,7 +63,7 @@ import com.vaadin.flow.component.AbstractSinglePropertyField;
  * <p>
  * The following custom properties are available for styling:
  * </p>
- * <table>
+ * <table summary="Custom properties for styling">
  * <thead>
  * <tr>
  * <th>Custom property</th>
@@ -81,7 +81,7 @@ import com.vaadin.flow.component.AbstractSinglePropertyField;
  * <p>
  * The following shadow DOM parts are available for styling:
  * </p>
- * <table>
+ * <table summary="Shadow dom parts available for styling">
  * <thead>
  * <tr>
  * <th>Part name</th>
@@ -109,7 +109,7 @@ import com.vaadin.flow.component.AbstractSinglePropertyField;
  * <p>
  * The following state attributes are available for styling:
  * </p>
- * <table>
+ * <table summary="State attributes available for styling">
  * <thead>
  * <tr>
  * <th>Attribute</th>
@@ -745,7 +745,7 @@ public abstract class GeneratedVaadinTextField<R extends GeneratedVaadinTextFiel
      * </p>
      * <p>
      * Identifies a list of pre-defined options to suggest to the user. The
-     * value must be the id of a <datalist> element in the same document.
+     * value must be the id of a datalist element in the same document.
      * <p>
      * This property is not synchronized automatically from the client side, so
      * the returned value may not be the same as in client side.
@@ -763,7 +763,7 @@ public abstract class GeneratedVaadinTextField<R extends GeneratedVaadinTextFiel
      * </p>
      * <p>
      * Identifies a list of pre-defined options to suggest to the user. The
-     * value must be the id of a <datalist> element in the same document.
+     * value must be the id of a datalist element in the same document.
      * </p>
      *
      * @param list

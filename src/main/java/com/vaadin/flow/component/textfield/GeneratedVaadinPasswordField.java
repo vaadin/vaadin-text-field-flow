@@ -42,7 +42,7 @@ import com.vaadin.flow.function.SerializableBiFunction;
  * In addition to vaadin-text-field parts, here's the list of
  * vaadin-password-field specific parts
  * </p>
- * <table>
+ * <table summary="List of parts">
  * <thead>
  * <tr>
  * <th>Part name</th>
@@ -59,7 +59,7 @@ import com.vaadin.flow.function.SerializableBiFunction;
  * In addition to vaadin-text-field state attributes, here's the list of
  * vaadin-password-field specific attributes
  * </p>
- * <table>
+ * <table summary="List of attributes">
  * <thead>
  * <tr>
  * <th>Attribute</th>
