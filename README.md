@@ -8,7 +8,6 @@ The repository contains implementations for `TextField`, `PasswordField` and `Te
 `master` branch is the latest version that will at some point be released in the [Vaadin platform](https://github.com/vaadin/platform). See other branches for other framework versions:
  - `1.0` branch is Vaadin 10 LTS (Flow/Flow-component version 1.0)
 
-
 ## Running the component demo
 Run from the command line:
 - `mvn jetty:run -PrunTests`
