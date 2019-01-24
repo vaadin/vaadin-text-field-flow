@@ -10,7 +10,7 @@
         <version>1.3-SNAPSHOT</version>
     </parent>
 
-    <artifactId>vaadin-text-field-testbench</artifactId>
+    <artifactId>vaadin-text-field-flow-testbench</artifactId>
     <packaging>jar</packaging>
 
     <name>Vaadin TextField Testbench API</name>
