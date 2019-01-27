@@ -18,7 +18,9 @@ package com.vaadin.flow.component.textfield.demo;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.demo.DemoView;
@@ -39,6 +41,7 @@ public class TextFieldView extends DemoView {
         addAutoselectFeature();
         addNumberFields();
         addDisabledField();
+        addEmailFieldFields();
         addVariantsFeature();
     }
 
@@ -108,21 +111,37 @@ public class TextFieldView extends DemoView {
     private void addNumberFields() {
         // begin-source-example
         // source-example-heading: Number fields
-        TextField dollarField = new TextField("Dollars");
-        dollarField.setPattern("[0-9]*");
-        dollarField.setPreventInvalidInput(true);
+        NumberField dollarField = new NumberField("Dollars");
         dollarField.setPrefixComponent(new Span("$"));
 
-        TextField euroField = new TextField("Euros");
-        euroField.setPattern("[0-9]*");
-        euroField.setPreventInvalidInput(true);
+        NumberField euroField = new NumberField("Euros");
+        euroField.setSuffixComponent(new Span("€"));
+
+        NumberField stepperField = new NumberField("Stepper");
+        stepperField.setValue(1d);
+        stepperField.setMin(0);
+        stepperField.setMax(10);
+        stepperField.setHasControls(true);
+
         euroField.setSuffixComponent(new Span("€"));
         // end-source-example
 
         dollarField.setId("dollar-field");
         euroField.setId("euro-field");
+        stepperField.setId("step-number-field");
 
-        addCard("Number fields", dollarField, euroField);
+        addCard("Number fields", dollarField, euroField, stepperField);
+    }
+
+    private void addEmailFieldFields() {
+        // begin-source-example
+        // source-example-heading: Email field
+        EmailField emailField = new EmailField("Dollars");
+        // end-source-example
+
+        emailField.setId("email-field");
+
+        addCard("Email field", emailField);
     }
 
     private void addDisabledField() {
