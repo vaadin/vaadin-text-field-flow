@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
+import com.vaadin.flow.component.HasValue.ValueChangeListener;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.NumberField;
@@ -31,37 +33,33 @@ public class NumberFieldPage extends Div {
      */
     public NumberFieldPage() {
         Div message = new Div();
-        NumberField NumberField = new NumberField();
-        NumberField.addValueChangeListener(event -> message
-                .setText(String.format("Old value: '%s'. New value: '%s'.",
-                        event.getOldValue(), event.getValue())));
-        add(NumberField, message);
+        NumberField numberField = new NumberField();
+        numberField.addValueChangeListener(logValueChangeListener(message));
+        add(numberField, message);
 
         NativeButton button = new NativeButton(
                 "Set/unset text field read-only");
         button.setId("read-only");
-        button.addClickListener(event -> NumberField
-                .setReadOnly(!NumberField.isReadOnly()));
+        button.addClickListener(event -> numberField
+                .setReadOnly(!numberField.isReadOnly()));
         add(button);
 
         NativeButton required = new NativeButton(
                 "Set/unset field required property");
         required.setId("required");
         required.addClickListener(
-                event -> NumberField.setRequiredIndicatorVisible(
-                        !NumberField.isRequiredIndicatorVisible()));
+                event -> numberField.setRequiredIndicatorVisible(
+                        !numberField.isRequiredIndicatorVisible()));
         add(required);
 
-        NumberField NumberFieldClear = new NumberField();
-        NumberFieldClear.setId("clear-number-field");
-        NumberFieldClear.getStyle().set("display", "block");
-        NumberFieldClear.setClearButtonVisible(true);
+        NumberField numberFieldClear = new NumberField();
+        numberFieldClear.setId("clear-number-field");
+        numberFieldClear.getStyle().set("display", "block");
+        numberFieldClear.setClearButtonVisible(true);
         Div clearValueMessage = new Div();
         clearValueMessage.setId("clear-message");
-        NumberFieldClear.addValueChangeListener(event -> clearValueMessage
-                .setText(String.format("Old value: '%s'. New value: '%s'.",
-                        event.getOldValue(), event.getValue())));
-        add(NumberFieldClear, clearValueMessage);
+        numberFieldClear.addValueChangeListener(logValueChangeListener(clearValueMessage));
+        add(numberFieldClear, clearValueMessage);
 
         NumberField numberFieldStep = new NumberField();
         numberFieldStep.setId("step-number-field");
@@ -71,10 +69,15 @@ public class NumberFieldPage extends Div {
         numberFieldStep.setHasControls(true);
         Div stepValueMessage = new Div();
         stepValueMessage.setId("step-message");
-        numberFieldStep.addValueChangeListener(event -> stepValueMessage
-                .setText(String.format("Old value: '%s'. New value: '%s'.",
-                        event.getOldValue(), event.getValue())));
+        numberFieldStep.addValueChangeListener(logValueChangeListener(stepValueMessage));
 
         add(numberFieldStep, stepValueMessage);
+    }
+
+    private ValueChangeListener<? super ComponentValueChangeEvent<NumberField, Double>> logValueChangeListener(
+            Div stepValueMessage) {
+        return event -> stepValueMessage
+                .setText(String.format("Old value: '%s'. New value: '%s'.",
+                        event.getOldValue(), event.getValue()));
     }
 }

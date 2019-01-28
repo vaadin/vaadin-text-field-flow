@@ -31,36 +31,36 @@ public class EmailFieldPage extends Div {
      */
     public EmailFieldPage() {
         Div message = new Div();
-        EmailField EmailField = new EmailField();
-        EmailField.addValueChangeListener(event -> message
+        EmailField emailField = new EmailField();
+        emailField.addValueChangeListener(event -> message
                 .setText(String.format("Old value: '%s'. New value: '%s'.",
                         event.getOldValue(), event.getValue())));
-        add(EmailField, message);
+        add(emailField, message);
 
         NativeButton button = new NativeButton(
                 "Set/unset text field read-only");
         button.setId("read-only");
-        button.addClickListener(event -> EmailField
-                .setReadOnly(!EmailField.isReadOnly()));
+        button.addClickListener(event -> emailField
+                .setReadOnly(!emailField.isReadOnly()));
         add(button);
 
         NativeButton required = new NativeButton(
                 "Set/unset field required property");
         required.setId("required");
         required.addClickListener(
-                event -> EmailField.setRequiredIndicatorVisible(
-                        !EmailField.isRequiredIndicatorVisible()));
+                event -> emailField.setRequiredIndicatorVisible(
+                        !emailField.isRequiredIndicatorVisible()));
         add(required);
 
-        EmailField EmailFieldClear = new EmailField();
-        EmailFieldClear.setId("clear-email-field");
-        EmailFieldClear.getStyle().set("display", "block");
-        EmailFieldClear.setClearButtonVisible(true);
+        EmailField emailFieldClear = new EmailField();
+        emailFieldClear.setId("clear-email-field");
+        emailFieldClear.getStyle().set("display", "block");
+        emailFieldClear.setClearButtonVisible(true);
         Div clearValueMessage = new Div();
         clearValueMessage.setId("clear-message");
-        EmailFieldClear.addValueChangeListener(event -> clearValueMessage
+        emailFieldClear.addValueChangeListener(event -> clearValueMessage
                 .setText(String.format("Old value: '%s'. New value: '%s'.",
                         event.getOldValue(), event.getValue())));
-        add(EmailFieldClear, clearValueMessage);
+        add(emailFieldClear, clearValueMessage);
     }
 }
