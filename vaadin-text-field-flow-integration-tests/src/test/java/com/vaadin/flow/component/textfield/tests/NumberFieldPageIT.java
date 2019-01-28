@@ -84,7 +84,7 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         clearButton.click();
 
         String value = findElement(By.id("clear-message")).getText();
-        Assert.assertEquals("Old value: '300.0'. New value: '0.0'.", value);
+        Assert.assertEquals("Old value: '300.0'. New value: 'null'.", value);
     }
 
     @Test
@@ -95,6 +95,6 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         increaseButton.click();
 
         String value = findElement(By.id("step-message")).getText();
-        Assert.assertEquals("Old value: '0.0'. New value: '0.5'.", value);
+        Assert.assertEquals("Old value: 'null'. New value: '0.5'.", value);
     }
 }

@@ -16,6 +16,8 @@
 
 package com.vaadin.flow.component.textfield;
 
+import java.time.LocalTime;
+
 import com.vaadin.flow.component.CompositionNotifier;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
@@ -24,6 +26,7 @@ import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.function.SerializableFunction;
 
 /**
  * Server-side component for the {@code vaadin-number-field} element.
@@ -35,6 +38,16 @@ public class NumberField
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
         HasAutocomplete, HasAutocapitalize, HasAutocorrect {
+    
+    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> {
+        return valueFromClient == null || valueFromClient.isEmpty() ? null
+                : Double.parseDouble(valueFromClient);
+    };
+
+    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> {
+        return valueFromModel == null ? "" : valueFromModel.toString();
+    };
+
     private ValueChangeMode currentMode;
 
     private boolean isConnectorAttached;
@@ -43,7 +56,7 @@ public class NumberField
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(null, null, false);
+        super(null, null, String.class, PARSER, FORMATTER);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
     }
 
