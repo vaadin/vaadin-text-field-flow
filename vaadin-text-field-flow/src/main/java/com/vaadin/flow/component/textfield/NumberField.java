@@ -263,15 +263,7 @@ public class NumberField
     }
 
     /**
-     * <p>
-     * Description copied from corresponding location in WebComponent:
-     * </p>
-     * <p>
      * Specify that this control should have input focus when the page loads.
-     * <p>
-     * This property is not synchronized automatically from the client side, so
-     * the returned value may not be the same as in client side.
-     * </p>
      *
      * @return the {@code autofocus} property from the webcomponent
      */
@@ -291,16 +283,8 @@ public class NumberField
     }
 
     /**
-     * <p>
-     * Description copied from corresponding location in WebComponent:
-     * </p>
-     * <p>
      * Maximum number of characters (in Unicode code points) that the user can
      * enter.
-     * <p>
-     * This property is not synchronized automatically from the client side, so
-     * the returned value may not be the same as in client side.
-     * </p>
      *
      * @return the {@code maxlength} property from the webcomponent
      */
@@ -327,20 +311,6 @@ public class NumberField
      */
     public int getMinLength() {
         return (int) getMinlengthDouble();
-    }
-
-    /**
-     * Specifies that the user must fill in a value.
-     *
-     * @return the {@code required} property from the webcomponent
-     */
-    public boolean isRequired() {
-        return isRequiredBoolean();
-    }
-
-    @Override
-    public void setRequired(boolean required) {
-        super.setRequired(required);
     }
 
     /**
@@ -434,6 +404,9 @@ public class NumberField
         super.setClearButtonVisible(clearButtonVisible);
     }
 
+    /**
+     * Returns the value that represents an empty value.
+     */
     @Override
     public Double getEmptyValue() {
         return null;
@@ -441,14 +414,10 @@ public class NumberField
 
     /**
      * Sets the value of this number field. If the new value is not equal to
-     * {@code getValue()}, fires a value change event. Throws
-     * {@code NullPointerException}, if the value is null.
-     * <p>
-     * Note: {@link Binder} will take care of the {@code null} conversion when
-     * integrates with number field, as long as no new converter is defined.
+     * {@code getValue()}, fires a value change event. 
      *
      * @param value
-     *            the new value, not {@code null}
+     *            the new value
      */
     @Override
     public void setValue(Double value) {
@@ -457,7 +426,7 @@ public class NumberField
 
     /**
      * Returns the current value of the number field. By default, the empty
-     * number field will return an empty string.
+     * number field will return {@code null} .
      *
      * @return the current value.
      */

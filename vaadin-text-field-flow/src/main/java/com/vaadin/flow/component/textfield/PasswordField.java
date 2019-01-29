@@ -197,15 +197,7 @@ public class PasswordField
     }
 
     /**
-     * <p>
-     * Description copied from corresponding location in WebComponent:
-     * </p>
-     * <p>
      * Specify that this control should have input focus when the page loads.
-     * <p>
-     * This property is not synchronized automatically from the client side, so
-     * the returned value may not be the same as in client side.
-     * </p>
      *
      * @return the {@code autofocus} property from the webcomponent
      */
@@ -225,16 +217,8 @@ public class PasswordField
     }
 
     /**
-     * <p>
-     * Description copied from corresponding location in WebComponent:
-     * </p>
-     * <p>
      * Maximum number of characters (in Unicode code points) that the user can
      * enter.
-     * <p>
-     * This property is not synchronized automatically from the client side, so
-     * the returned value may not be the same as in client side.
-     * </p>
      *
      * @return the {@code maxlength} property from the webcomponent
      */
