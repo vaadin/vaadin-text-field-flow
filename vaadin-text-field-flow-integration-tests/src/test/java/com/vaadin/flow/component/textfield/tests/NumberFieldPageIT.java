@@ -15,6 +15,9 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import static org.junit.Assert.assertFalse;
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +25,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.testbench.NumberFieldElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
 
@@ -38,45 +42,70 @@ public class NumberFieldPageIT extends AbstractComponentIT {
 
     @Test
     public void assertReadOnly() {
-        WebElement webComponent = findElement(
-                By.tagName("vaadin-number-field"));
+        NumberFieldElement numberField = $(NumberFieldElement.class).first();
+        WebElement messageDiv = $("div").id("message");
+        numberField.setValue("123.0");
 
-        Assert.assertNull(webComponent.getAttribute("readonly"));
+        assertFalse(numberField.hasAttribute("readonly"));
 
-        WebElement button = findElement(By.id("read-only"));
-        button.click();
+        WebElement readOnlyButton = findElement(By.id("read-only"));
+        readOnlyButton.click();
 
-        waitUntil(
-                driver -> "true".equals(getProperty(webComponent, "readonly")));
+        numberField.setValue("456");
+        Assert.assertEquals("123.0", numberField.getValue());
+        Assert.assertEquals("Old value: 'null'. New value: '123.0'.", messageDiv.getText());
 
-        button.click();
+        numberField.setProperty("readonly", "");
+        numberField.setValue("789");
+        Assert.assertEquals("123.0", numberField.getValue());
+        Assert.assertEquals("Old value: 'null'. New value: '123.0'.", messageDiv.getText());
 
-        waitUntil(driver -> "false"
-                .equals(getProperty(webComponent, "readonly")));
+        readOnlyButton.click();
+        numberField.setValue("987");
+        Assert.assertEquals("Old value: '123.0'. New value: '987.0'.", messageDiv.getText());
+    }
+
+    @Test
+    public void assertEnabled() {
+        NumberFieldElement numberField = $(NumberFieldElement.class).first();
+        WebElement messageDiv = $("div").id("message");
+        numberField.setValue("123.0");
+
+        assertFalse(numberField.hasAttribute("disabled"));
+        WebElement disableEnableButton = findElement(By.id("disabled"));
+        disableEnableButton.click();
+
+        numberField.setValue("456");
+        Assert.assertEquals("Old value: 'null'. New value: '123.0'.", messageDiv.getText());
+
+        numberField.setProperty("disabled", "");
+        numberField.setValue("789");
+        Assert.assertEquals("Old value: 'null'. New value: '123.0'.", messageDiv.getText());
+        
+        disableEnableButton.click();
+        numberField.setValue("987");
+        Assert.assertEquals("Old value: '123.0'. New value: '987.0'.", messageDiv.getText());
     }
 
     @Test
     public void assertRequired() {
-        WebElement webComponent = findElement(
-                By.tagName("vaadin-number-field"));
+        NumberFieldElement numberField = $(NumberFieldElement.class).first();
 
-        Assert.assertNull(webComponent.getAttribute("required"));
+        assertFalse(numberField.hasAttribute("required"));
 
         WebElement button = findElement(By.id("required"));
         button.click();
-        waitUntil(
-                driver -> "true".equals(getProperty(webComponent, "required")));
+        waitUntil(attributeToBe(numberField, "required", "true"));
 
         button.click();
-        waitUntil(driver -> "false"
-                .equals(getProperty(webComponent, "required")));
+        waitUntil(attributeToBe(numberField, "required", ""));
     }
 
     @Test
     public void assertClearValue() {
-        WebElement field = findElement(By.id("clear-number-field"));
+        NumberFieldElement field = $(NumberFieldElement.class).id("clear-number-field");
 
-        WebElement input = getInShadowRoot(field, By.cssSelector("input"));
+        WebElement input = field.$("input").first();
         input.sendKeys("300");
         blur();
 
@@ -97,4 +126,13 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         String value = findElement(By.id("step-message")).getText();
         Assert.assertEquals("Old value: 'null'. New value: '0.5'.", value);
     }
+
+    @Test
+    public void assertValueChange() {
+        NumberFieldElement field = $(NumberFieldElement.class).id("clear-number-field");
+        field.setValue("123.0");
+        String message = $("div").id("clear-message").getText();
+        Assert.assertEquals("Old value: 'null'. New value: '123.0'.", message);
+    }
+
 }

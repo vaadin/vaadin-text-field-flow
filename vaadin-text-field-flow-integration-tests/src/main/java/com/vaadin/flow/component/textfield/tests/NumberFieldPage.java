@@ -33,6 +33,7 @@ public class NumberFieldPage extends Div {
      */
     public NumberFieldPage() {
         Div message = new Div();
+        message.setId("message");
         NumberField numberField = new NumberField();
         numberField.addValueChangeListener(logValueChangeListener(message));
         add(numberField, message);
@@ -51,6 +52,14 @@ public class NumberFieldPage extends Div {
                 event -> numberField.setRequiredIndicatorVisible(
                         !numberField.isRequiredIndicatorVisible()));
         add(required);
+
+        NativeButton enabled = new NativeButton(
+                "Set/unset field enabled property");
+        enabled.setId("disabled");
+        enabled.addClickListener(
+                event -> numberField.setEnabled(
+                        !numberField.isEnabled()));
+        add(enabled);
 
         NumberField numberFieldClear = new NumberField();
         numberFieldClear.setId("clear-number-field");
