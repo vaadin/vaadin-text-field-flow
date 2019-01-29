@@ -19,6 +19,8 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.GeneratedVaadinEmailField;
+import com.vaadin.flow.component.textfield.GeneratedVaadinNumberField;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -50,11 +52,27 @@ public class TextFieldView extends DemoView {
         // source-example-heading: Theme variants usage
         TextField textField = new TextField();
         textField.addThemeVariants(TextFieldVariant.LUMO_SMALL);
+        
+        NumberField numberField = new NumberField();
+        numberField.addThemeVariants(TextFieldVariant.LUMO_SMALL);
+
+        EmailField emailField = new EmailField();
+        emailField.addThemeVariants(TextFieldVariant.LUMO_SMALL);
         // end-source-example
 
         addVariantsDemo(TextField::new,
                 GeneratedVaadinTextField::addThemeVariants,
                 GeneratedVaadinTextField::removeThemeVariants,
+                TextFieldVariant::getVariantName, TextFieldVariant.LUMO_SMALL);
+        
+        addVariantsDemo(NumberField::new,
+                GeneratedVaadinNumberField::addThemeVariants,
+                GeneratedVaadinNumberField::removeThemeVariants,
+                TextFieldVariant::getVariantName, TextFieldVariant.LUMO_SMALL);
+        
+        addVariantsDemo(EmailField::new,
+                GeneratedVaadinEmailField::addThemeVariants,
+                GeneratedVaadinEmailField::removeThemeVariants,
                 TextFieldVariant::getVariantName, TextFieldVariant.LUMO_SMALL);
     }
 
@@ -134,14 +152,20 @@ public class TextFieldView extends DemoView {
     }
 
     private void addEmailFieldFields() {
+        Div message = new Div();
+
         // begin-source-example
         // source-example-heading: Email field
-        EmailField emailField = new EmailField("Dollars");
+        EmailField emailField = new EmailField("Email");
+        emailField.addValueChangeListener(event -> message.setText(
+                String.format("Email field value changed from '%s' to '%s'",
+                        event.getOldValue(), event.getValue())));
         // end-source-example
 
         emailField.setId("email-field");
+        message.setId("email-field-value");
 
-        addCard("Email field", emailField);
+        addCard("Email field", emailField, message);
     }
 
     private void addDisabledField() {
