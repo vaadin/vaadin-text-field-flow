@@ -15,6 +15,10 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,45 +43,70 @@ public class EmailFieldPageIT extends AbstractComponentIT {
 
     @Test
     public void assertReadOnly() {
-        WebElement webComponent = findElement(
-                By.tagName("vaadin-email-field"));
+        EmailFieldElement emailField = $(EmailFieldElement.class).first();
+        WebElement messageDiv = $("div").id("message");
+        emailField.setValue("mail@domain.com");
 
-        Assert.assertNull(webComponent.getAttribute("readonly"));
+        assertFalse(emailField.hasAttribute("readonly"));
 
-        WebElement button = findElement(By.id("read-only"));
-        button.click();
+        WebElement readOnlyButton = findElement(By.id("read-only"));
+        readOnlyButton.click();
 
-        waitUntil(
-                driver -> "true".equals(getProperty(webComponent, "readonly")));
+        emailField.setValue("another@domain.com");
+        Assert.assertEquals("mail@domain.com", emailField.getValue());
+        Assert.assertEquals("Old value: ''. New value: 'mail@domain.com'.", messageDiv.getText());
 
-        button.click();
+        emailField.setProperty("readonly", "");
+        emailField.setValue("another@domain.com");
+        Assert.assertEquals("mail@domain.com", emailField.getValue());
+        Assert.assertEquals("Old value: ''. New value: 'mail@domain.com'.", messageDiv.getText());
 
-        waitUntil(driver -> "false"
-                .equals(getProperty(webComponent, "readonly")));
+        readOnlyButton.click();
+        emailField.setValue("yetanother@domain.com");
+        Assert.assertEquals("Old value: 'mail@domain.com'. New value: 'yetanother@domain.com'.", messageDiv.getText());
+    }
+
+    @Test
+    public void assertEnabled() {
+        EmailFieldElement emailField = $(EmailFieldElement.class).first();
+        WebElement messageDiv = $("div").id("message");
+        emailField.setValue("mail@domain.com");
+
+        assertFalse(emailField.hasAttribute("disabled"));
+        WebElement disableEnableButton = findElement(By.id("disabled"));
+        disableEnableButton.click();
+
+        emailField.setValue("another@domain.com");
+        Assert.assertEquals("Old value: ''. New value: 'mail@domain.com'.", messageDiv.getText());
+
+        emailField.setProperty("disabled", "");
+        emailField.setValue("another@domain.com");
+        Assert.assertEquals("Old value: ''. New value: 'mail@domain.com'.", messageDiv.getText());
+        
+        disableEnableButton.click();
+        emailField.setValue("yetanother@domain.com");
+        Assert.assertEquals("Old value: 'mail@domain.com'. New value: 'yetanother@domain.com'.", messageDiv.getText());
     }
 
     @Test
     public void assertRequired() {
-        WebElement webComponent = findElement(
-                By.tagName("vaadin-email-field"));
+        EmailFieldElement emailField = $(EmailFieldElement.class).first();
 
-        Assert.assertNull(webComponent.getAttribute("required"));
+        assertFalse(emailField.hasAttribute("required"));
 
         WebElement button = findElement(By.id("required"));
         button.click();
-        waitUntil(
-                driver -> "true".equals(getProperty(webComponent, "required")));
+        waitUntil(attributeToBe(emailField, "required", "true"));
 
         button.click();
-        waitUntil(driver -> "false"
-                .equals(getProperty(webComponent, "required")));
+        waitUntil(attributeToBe(emailField, "required", ""));
     }
 
     @Test
     public void assertClearValue() {
-        WebElement field = findElement(By.id("clear-email-field"));
+        EmailFieldElement field = $(EmailFieldElement.class).id("clear-email-field");
 
-        WebElement input = getInShadowRoot(field, By.cssSelector("input"));
+        WebElement input = field.$("input").first();
         input.sendKeys("foo");
         blur();
 
@@ -92,16 +121,20 @@ public class EmailFieldPageIT extends AbstractComponentIT {
     public void assertInvalidValue() {
         EmailFieldElement field = $(EmailFieldElement.class).id("clear-email-field");
 
-        WebElement input = field.$("input").first();
-        input.sendKeys("username");
+        field.sendKeys("username");
         blur();
+        assertTrue(field.hasAttribute("invalid"));
 
-        Assert.assertTrue(field.hasAttribute("invalid"));
-
-        input.sendKeys("username@domain.com");
+        field.sendKeys("username@domain.com");
         blur();
+        assertFalse(field.hasAttribute("invalid"));
+    }
 
-        Assert.assertFalse(field.hasAttribute("invalid"));
-
+    @Test
+    public void assertValueChange() {
+        EmailFieldElement field = $(EmailFieldElement.class).id("clear-email-field");
+        field.setValue("account@domain.com");
+        String message = $("div").id("clear-message").getText();
+        Assert.assertEquals("Old value: ''. New value: 'account@domain.com'.", message);
     }
 }

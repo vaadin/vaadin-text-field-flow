@@ -31,6 +31,7 @@ public class EmailFieldPage extends Div {
      */
     public EmailFieldPage() {
         Div message = new Div();
+        message.setId("message");
         EmailField emailField = new EmailField();
         emailField.addValueChangeListener(event -> message
                 .setText(String.format("Old value: '%s'. New value: '%s'.",
@@ -51,6 +52,14 @@ public class EmailFieldPage extends Div {
                 event -> emailField.setRequiredIndicatorVisible(
                         !emailField.isRequiredIndicatorVisible()));
         add(required);
+
+        NativeButton enabled = new NativeButton(
+                "Set/unset field enabled property");
+        enabled.setId("disabled");
+        enabled.addClickListener(
+                event -> emailField.setEnabled(
+                        !emailField.isEnabled()));
+        add(enabled);
 
         EmailField emailFieldClear = new EmailField();
         emailFieldClear.setId("clear-email-field");
