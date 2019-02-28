@@ -22,6 +22,7 @@ import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.GeneratedVaadinEmailField;
 import com.vaadin.flow.component.textfield.GeneratedVaadinNumberField;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextField;
+import com.vaadin.flow.component.textfield.IntegerNumberField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
@@ -134,14 +135,13 @@ public class TextFieldView extends DemoView {
 
         NumberField euroField = new NumberField("Euros");
         euroField.setSuffixComponent(new Span("€"));
-
-        NumberField stepperField = new NumberField("Stepper");
-        stepperField.setValue(1d);
+        
+        IntegerNumberField stepperField = new IntegerNumberField("Stepper");
+        stepperField.setValue(1);
         stepperField.setMin(0);
         stepperField.setMax(10);
         stepperField.setHasControls(true);
-
-        euroField.setSuffixComponent(new Span("€"));
+        
         // end-source-example
 
         dollarField.setId("dollar-field");
