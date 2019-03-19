@@ -24,6 +24,7 @@ import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Integration tests for changing the ValueChangeMode of TextField, TextArea and
@@ -125,8 +126,8 @@ public class ValueChangeModeIT extends AbstractComponentIT {
                     "The value change event should not be sent until timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
         }
 
-        Thread.sleep(200);
-        assertMessageUpdated("The value change event should be sent when timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
+        waitUntilMessageUpdated(200,
+                "The value change event should be sent when timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
 
         clickButton(componentName + "-timeout");
         field.sendKeys("a");
@@ -137,8 +138,9 @@ public class ValueChangeModeIT extends AbstractComponentIT {
         Thread.sleep(800);
         assertMessageNotUpdated(
                 "The value change event should not be sent until timeout elapsed since last event when using ValueChangeMode.TIMEOUT");
-        Thread.sleep(200);
-        assertMessageUpdated("The value change event should be sent when timeout elapsed  since last event when using ValueChangeMode.TIMEOUT");
+
+        waitUntilMessageUpdated(200,
+                "The value change event should be sent when timeout elapsed since last event when using ValueChangeMode.TIMEOUT");
     }
 
     private void clickButton(String buttonId) {
@@ -158,5 +160,11 @@ public class ValueChangeModeIT extends AbstractComponentIT {
         boolean isUpdated = !message.getText().equals(lastMessageText);
         lastMessageText = messageText;
         return isUpdated;
+    }
+
+    private void waitUntilMessageUpdated(long timeout, String failMessage) {
+        new WebDriverWait(getDriver(), timeout)
+                .withMessage(failMessage)
+                .until(webDriver -> isMessageUpdated());
     }
 }
