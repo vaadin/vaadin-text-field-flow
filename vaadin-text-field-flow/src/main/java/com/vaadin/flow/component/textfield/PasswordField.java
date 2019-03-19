@@ -158,7 +158,7 @@ public class PasswordField
     }
 
     private void applyChangeTimeout() {
-        ValueChangeMode.applyChangeTimeout(currentMode, valueChangeTimeout,
+        ValueChangeMode.applyChangeTimeout(getValueChangeMode(), getValueChangeTimeout(),
                 getSynchronizationRegistration());
     }
 

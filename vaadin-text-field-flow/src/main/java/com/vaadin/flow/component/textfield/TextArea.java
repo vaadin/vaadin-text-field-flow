@@ -175,7 +175,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     }
 
     private void applyChangeTimeout() {
-        ValueChangeMode.applyChangeTimeout(currentMode, valueChangeTimeout,
+        ValueChangeMode.applyChangeTimeout(getValueChangeMode(), getValueChangeTimeout(),
                 getSynchronizationRegistration());
     }
 

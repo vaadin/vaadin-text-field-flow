@@ -175,7 +175,7 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
     }
 
     private void applyChangeTimeout() {
-        ValueChangeMode.applyChangeTimeout(currentMode, valueChangeTimeout,
+        ValueChangeMode.applyChangeTimeout(getValueChangeMode(), getValueChangeTimeout(),
                 getSynchronizationRegistration());
     }
 
