@@ -18,9 +18,8 @@ package com.vaadin.flow.component.textfield.demo;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Input;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -31,31 +30,9 @@ import static com.vaadin.flow.component.textfield.TextFieldVariant.LUMO_SMALL;
 public class ValueChangeModeButtonProvider {
     private final HasValueChangeMode elementWithChangeMode;
 
-    public static String getRadioId(ValueChangeMode mode, String prefix) {
-        return prefix + "-" + mode.name();
-    }
-
     ValueChangeModeButtonProvider(
             HasValueChangeMode elementWithChangeMode) {
         this.elementWithChangeMode = elementWithChangeMode;
-    }
-
-    private Div addRadio(ValueChangeMode changeMode) {
-        Input radioBtn = new Input();
-        radioBtn.setType("radio");
-        String simpleName = elementWithChangeMode.getClass().getSimpleName();
-        radioBtn.setId(getRadioId(changeMode, simpleName));
-        radioBtn.getElement().setAttribute("name", simpleName + "-change-mode");
-        if (elementWithChangeMode.getValueChangeMode() == changeMode) {
-            radioBtn.getElement().setAttribute("checked", "on");
-        }
-
-        Label label = new Label(changeMode.name());
-        label.setFor(radioBtn);
-
-        radioBtn.getElement().addEventListener("change",
-                event -> elementWithChangeMode.setValueChangeMode(changeMode));
-        return new Div(radioBtn, label);
     }
 
     private Component getTimeoutInput() {
@@ -68,8 +45,6 @@ public class ValueChangeModeButtonProvider {
         field.addThemeVariants(LUMO_ALIGN_RIGHT, LUMO_SMALL);
         field.setValue(elementWithChangeMode.getValueChangeTimeout() + "");
         field.addValueChangeListener(this::onTimeoutChange);
-        field.getStyle().set("vertical-align", "bottom");
-        field.getStyle().set("padding-left", "50px");
         return field;
     }
 
@@ -83,14 +58,12 @@ public class ValueChangeModeButtonProvider {
 
     Component getValueChangeModeRadios() {
         Div container = new Div();
-        Div radios = new Div();
-        for (ValueChangeMode changeMode : ValueChangeMode.values()) {
-            Div radioLine = addRadio(changeMode);
-            radios.add(radioLine);
-        }
-        radios.getStyle().set("display", "inline-block");
-        container.add(radios, getTimeoutInput());
-
+        RadioButtonGroup<ValueChangeMode> group = new RadioButtonGroup<>();
+        group.setItems(ValueChangeMode.values());
+        group.setValue(elementWithChangeMode.getValueChangeMode());
+        group.addValueChangeListener(
+                event -> elementWithChangeMode.setValueChangeMode(event.getValue()));
+        container.add(group, getTimeoutInput());
         return container;
     }
 
