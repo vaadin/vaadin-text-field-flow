@@ -118,7 +118,7 @@ public class TextAreaView extends DemoView {
 
         addCard("Basic text area", textArea,
                 new ValueChangeModeButtonProvider(textArea)
-                        .getToggleValueSyncButton(),
+                        .getValueChangeModeRadios(),
                 message);
     }
 

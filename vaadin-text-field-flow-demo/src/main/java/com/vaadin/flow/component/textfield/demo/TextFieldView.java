@@ -108,7 +108,7 @@ public class TextFieldView extends DemoView {
 
         addCard("Basic text field", textField,
                 new ValueChangeModeButtonProvider(textField)
-                        .getToggleValueSyncButton(),
+                        .getValueChangeModeRadios(),
                 message);
     }
 

@@ -90,7 +90,7 @@ public class AllTextFieldView extends DemoView {
 
         addCard("Basic text field", textField,
                 new ValueChangeModeButtonProvider(textField)
-                        .getToggleValueSyncButton(),
+                        .getValueChangeModeRadios(),
                 message);
     }
 
@@ -203,7 +203,7 @@ public class AllTextFieldView extends DemoView {
 
         addCard("Basic password field", button, passwordField,
                 new ValueChangeModeButtonProvider(passwordField)
-                        .getToggleValueSyncButton(),
+                        .getValueChangeModeRadios(),
                 message);
     }
 
@@ -288,7 +288,7 @@ public class AllTextFieldView extends DemoView {
 
         addCard("Basic text area", textArea,
                 new ValueChangeModeButtonProvider(textArea)
-                        .getToggleValueSyncButton(),
+                        .getValueChangeModeRadios(),
                 message);
     }
 
