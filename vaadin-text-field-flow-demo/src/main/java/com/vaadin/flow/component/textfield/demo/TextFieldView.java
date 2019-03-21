@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.component.textfield.demo;
 
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Span;
@@ -45,9 +47,21 @@ public class TextFieldView extends DemoView {
         addDisabledField();
         addEmailFieldFields();
         addVariantsFeature();
+        addFocusShortcut();
     }
 
-    private void addVariantsFeature() {
+    private void addFocusShortcut() {
+    	// begin-source-example
+        // source-example-heading: Focus shortcut usage
+        TextField textField = new TextField();
+        textField.setLabel("Press ALT + 1 to focus");
+        textField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
+        // end-source-example
+     
+        this.addCard("Focus shortcut usage", textField);
+	}
+
+	private void addVariantsFeature() {
         // begin-source-example
         // source-example-heading: Theme variants usage
         TextField textField = new TextField();
