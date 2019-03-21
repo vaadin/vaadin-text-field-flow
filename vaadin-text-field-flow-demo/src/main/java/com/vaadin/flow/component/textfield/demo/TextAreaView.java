@@ -20,7 +20,6 @@ import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.GeneratedVaadinTextArea;
-import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextAreaVariant;
 import com.vaadin.flow.demo.DemoView;

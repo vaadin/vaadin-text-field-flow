@@ -327,10 +327,9 @@ public class AllTextFieldView extends DemoView {
         // end-source-example
         
         Div container = new Div(textField, passwordField, textArea);
-        container.getChildren().forEach(child -> {
-            child.getElement().getStyle().set("margin",
-                    "var(--lumo-space-s,8)");
-        });
+        container.getChildren().forEach(child -> 
+            child.getElement().getStyle().set("margin","var(--lumo-space-s,8)")
+        );
      
         this.addCard("Focus shortcut usage", container);
 	}
