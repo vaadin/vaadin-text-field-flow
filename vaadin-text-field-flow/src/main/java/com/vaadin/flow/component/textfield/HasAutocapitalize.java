@@ -37,7 +37,7 @@ public interface HasAutocapitalize extends HasElement {
      * "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/autocapitalize">
      * This attribute doesn't affect behavior when typing on a physical keyboard. Instead,
      * it affects the behavior of other input mechanisms, such as virtual keyboards on
-     * mobile devices and voice input. And it is only supported by Chrome and Safari</a>.
+     * mobile devices and voice input. It is only supported by Chrome and Safari</a>.
      *
      * @param autocapitalize
      *            the {@code autocapitalize} value, or {@code null} to unset
