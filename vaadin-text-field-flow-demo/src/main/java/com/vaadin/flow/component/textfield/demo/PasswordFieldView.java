@@ -42,17 +42,17 @@ public class PasswordFieldView extends DemoView {
         addVariantsFeature();
         addFocusShortcut();
     }
-    
+
     private void addFocusShortcut() {
-    	// begin-source-example
+        // begin-source-example
         // source-example-heading: Focus shortcut usage
-    	PasswordField passwordField = new PasswordField();
-    	passwordField.setLabel("Press ALT + 1 to focus");
-    	passwordField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
+        PasswordField passwordField = new PasswordField();
+        passwordField.setLabel("Press ALT + 1 to focus");
+        passwordField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
         // end-source-example
-     
+
         this.addCard("Focus shortcut usage", passwordField);
-	}
+    }
 
     private void addVariantsFeature() {
         // begin-source-example
