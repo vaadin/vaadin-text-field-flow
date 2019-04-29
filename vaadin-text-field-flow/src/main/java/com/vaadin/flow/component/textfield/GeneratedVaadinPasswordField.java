@@ -20,6 +20,7 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.function.SerializableBiFunction;
 
@@ -86,6 +87,7 @@ import com.vaadin.flow.function.SerializableBiFunction;
         "Flow#1.3-SNAPSHOT" })
 @Tag("vaadin-password-field")
 @HtmlImport("frontend://bower_components/vaadin-text-field/src/vaadin-password-field.html")
+@NpmPackage(value = "@vaadin/vaadin-text-field", version = "2.3.7")
 @JsModule("@vaadin/vaadin-text-field/src/vaadin-password-field.js")
 public abstract class GeneratedVaadinPasswordField<R extends GeneratedVaadinPasswordField<R, T>, T>
         extends GeneratedVaadinTextField<R, T> implements HasStyle {
