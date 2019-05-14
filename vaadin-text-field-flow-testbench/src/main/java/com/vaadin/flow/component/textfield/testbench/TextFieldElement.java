@@ -35,34 +35,15 @@ public class TextFieldElement extends TestBenchElement
     @Override
     public void setValue(String string) {
         HasStringValueProperty.super.setValue(string);
-        EventsUtil.dispatchEvent(this, "change",
+        dispatchCustomEvent("change",
                 Collections.singletonMap("bubbles", true));
         dispatchEvent("blur");
     }
 
-    private static class EventsUtil {
-
-        private EventsUtil() {
-            // Util methods only
-        }
-
-       /**
-        * Dispatches (fires) a custom event of the given type on the element with
-        * the given properties
-        *
-        * @param element
-        *            element that will dispatch the event
-        * @param eventType
-        *            the type of custom event to dispatch
-        * @param customEventInit
-        *            map with properties and values that will be used to initialize
-        *            the event
-        */
-        private static void dispatchEvent(TestBenchElement element, String eventType,
-                Map<String, Object> customEventInit) {
-            element.executeScript(
+    private void dispatchCustomEvent(String eventType,
+                                            Map<String, Object> customEventInit) {
+        executeScript(
                 "arguments[0].dispatchEvent(new CustomEvent(arguments[1], arguments[2]));",
-                element, eventType, customEventInit);
-        }
+                this, eventType, customEventInit);
     }
 }
