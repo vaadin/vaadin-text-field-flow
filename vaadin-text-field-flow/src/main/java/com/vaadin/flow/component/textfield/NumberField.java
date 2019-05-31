@@ -35,14 +35,6 @@ public class NumberField
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
         HasAutocomplete, HasAutocapitalize, HasAutocorrect {
-    
-    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
-            || valueFromClient.isEmpty() ? null
-                    : Double.parseDouble(valueFromClient);
-
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toString();
 
     private ValueChangeMode currentMode;
 
@@ -54,7 +46,7 @@ public class NumberField
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(null, null, String.class, PARSER, FORMATTER);
+        super(null, null, true);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
     }
 
