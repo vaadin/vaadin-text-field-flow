@@ -455,7 +455,7 @@ public class TextFieldView extends DemoView {
         rightTextField.setId("text-field-right-id");
         div.add(leftTextField, new Text(" "), centerTextField, new Text(" "),
                 rightTextField);
-        addCard("Theme Variant", "Text align", div);
+        addCard("Theme Variants", "Text align", div);
     }
 
     private void themeVariantsSmallSize() {
