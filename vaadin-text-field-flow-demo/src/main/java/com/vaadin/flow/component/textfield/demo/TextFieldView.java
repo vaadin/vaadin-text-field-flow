@@ -119,6 +119,7 @@ public class TextFieldView extends DemoView {
         // source-example-heading: Text field with clear button
         TextField textField = new TextField();
         textField.setLabel("Text field label");
+        textField.setValue("Text field value");
         textField.setPlaceholder("placeholder text");
         NativeButton clearButton = new NativeButton("Toggle clear button", event -> {
             textField.setClearButtonVisible(
