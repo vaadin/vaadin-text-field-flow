@@ -16,14 +16,12 @@
 
 package com.vaadin.flow.component.textfield;
 
-import com.vaadin.flow.component.CompositionNotifier;
-import com.vaadin.flow.component.HasSize;
-import com.vaadin.flow.component.HasValidation;
-import com.vaadin.flow.component.InputNotifier;
-import com.vaadin.flow.component.KeyNotifier;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
+
+import java.util.regex.Pattern;
 
 /**
  * Server-side component for the {@code vaadin-email-field} element.
@@ -35,11 +33,15 @@ public class EmailField
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
         HasAutocomplete, HasAutocapitalize, HasAutocorrect {
+    private static final String EMAIL_PATTERN = "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$";
+
     private ValueChangeMode currentMode;
 
     private boolean isConnectorAttached;
 
     private int valueChangeTimeout = DEFAULT_CHANGE_TIMEOUT;
+
+    private TextFieldValidationSupport validationSupport;
 
     /**
      * Constructs an empty {@code EmailField}.
@@ -126,6 +128,14 @@ public class EmailField
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
+    }
+
+    private TextFieldValidationSupport getValidationSupport() {
+        if (validationSupport == null) {
+            validationSupport = new TextFieldValidationSupport(this);
+            validationSupport.setPattern(EMAIL_PATTERN);
+        }
+        return validationSupport;
     }
 
     /**
@@ -233,6 +243,7 @@ public class EmailField
      */
     public void setMaxLength(int maxLength) {
         super.setMaxlength(maxLength);
+        getValidationSupport().setMaxLength(maxLength);
     }
 
     /**
@@ -254,6 +265,7 @@ public class EmailField
      */
     public void setMinLength(int minLength) {
         super.setMinlength(minLength);
+        getValidationSupport().setMinLength(minLength);
     }
 
     /**
@@ -284,6 +296,7 @@ public class EmailField
     @Override
     public void setPattern(String pattern) {
         super.setPattern(pattern);
+        getValidationSupport().setPattern(pattern);
     }
 
     /**
@@ -390,6 +403,14 @@ public class EmailField
     }
 
     @Override
+    protected void setModelValue(String newModelValue, boolean fromClient) {
+        if (getValidationSupport().isInvalid(newModelValue)) {
+            setInvalid(true);
+        }
+        super.setModelValue(newModelValue, fromClient);
+    }
+
+    @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
         if (!isConnectorAttached) {
@@ -398,5 +419,6 @@ public class EmailField
         }
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
+        getValidationSupport().setRequired(requiredIndicatorVisible);
     }
 }
