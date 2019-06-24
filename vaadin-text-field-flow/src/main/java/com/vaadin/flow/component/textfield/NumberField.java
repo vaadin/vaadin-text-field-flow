@@ -25,6 +25,8 @@ import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
+import java.util.Objects;
+
 /**
  * Server-side component for the {@code vaadin-number-field} element.
  *
@@ -49,6 +51,10 @@ public class NumberField
     private boolean isConnectorAttached;
 
     private int valueChangeTimeout = DEFAULT_CHANGE_TIMEOUT;
+
+    private Double max;
+    private Double min;
+    private boolean required;
 
     /**
      * Constructs an empty {@code NumberField}.
@@ -186,6 +192,23 @@ public class NumberField
         return isInvalidBoolean();
     }
 
+    /**
+     * Performs a server-side validation of the given value. This is needed because it is possible to circumvent the
+     * client side validation constraints using browser development tools.
+     */
+    private boolean isInvalid(Double value) {
+        if (required && Objects.equals(getEmptyValue(), value)) {
+            return true;
+        }
+        if (value != null && max != null && value > max) {
+            return true;
+        }
+        if (value != null && min != null && value < min) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void setInvalid(boolean invalid) {
         super.setInvalid(invalid);
@@ -208,6 +231,7 @@ public class NumberField
     @Override
     public void setMax(double max) {
         super.setMax(max);
+        this.max = max;
     }
 
     /**
@@ -222,6 +246,7 @@ public class NumberField
     @Override
     public void setMin(double min) {
         super.setMin(min);
+        this.min = min;
     }
 
     /**
@@ -454,6 +479,14 @@ public class NumberField
     }
 
     @Override
+    protected void setModelValue(Double newModelValue, boolean fromClient) {
+        if (isInvalid(newModelValue)) {
+            setInvalid(true);
+        }
+        super.setModelValue(newModelValue, fromClient);
+    }
+
+    @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
         if (!isConnectorAttached) {
@@ -462,5 +495,6 @@ public class NumberField
         }
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
+        this.required = requiredIndicatorVisible;
     }
 }

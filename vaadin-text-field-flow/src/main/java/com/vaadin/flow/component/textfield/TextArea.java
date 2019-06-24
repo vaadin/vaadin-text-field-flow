@@ -39,6 +39,8 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
 
     private int valueChangeTimeout = DEFAULT_CHANGE_TIMEOUT;
 
+    private TextFieldValidationSupport validationSupport;
+
     /**
      * Constructs an empty {@code TextArea}.
      */
@@ -143,6 +145,13 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
+    }
+
+    private TextFieldValidationSupport getValidationSupport() {
+        if (validationSupport == null) {
+            validationSupport = new TextFieldValidationSupport(this);
+        }
+        return validationSupport;
     }
 
     /**
@@ -298,6 +307,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      */
     public void setMaxLength(int maxLength) {
         super.setMaxlength(maxLength);
+        getValidationSupport().setMaxLength(maxLength);
     }
 
     /**
@@ -319,6 +329,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      */
     public void setMinLength(int minLength) {
         super.setMinlength(minLength);
+        getValidationSupport().setMinLength(minLength);
     }
 
     /**
@@ -343,6 +354,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     @Override
     public void setRequired(boolean required) {
         super.setRequired(required);
+        getValidationSupport().setRequired(required);
     }
 
     /**
@@ -393,6 +405,14 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     }
 
     @Override
+    protected void setModelValue(String newModelValue, boolean fromClient) {
+        if (getValidationSupport().isInvalid(newModelValue)) {
+            setInvalid(true);
+        }
+        super.setModelValue(newModelValue, fromClient);
+    }
+
+    @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
         if (!isConnectorAttached) {
@@ -401,5 +421,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         }
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
+        getValidationSupport().setRequired(requiredIndicatorVisible);
     }
 }
