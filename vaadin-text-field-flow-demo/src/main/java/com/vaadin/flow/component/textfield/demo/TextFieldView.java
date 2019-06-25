@@ -118,8 +118,10 @@ public class TextFieldView extends DemoView {
         // begin-source-example
         // source-example-heading: Text field with clear button
         TextField textField = new TextField();
+        textField.setClearButtonVisible(true);
         textField.setLabel("Text field label");
-        textField.setPlaceholder("placeholder text");
+        textField.setPlaceholder("Enter some text");
+        textField.setValue("Clearable text");
         NativeButton clearButton = new NativeButton("Toggle clear button", event -> {
             textField.setClearButtonVisible(
                     !textField.isClearButtonVisible());
