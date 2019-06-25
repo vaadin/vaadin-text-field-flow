@@ -76,7 +76,6 @@ public class TextFieldView extends DemoView {
     }
 
     private void textFiledBasic() {
-
         Div div = new Div();
 
         // begin-source-example
@@ -93,7 +92,7 @@ public class TextFieldView extends DemoView {
 
         labelField.setId("text-field-label-id");
         placeholderField.setId("text-field-placeholder-id");
-        valueField.setId("text-field-value-id");
+        valueField.setId("text-field-value");
         div.add(labelField, new Text(" "), placeholderField, new Text(" "),
                 valueField);
         addCard("Text field", "Basic text field", div);
@@ -154,7 +153,7 @@ public class TextFieldView extends DemoView {
         textField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
         // end-source-example
 
-        textField.setId("shortcut-field-id");
+        textField.setId("shortcut-field");
         this.addCard("Text field", "Focus shortcut usage", textField);
     }
 
@@ -293,8 +292,8 @@ public class TextFieldView extends DemoView {
         euroField.setSuffixComponent(new Span("€"));
         // end-source-example
 
-        dollarField.setId("dollar-field-id");
-        euroField.setId("euro-field-id");
+        dollarField.setId("dollar-field");
+        euroField.setId("euro-field");
         div.add(dollarField, new Text(" "), euroField);
         addCard("Prefix and suffix", "Currency field", div);
     }
@@ -465,7 +464,7 @@ public class TextFieldView extends DemoView {
         textField.setPlaceholder("Text field");
         textField.getElement().setAttribute("theme", "small");
         // end-source-example
-        addCard("Theme Variant", "Small size", textField);
+        addCard("Theme Variants", "Small size", textField);
     }
 
     private void styling() {

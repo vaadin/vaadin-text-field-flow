@@ -19,6 +19,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.router.Route;
 
 /**
@@ -65,21 +66,55 @@ public class TextFieldPage extends Div {
         valueChange.setId("get-value");
         add(valueChangeSource, valueChange);
 
-       TextField textFieldClear = new TextField();
-       textFieldClear.setId("clear-text-field");
-       textFieldClear.getStyle().set("display", "block");
-       textFieldClear.setClearButtonVisible(true);
-       Div clearValueMessage = new Div();
-       clearValueMessage.setId("clear-message");
-       textFieldClear.addValueChangeListener(event -> clearValueMessage
-               .setText(String.format("Old value: '%s'. New value: '%s'.",
-                       event.getOldValue(), event.getValue())));
-       add(textFieldClear, clearValueMessage);
+        TextField textFieldClear = new TextField();
+        textFieldClear.setId("clear-text-field");
+        textFieldClear.getStyle().set("display", "block");
+        textFieldClear.setClearButtonVisible(true);
+        Div clearValueMessage = new Div();
+        clearValueMessage.setId("clear-message");
+        textFieldClear.addValueChangeListener(event -> clearValueMessage
+                .setText(String.format("Old value: '%s'. New value: '%s'.",
+                        event.getOldValue(), event.getValue())));
+        add(textFieldClear, clearValueMessage);
+        addDisabledField();
+        addBasicFeatures();
     }
 
     private void handleTextFieldValue(TextField field) {
         Label label = new Label(field.getValue());
         label.addClassName("text-field-value");
         add(label);
+    }
+
+    private void addDisabledField() {
+        TextField textField = new TextField();
+        textField.setLabel("Text field label");
+        textField.setPlaceholder("placeholder text");
+        textField.setEnabled(false);
+        textField.setId("disabled-text-field");
+        Div message = new Div();
+        message.setId("disabled-text-field-message");
+        textField.addValueChangeListener(
+                change -> message.setText("Value changed"));
+        add(textField, message);
+    }
+
+    private void addBasicFeatures() {
+        Div message = new Div();
+
+        TextField textField = new TextField();
+        textField.setLabel("Text field label");
+        textField.setPlaceholder("placeholder text");
+        textField.addValueChangeListener(event -> message.setText(
+                String.format("Text field value changed from '%s' to '%s'",
+                        event.getOldValue(), event.getValue())));
+
+        textField.setId("text-field-with-value-change-listener");
+        message.setId("text-field-value");
+
+        add(textField,
+                new ValueChangeModeButtonProvider(textField)
+                        .getValueChangeModeRadios(),
+                message);
     }
 }
