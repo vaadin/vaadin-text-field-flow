@@ -463,7 +463,7 @@ public class TextFieldView extends DemoView {
         // source-example-heading: Small size
         TextField textField = new TextField("Label");
         textField.setPlaceholder("Text field");
-        textField.getElement().setAttribute("theme", "small");
+        textField.addThemeVariants(TextFieldVariant.LUMO_SMALL);
         // end-source-example
         addCard("Theme Variants", "Small size", textField);
     }
@@ -473,8 +473,8 @@ public class TextFieldView extends DemoView {
         Div firstDiv = new Div();
         firstDiv.setText(
                 "To read about styling you can read the related tutorial in");
-        Anchor firstAnchor = new Anchor(
-                "https://vaadin.com/docs/flow/theme/using-component-themes.html",
+        Anchor firstAnchor = new Anchor("https://vaadin.com/components/" +
+                "vaadin-text-field/html-examples/text-field-styling-demos",
                 "Using Component Themes");
 
         Div secondDiv = new Div();
