@@ -20,7 +20,6 @@ import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.router.Route;
 
 /**
@@ -65,27 +64,22 @@ public class PasswordFieldPage extends Div {
                 .setText(String.format("Old value: '%s'. New value: '%s'.",
                         event.getOldValue(), event.getValue())));
         add(passwordFieldClear, clearValueMessage);
-        addPasswordDisabledField();
-        addBasicField();
         addFocusShortcut();
+        addBasicField();
+        addDisabledField();
     }
 
-    private void addPasswordDisabledField() {
+    private void addFocusShortcut() {
         PasswordField passwordField = new PasswordField();
-        passwordField.setLabel("Password field label");
-        passwordField.setPlaceholder("placeholder text");
-        passwordField.setEnabled(false);
-
-        passwordField.setId("disabled-password-field");
-        Div message = new Div();
-        message.setId("disabled-password-field-message");
-        passwordField.addValueChangeListener(
-                change -> message.setText("password changed"));
-        add(passwordField, message);
+        passwordField.setLabel("Press ALT + 1 to focus");
+        passwordField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
+        passwordField.setId("shortcut-field");
+        add(passwordField);
     }
 
     private void addBasicField() {
         Div message = new Div();
+
         PasswordField passwordField = new PasswordField();
         passwordField.setLabel("Password field label");
         passwordField.setPlaceholder("placeholder text");
@@ -107,11 +101,17 @@ public class PasswordFieldPage extends Div {
                 message);
     }
 
-    private void addFocusShortcut() {
+    private void addDisabledField() {
         PasswordField passwordField = new PasswordField();
-        passwordField.setLabel("Press ALT + 1 to focus");
-        passwordField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
-        passwordField.setId("shortcut-field");
-        add(passwordField);
+        passwordField.setLabel("Password field label");
+        passwordField.setPlaceholder("placeholder text");
+        passwordField.setEnabled(false);
+        passwordField.setId("disabled-password-field");
+        Div message = new Div();
+        message.setId("disabled-password-field-message");
+        passwordField.addValueChangeListener(
+                change -> message.setText("password changed"));
+
+        add(passwordField, message);
     }
 }

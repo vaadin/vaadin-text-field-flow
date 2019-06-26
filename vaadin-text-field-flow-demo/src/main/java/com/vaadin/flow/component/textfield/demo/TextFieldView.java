@@ -30,6 +30,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.component.textfield.demo.entity.Person;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationResult;
@@ -48,8 +49,8 @@ public class TextFieldView extends DemoView {
 
     @Override
     public void initView() {
-        textFiledBasic(); // TextField
-        textFiledDisabledReadonly();
+        textFieldBasic(); // TextField
+        textFieldDisabledReadonly();
         textFieldAutoselect();
         textFieldClearButton();
         textFieldFocusShortcut();
@@ -75,7 +76,7 @@ public class TextFieldView extends DemoView {
         styling(); // Styling
     }
 
-    private void textFiledBasic() {
+    private void textFieldBasic() {
         Div div = new Div();
 
         // begin-source-example
@@ -98,7 +99,7 @@ public class TextFieldView extends DemoView {
         addCard("Text field", "Basic text field", div);
     }
 
-    private void textFiledDisabledReadonly() {
+    private void textFieldDisabledReadonly() {
         Div div = new Div();
 
         // begin-source-example
@@ -442,11 +443,11 @@ public class TextFieldView extends DemoView {
 
         TextField centerTextField = new TextField();
         centerTextField.setValue("center");
-        centerTextField.getElement().setAttribute("theme", "align-center");
+        centerTextField.addThemeVariants(TextFieldVariant.LUMO_ALIGN_CENTER);
 
         TextField rightTextField = new TextField();
         rightTextField.setValue("right");
-        rightTextField.getElement().setAttribute("theme", "align-right");
+        rightTextField.addThemeVariants(TextFieldVariant.LUMO_ALIGN_RIGHT);
         // end-source-example
 
         leftTextField.setId("text-field-left-id");
@@ -473,7 +474,7 @@ public class TextFieldView extends DemoView {
         firstDiv.setText(
                 "To read about styling you can read the related tutorial in");
         Anchor firstAnchor = new Anchor(
-                "https://vaadin.com/docs/v13/flow/theme/using-component-themes.html",
+                "https://vaadin.com/docs/flow/theme/using-component-themes.html",
                 "Using Component Themes");
 
         Div secondDiv = new Div();
@@ -494,3 +495,4 @@ public class TextFieldView extends DemoView {
                 secondHorizontalLayout);
     }
 }
+

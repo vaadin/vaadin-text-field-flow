@@ -135,4 +135,19 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         Assert.assertEquals("Old value: 'null'. New value: '123.0'.", message);
     }
 
+    @Test
+    public void euroFieldHasEuroSuffix() {
+        WebElement euroField = findElement(By.id("euro-field"));
+        WebElement span = euroField.findElement(By.tagName("span"));
+
+        Assert.assertEquals("€", span.getText());
+
+        int spanX = span.getLocation().getX();
+        int middleX = euroField.getLocation().getX()
+                + euroField.getSize().getWidth() / 2;
+
+        Assert.assertTrue(
+                "The euro sign should be located on the right side of the text field",
+                spanX > middleX);
+    }
 }

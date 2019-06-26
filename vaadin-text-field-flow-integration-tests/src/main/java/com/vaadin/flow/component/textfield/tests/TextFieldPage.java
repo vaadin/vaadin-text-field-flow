@@ -15,11 +15,12 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.demo.ValueChangeModeButtonProvider;
 import com.vaadin.flow.router.Route;
 
 /**
@@ -78,6 +79,7 @@ public class TextFieldPage extends Div {
         add(textFieldClear, clearValueMessage);
         addDisabledField();
         addBasicFeatures();
+        addFocusShortcut();
     }
 
     private void handleTextFieldValue(TextField field) {
@@ -116,5 +118,13 @@ public class TextFieldPage extends Div {
                 new ValueChangeModeButtonProvider(textField)
                         .getValueChangeModeRadios(),
                 message);
+    }
+
+    private void addFocusShortcut() {
+        TextField textField = new TextField();
+        textField.setLabel("Press ALT + 1 to focus");
+        textField.addFocusShortcut(Key.DIGIT_1, KeyModifier.ALT);
+        textField.setId("shortcut-field");
+        add(textField);
     }
 }

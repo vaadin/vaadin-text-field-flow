@@ -128,6 +128,25 @@ public class TextFieldPageIT extends AbstractComponentIT {
         updateValues(textFieldValueDiv, textField, false);
     }
 
+    @Test
+    public void textFieldHasPlaceholder() {
+        WebElement textField = findElement(By.id("text-field-with-value-change-listener"));
+        Assert.assertEquals(textField.getAttribute("placeholder"),
+                "placeholder text");
+    }
+
+    @Test
+    public void assertFocusShortcut() {
+        WebElement shortcutField = findElement(By.id("shortcut-field"));
+        Assert.assertNull("TextField should not be focused before the shortcut event is triggered.",
+                shortcutField.getAttribute("focused"));
+
+        SendKeysHelper.sendKeys(driver, Keys.ALT, "1");
+        Assert.assertTrue("TextField should be focused after the shortcut event is triggered.",
+                shortcutField.getAttribute("focused").equals("true")
+                        || shortcutField.getAttribute("focused").equals(""));
+    }
+
     private void updateValues(WebElement textFieldValueDiv,
                               WebElement textField, boolean toggleBlur) {
         textField.sendKeys("a");
