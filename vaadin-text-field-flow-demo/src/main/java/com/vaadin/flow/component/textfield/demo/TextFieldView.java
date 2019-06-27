@@ -473,14 +473,14 @@ public class TextFieldView extends DemoView {
         Div firstDiv = new Div();
         firstDiv.setText(
                 "To read about styling you can read the related tutorial in");
-        Anchor firstAnchor = new Anchor("https://vaadin.com/components/" +
-                "vaadin-text-field/html-examples/text-field-styling-demos",
+        Anchor firstAnchor = new Anchor("https://vaadin.com/docs/flow/theme/using-component-themes.html",
                 "Using Component Themes");
 
         Div secondDiv = new Div();
         secondDiv.setText("To know about styling in html you can read the ");
         Anchor secondAnchor = new Anchor(
-                "https://vaadin.com/components/vaadin-password-field/html-examples/text-field-styling-demos",
+                "https://vaadin.com/components/" +
+                        "vaadin-text-field/html-examples/text-field-styling-demos",
                 "HTML Styling Demos");
 
         HorizontalLayout firstHorizontalLayout = new HorizontalLayout(firstDiv,
