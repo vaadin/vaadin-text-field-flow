@@ -11,7 +11,7 @@ import org.openqa.selenium.Keys;
 public class TextFieldRequiredWithCustomValidationIT extends AbstractComponentIT {
 
     @Test
-    public void requiredAndCustomValidationOnServerSide_initialStateIsInvalid_chaningToValidValueResetsInvalidFlag() {
+    public void requiredAndCustomValidationOnServerSide_initialStateIsInvalid_changingToValidValueResetsInvalidFlag() {
         open();
 
         TestBenchElement textField = $("vaadin-text-field").first();
