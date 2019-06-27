@@ -66,10 +66,8 @@ public class TextFieldView extends DemoView {
         textAreaMinHeight();
         prefixAndSuffix(); // Prefix and suffix
         prefixAndSuffixSearch();
-        validationRequired(); // Validation
-        validationMinMaxLength();
+        validationMinMaxLength(); // Validation
         validationPattern();
-        validationPreventInvalidInput();
         validationSynchronousCustom();
         themeVariantsTextAlign(); // Theme Variants
         themeVariantsSmallSize();
@@ -313,21 +311,6 @@ public class TextFieldView extends DemoView {
         addCard("Prefix and suffix", "Search field", textField);
     }
 
-    private void validationRequired() {
-        Person person = new Person();
-        // begin-source-example
-        // source-example-heading: Required
-        Binder<Person> binder = new Binder<>();
-        TextField textField = new TextField("Name");
-        binder.forField(textField).asRequired("Please enter your name")
-                .bind(Person::getName, Person::setName);
-        binder.setBean(person);
-        // end-source-example
-
-        textField.setId("text-field-required-id");
-        addCard("Validation", "Required", textField);
-    }
-
     private void validationMinMaxLength() {
         Person person = new Person();
         Binder<Person> binder = new Binder<>();
@@ -339,10 +322,13 @@ public class TextFieldView extends DemoView {
         binder.forField(minField)
                 .withValidator(min -> min.length() >= 2, "Minimum 2 characters")
                 .bind(Person::getName, Person::setName);
-        binder.setBean(person);
 
         TextField maxField = new TextField("Max 4 characters");
         maxField.setMaxLength(4);
+        binder.forField(maxField)
+                .withValidator(max -> max.length() <= 4, "Maximum 4 characters")
+                .bind(Person::getName, Person::setName);
+        binder.setBean(person);
         // end-source-example
 
         minField.setId("min-id");
@@ -371,32 +357,12 @@ public class TextFieldView extends DemoView {
         addCard("Validation", "Pattern", textField, div);
     }
 
-    private void validationPreventInvalidInput() {
-        Div div = new Div();
-        Person person = new Person();
-        Binder<Person> binder = new Binder<>();
-        // begin-source-example
-        // source-example-heading: Prevent invalid input
-        TextField textField = new TextField("Username");
-        binder.forField(textField)
-                .withValidator(new RegexpValidator("Not a valid user name",
-                        "[a-zA-Z0-9_.]{0,20}"))
-                .bind(Person::getUserName, Person::setUserName);
-        textField.setPreventInvalidInput(true);
-        binder.setBean(person);
-        // end-source-example
-        div.setText(
-                "Valid username: Alphanumeric characters, underscores and dots. For example: name.family");
-        textField.setId("text-field-invalid-input-id");
-        addCard("Validation", "Prevent invalid input", textField, div);
-    }
-
     private void validationSynchronousCustom() {
         Div div = new Div();
         Person person = new Person();
         Binder<Person> binder = new Binder<>();
         // begin-source-example
-        // source-example-heading: Synchronous custom validator
+        // source-example-heading: Custom validator
         TextField textField = new TextField("ID");
         binder.forField(textField)
                 .withValidator((Validator<String>) (value, context) -> {
@@ -431,7 +397,7 @@ public class TextFieldView extends DemoView {
         div.setText(
                 "Valid ID: Use a 10 digit number. The sum of digits must be divisible by 10. For example 1111111111.");
         textField.setId("text-field-synchronous-id");
-        addCard("Validation", "Synchronous custom validator", textField, div);
+        addCard("Validation", "Custom validator", textField, div);
     }
 
     private void themeVariantsTextAlign() {
