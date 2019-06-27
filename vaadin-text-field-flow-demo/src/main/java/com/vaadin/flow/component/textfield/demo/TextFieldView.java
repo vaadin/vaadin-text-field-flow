@@ -68,7 +68,7 @@ public class TextFieldView extends DemoView {
         prefixAndSuffixSearch();
         validationMinMaxLength(); // Validation
         validationPattern();
-        validationSynchronousCustom();
+        customValidation();
         themeVariantsTextAlign(); // Theme Variants
         themeVariantsSmallSize();
         styling(); // Styling
@@ -357,7 +357,7 @@ public class TextFieldView extends DemoView {
         addCard("Validation", "Pattern", textField, div);
     }
 
-    private void validationSynchronousCustom() {
+    private void customValidation() {
         Div div = new Div();
         Person person = new Person();
         Binder<Person> binder = new Binder<>();
