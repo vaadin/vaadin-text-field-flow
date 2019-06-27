@@ -11,7 +11,7 @@ import org.openqa.selenium.Keys;
 public class TextFieldRequiredWithCustomValidationIT extends AbstractComponentIT {
 
     @Test
-    public void requiredAndCustomValidationOnServerSide_initialStateIsInvalid_changingToValidValueResetsInvalidFlag() {
+    public void requiredAndCustomValidationOnServerSide_initialStateIsInvalid_changingToValidValueResetsInvalidFlag() throws Exception {
         open();
 
         TestBenchElement textField = $("vaadin-text-field").first();
@@ -24,6 +24,8 @@ public class TextFieldRequiredWithCustomValidationIT extends AbstractComponentIT
         }
         input.sendKeys("Valid");
         input.sendKeys(Keys.ENTER);
+
+        Thread.sleep(500); // Wait for the server to process the client event
 
         Assert.assertEquals(Boolean.FALSE.toString(), textField.getAttribute("invalid"));
     }
