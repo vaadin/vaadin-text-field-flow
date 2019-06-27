@@ -18,15 +18,17 @@ public class TextFieldRequiredWithCustomValidationIT extends AbstractComponentIT
         TestBenchElement input = textField.$("input").first();
 
         Assert.assertEquals(Boolean.TRUE.toString(), textField.getAttribute("invalid"));
+        Assert.assertEquals("invalid", textField.getAttribute("value"));
 
         while (!input.getAttribute("value").isEmpty()) {
             input.sendKeys(Keys.BACK_SPACE);
         }
+        Assert.assertEquals("", textField.getAttribute("value"));
+
         input.sendKeys("Valid");
         input.sendKeys(Keys.ENTER);
 
-        Thread.sleep(500); // Wait for the server to process the client event
-
+        Assert.assertEquals("Valid", textField.getAttribute("value"));
         Assert.assertEquals(Boolean.FALSE.toString(), textField.getAttribute("invalid"));
     }
 }
