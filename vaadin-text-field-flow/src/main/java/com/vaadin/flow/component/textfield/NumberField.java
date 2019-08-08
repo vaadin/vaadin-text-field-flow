@@ -62,6 +62,12 @@ public class NumberField
     public NumberField() {
         super(null, null, String.class, PARSER, FORMATTER);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        addInvalidChangeListener(e -> {
+            // If invalid is updated from client to false, check it
+            if(e.isFromClient() && !e.isInvalid()) {
+                setInvalid(isInvalid(getValue()));
+            }
+        });
     }
 
     /**
@@ -480,10 +486,8 @@ public class NumberField
 
     @Override
     protected void setModelValue(Double newModelValue, boolean fromClient) {
-        if (isInvalid(newModelValue)) {
-            setInvalid(true);
-        }
         super.setModelValue(newModelValue, fromClient);
+        setInvalid(isInvalid(newModelValue));
     }
 
     @Override
