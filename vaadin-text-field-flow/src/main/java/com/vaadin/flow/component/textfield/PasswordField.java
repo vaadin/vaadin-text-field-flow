@@ -49,6 +49,12 @@ public class PasswordField
     public PasswordField() {
         super("", "", false);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        addInvalidChangeListener(e -> {
+            // If invalid is updated from client to false, check it
+            if(e.isFromClient() && !e.isInvalid()) {
+                setInvalid(getValidationSupport().isInvalid(getValue()));
+            }
+        });
     }
 
     /**
@@ -442,10 +448,8 @@ public class PasswordField
 
     @Override
     protected void setModelValue(String newModelValue, boolean fromClient) {
-        if (getValidationSupport().isInvalid(newModelValue)) {
-            setInvalid(true);
-        }
         super.setModelValue(newModelValue, fromClient);
+        setInvalid(getValidationSupport().isInvalid(newModelValue));
     }
 
     @Override
