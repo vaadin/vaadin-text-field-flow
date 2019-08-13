@@ -19,6 +19,7 @@ import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyModifier;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 
 /**
@@ -46,6 +47,7 @@ public class TextAreaPage extends Div {
         addBasicFeatures();
         addMaxHeightFeature();
         addMinHeightFeature();
+        addInvalidCheck();
     }
 
     private void addFocusShortcut() {
@@ -104,4 +106,12 @@ public class TextAreaPage extends Div {
         textArea.setId("text-area-with-min-height");
         add(textArea, message);
     }
+
+    private void addInvalidCheck() {
+        final TextArea field = new TextArea();
+        field.setMaxLength(10);
+        field.setMinLength(5);
+        TextFieldTestPageUtil.addInvalidCheck(this, field);
+    }
+
 }

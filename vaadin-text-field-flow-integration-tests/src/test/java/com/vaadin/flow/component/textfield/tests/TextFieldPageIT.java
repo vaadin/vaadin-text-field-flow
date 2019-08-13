@@ -16,6 +16,8 @@
 package com.vaadin.flow.component.textfield.tests;
 
 import com.vaadin.flow.component.radiobutton.testbench.RadioButtonGroupElement;
+import com.vaadin.flow.component.textfield.testbench.NumberFieldElement;
+import com.vaadin.flow.component.textfield.testbench.TextFieldElement;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -101,6 +103,13 @@ public class TextFieldPageIT extends AbstractComponentIT {
 
         String value = findElement(By.id("clear-message")).getText();
         Assert.assertEquals("Old value: 'foo'. New value: ''.", value);
+    }
+
+    @Test
+    public void assertCantMakeInvalidValueValidThroughClientManipulation() {
+        ValidationTestHelper.testValidation(getCommandExecutor(),getContext(),$(
+            TextFieldElement.class)
+            .id("invalid-test-field"));
     }
 
     @Test

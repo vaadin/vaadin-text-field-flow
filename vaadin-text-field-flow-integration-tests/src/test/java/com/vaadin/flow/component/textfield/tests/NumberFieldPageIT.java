@@ -126,7 +126,6 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         Assert.assertEquals("Old value: 'null'. New value: '0.5'.", value);
     }
 
-
     @Test
     public void assertInvalidAfterClientChange() {
         final boolean valid = true;
