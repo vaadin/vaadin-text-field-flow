@@ -203,9 +203,10 @@ public class NumberField
      * client side validation constraints using browser development tools.
      */
     private boolean isInvalid(Double value) {
-        return (required && Objects.equals(getEmptyValue(), value))
-            || (value != null && max != null && value > max)
-            || (value != null && min != null && value < min);
+        final boolean isRequiredButEmpty = required && Objects.equals(getEmptyValue(), value);
+        final boolean isGreaterThanMax  = value != null && max != null && value > max;
+        final boolean isSmallerThenMin = (value != null && min != null && value < min);
+        return isRequiredButEmpty || isGreaterThanMax || isSmallerThenMin;
     }
 
     @Override

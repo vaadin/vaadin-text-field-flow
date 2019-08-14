@@ -62,13 +62,17 @@ final class TextFieldValidationSupport implements Serializable {
      * @return <code>true</code> if the value is invalid.
      */
     boolean isInvalid(String value) {
-        final boolean valueIsInvalid = value != null &&
-            (maxLength != null && value.length() > maxLength)
-            || (minLength != null && value.length() < minLength)
-            || (pattern != null && !pattern.matcher(value).matches());
-
-        return (required && Objects.equals(field.getEmptyValue(), value))
-            || valueIsInvalid;
+        final boolean isRequiredButEmpty =
+            required && Objects.equals(field.getEmptyValue(), value);
+        final boolean isMaxLengthExceeded =
+            value != null && maxLength != null && value.length() > maxLength;
+        final boolean isMinLengthNotReached =
+            value != null && minLength != null && value.length() < minLength;
+        // Only evaluate if necessary.
+        final BooleanSupplier doesValueViolatePattern = () -> value != null
+            && pattern != null && !pattern.matcher(value).matches();
+        return isRequiredButEmpty || isMaxLengthExceeded
+            || isMinLengthNotReached || doesValueViolatePattern.getAsBoolean();
     }
 
 }
