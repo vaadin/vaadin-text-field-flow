@@ -3,8 +3,6 @@ package com.vaadin.flow.component.textfield;
 import com.vaadin.flow.component.HasValue;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
