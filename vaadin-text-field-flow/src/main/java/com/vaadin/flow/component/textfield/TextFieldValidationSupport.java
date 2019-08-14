@@ -4,6 +4,7 @@ import com.vaadin.flow.component.HasValue;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.function.BooleanSupplier;
 import java.util.regex.Pattern;
 
 /**
@@ -49,27 +50,25 @@ final class TextFieldValidationSupport implements Serializable {
      * @see GeneratedVaadinTextField#setPattern(String)
      */
     void setPattern(String pattern) {
-        this.pattern = pattern == null || pattern.isEmpty() ? null : Pattern.compile(pattern);
+        this.pattern = pattern == null || pattern.isEmpty() ?
+            null :
+            Pattern.compile(pattern);
     }
 
     /**
      * Test if value is invalid for the field.
+     *
      * @param value value to be tested.
      * @return <code>true</code> if the value is invalid.
      */
     boolean isInvalid(String value) {
-        if (required && Objects.equals(field.getEmptyValue(), value)) {
-            return true;
-        }
-        if (value != null && maxLength != null && value.length() > maxLength) {
-            return true;
-        }
-        if (value != null && minLength != null && value.length() < minLength) {
-            return true;
-        }
-        if (value != null && pattern != null && !pattern.matcher(value).matches()) {
-            return true;
-        }
-        return false;
+        final boolean valueIsInvalid = value != null &&
+            (maxLength != null && value.length() > maxLength)
+            || (minLength != null && value.length() < minLength)
+            || (pattern != null && !pattern.matcher(value).matches());
+
+        return (required && Objects.equals(field.getEmptyValue(), value))
+            || valueIsInvalid;
     }
+
 }

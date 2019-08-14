@@ -203,16 +203,9 @@ public class NumberField
      * client side validation constraints using browser development tools.
      */
     private boolean isInvalid(Double value) {
-        if (required && Objects.equals(getEmptyValue(), value)) {
-            return true;
-        }
-        if (value != null && max != null && value > max) {
-            return true;
-        }
-        if (value != null && min != null && value < min) {
-            return true;
-        }
-        return false;
+        return (required && Objects.equals(getEmptyValue(), value))
+            || (value != null && max != null && value > max)
+            || (value != null && min != null && value < min);
     }
 
     @Override
