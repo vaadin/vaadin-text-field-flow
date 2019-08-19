@@ -312,7 +312,6 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
      *            the maximum length
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-        value = "squid:S1845",
         justification = "MaxLength makes more sense in Java")
     public void setMaxLength(int maxLength) {
         super.setMaxlength(maxLength);
@@ -337,7 +336,6 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
      *            the minimum length
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(
-        value = "squid:S1845",
         justification = "MinLength makes more sense in Java")
     public void setMinLength(int minLength) {
         super.setMinlength(minLength);
