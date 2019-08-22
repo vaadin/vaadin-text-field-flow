@@ -311,7 +311,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      * @param maxLength
      *            the maximum length
      */
-    @SuppressWarnings(value = "squid:S1845")
     public void setMaxLength(int maxLength) {
         super.setMaxlength(maxLength);
         getValidationSupport().setMaxLength(maxLength);
@@ -334,7 +333,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      * @param minLength
      *            the minimum length
      */
-    @SuppressWarnings(value = "squid:S1845")
     public void setMinLength(int minLength) {
         super.setMinlength(minLength);
         getValidationSupport().setMinLength(minLength);
