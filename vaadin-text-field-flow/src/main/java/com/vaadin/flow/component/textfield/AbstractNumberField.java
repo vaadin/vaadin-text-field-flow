@@ -28,23 +28,16 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
 /**
- * Server-side component for the {@code vaadin-number-field} element.
+ * Abstract base class for components based on {@code vaadin-number-field}
+ * element and its subclasses.
  *
  * @author Vaadin Ltd.
  */
-public class AbstractNumberField
-        extends GeneratedVaadinNumberField<AbstractNumberField, Double>
+public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T extends Number>
+        extends GeneratedVaadinNumberField<C, T>
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
         HasAutocomplete, HasAutocapitalize, HasAutocorrect {
-
-    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
-            || valueFromClient.isEmpty() ? null
-                    : Double.parseDouble(valueFromClient);
-
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toString();
 
     private ValueChangeMode currentMode;
 
@@ -52,15 +45,20 @@ public class AbstractNumberField
 
     private int valueChangeTimeout = DEFAULT_CHANGE_TIMEOUT;
 
-    private Double max;
-    private Double min;
+    private T max;
+    private T min;
+    private T step;
+
     private boolean required;
 
     /**
      * Constructs an empty {@code NumberField}.
      */
-    public AbstractNumberField() {
-        super(null, null, String.class, PARSER, FORMATTER);
+    public AbstractNumberField(SerializableFunction<String, T> parser,
+            SerializableFunction<T, String> formatter, T defaultStep) {
+        super(null, null, String.class, parser, formatter);
+        setStep(defaultStep);
+
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
@@ -68,85 +66,6 @@ public class AbstractNumberField
                 setInvalid(isInvalid(getValue()));
             }
         });
-    }
-
-    /**
-     * Constructs an empty {@code NumberField} with the given label.
-     *
-     * @param label
-     *            the text to set as the label
-     */
-    public AbstractNumberField(String label) {
-        this();
-        setLabel(label);
-    }
-
-    /**
-     * Constructs an empty {@code NumberField} with the given label and
-     * placeholder text.
-     *
-     * @param label
-     *            the text to set as the label
-     * @param placeholder
-     *            the placeholder text to set
-     */
-    public AbstractNumberField(String label, String placeholder) {
-        this(label);
-        setPlaceholder(placeholder);
-    }
-
-    /**
-     * Constructs an empty {@code NumberField} with a value change listener.
-     *
-     * @param listener
-     *            the value change listener
-     *
-     * @see #addValueChangeListener(ValueChangeListener)
-     */
-    public AbstractNumberField(
-            ValueChangeListener<? super ComponentValueChangeEvent<AbstractNumberField, Double>> listener) {
-        this();
-        addValueChangeListener(listener);
-    }
-
-    /**
-     * Constructs an empty {@code NumberField} with a value change listener and
-     * a label.
-     *
-     * @param label
-     *            the text to set as the label
-     * @param listener
-     *            the value change listener
-     *
-     * @see #setLabel(String)
-     * @see #addValueChangeListener(ValueChangeListener)
-     */
-    public AbstractNumberField(String label,
-            ValueChangeListener<? super ComponentValueChangeEvent<AbstractNumberField, Double>> listener) {
-        this(label);
-        addValueChangeListener(listener);
-    }
-
-    /**
-     * Constructs a {@code NumberField} with a value change listener, a label
-     * and an initial value.
-     *
-     * @param label
-     *            the text to set as the label
-     * @param initialValue
-     *            the initial value
-     * @param listener
-     *            the value change listener
-     *
-     * @see #setLabel(String)
-     * @see #setValue(Object)
-     * @see #addValueChangeListener(ValueChangeListener)
-     */
-    public AbstractNumberField(String label, Double initialValue,
-            ValueChangeListener<? super ComponentValueChangeEvent<AbstractNumberField, Double>> listener) {
-        this(label);
-        setValue(initialValue);
-        addValueChangeListener(listener);
     }
 
     /**
@@ -203,14 +122,14 @@ public class AbstractNumberField
      * because it is possible to circumvent the client side validation
      * constraints using browser development tools.
      */
-    private boolean isInvalid(Double value) {
+    private boolean isInvalid(T value) {
         final boolean isRequiredButEmpty = required
                 && Objects.equals(getEmptyValue(), value);
         final boolean isGreaterThanMax = value != null && max != null
-                && value > max;
-        final boolean isSmallerThenMin = (value != null && min != null
-                && value < min);
-        return isRequiredButEmpty || isGreaterThanMax || isSmallerThenMin;
+                && value.doubleValue() > max.doubleValue();
+        final boolean isSmallerThanMin = (value != null && min != null
+                && value.doubleValue() < min.doubleValue());
+        return isRequiredButEmpty || isGreaterThanMax || isSmallerThanMin;
     }
 
     @Override
@@ -232,9 +151,12 @@ public class AbstractNumberField
         return getLabelString();
     }
 
-    @Override
-    public void setMax(double max) {
-        super.setMax(max);
+    /**
+     * 
+     * @param max
+     */
+    public void setMax(T max) {
+        super.setMax(max.doubleValue());
         this.max = max;
     }
 
@@ -243,13 +165,16 @@ public class AbstractNumberField
      * 
      * @return the {@code max} property from the webcomponent
      */
-    public double getMax() {
-        return super.getMaxDouble();
+    public T getMax() {
+        return max;
     }
 
-    @Override
-    public void setMin(double min) {
-        super.setMin(min);
+    /**
+     * 
+     * @param min
+     */
+    public void setMin(T min) {
+        super.setMin(min.doubleValue());
         this.min = min;
     }
 
@@ -258,13 +183,17 @@ public class AbstractNumberField
      * 
      * @return the {@code min} property from the webcomponent
      */
-    public double getMin() {
-        return super.getMinDouble();
+    public T getMin() {
+        return min;
     }
 
-    @Override
-    public void setStep(double step) {
-        super.setStep(step);
+    /**
+     * 
+     * @param step
+     */
+    public void setStep(T step) {
+        super.setStep(step.doubleValue());
+        this.step = step;
     }
 
     /**
@@ -272,8 +201,8 @@ public class AbstractNumberField
      * 
      * @return the {@code step} property from the webcomponent
      */
-    public double getStep() {
-        return super.getStepDouble();
+    public T getStep() {
+        return step;
     }
 
     @Override
@@ -455,7 +384,7 @@ public class AbstractNumberField
      * Returns the value that represents an empty value.
      */
     @Override
-    public Double getEmptyValue() {
+    public T getEmptyValue() {
         return null;
     }
 
@@ -467,7 +396,7 @@ public class AbstractNumberField
      *            the new value
      */
     @Override
-    public void setValue(Double value) {
+    public void setValue(T value) {
         super.setValue(value);
     }
 
@@ -478,12 +407,12 @@ public class AbstractNumberField
      * @return the current value.
      */
     @Override
-    public Double getValue() {
+    public T getValue() {
         return super.getValue();
     }
 
     @Override
-    protected void setModelValue(Double newModelValue, boolean fromClient) {
+    protected void setModelValue(T newModelValue, boolean fromClient) {
         super.setModelValue(newModelValue, fromClient);
         setInvalid(isInvalid(newModelValue));
     }

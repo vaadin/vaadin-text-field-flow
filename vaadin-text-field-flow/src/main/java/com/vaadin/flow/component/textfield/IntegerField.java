@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2017 Vaadin Ltd.
+ * Copyright 2000-2019 Vaadin Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,43 +16,49 @@
 
 package com.vaadin.flow.component.textfield;
 
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.function.SerializableFunction;
 
 /**
- * Server-side component for the {@code vaadin-number-field} element.
+ * Server-side component for the {@code vaadin-integer-field} element.
  *
  * @author Vaadin Ltd.
  */
-public class NumberField extends AbstractNumberField<NumberField, Double> {
+@Tag("vaadin-integer-field")
+@HtmlImport("frontend://bower_components/vaadin-text-field/src/vaadin-integer-field.html")
+@JsModule("@vaadin/vaadin-text-field/src/vaadin-integer-field.js")
+public class IntegerField extends AbstractNumberField<IntegerField, Integer> {
 
-    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
+    private static final SerializableFunction<String, Integer> PARSER = valueFromClient -> valueFromClient == null
             || valueFromClient.isEmpty() ? null
-                    : Double.parseDouble(valueFromClient);
+                    : Integer.parseInt(valueFromClient);
 
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
+    private static final SerializableFunction<Integer, String> FORMATTER = valueFromModel -> valueFromModel == null
             ? ""
             : valueFromModel.toString();
 
     /**
-     * Constructs an empty {@code NumberField}.
+     * Constructs an empty {@code IntegerField}.
      */
-    public NumberField() {
-        super(PARSER, FORMATTER, 1.0);
+    public IntegerField() {
+        super(PARSER, FORMATTER, 1);
     }
 
     /**
-     * Constructs an empty {@code NumberField} with the given label.
+     * Constructs an empty {@code IntegerField} with the given label.
      *
      * @param label
      *            the text to set as the label
      */
-    public NumberField(String label) {
+    public IntegerField(String label) {
         this();
         setLabel(label);
     }
 
     /**
-     * Constructs an empty {@code NumberField} with the given label and
+     * Constructs an empty {@code IntegerField} with the given label and
      * placeholder text.
      *
      * @param label
@@ -60,27 +66,27 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      * @param placeholder
      *            the placeholder text to set
      */
-    public NumberField(String label, String placeholder) {
+    public IntegerField(String label, String placeholder) {
         this(label);
         setPlaceholder(placeholder);
     }
 
     /**
-     * Constructs an empty {@code NumberField} with a value change listener.
+     * Constructs an empty {@code IntegerField} with a value change listener.
      *
      * @param listener
      *            the value change listener
      *
-     * @see #addValueChangeListener(com.vaadin.flow.component.HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(ValueChangeListener)
      */
-    public NumberField(
-            ValueChangeListener<? super ComponentValueChangeEvent<NumberField, Double>> listener) {
+    public IntegerField(
+            ValueChangeListener<? super ComponentValueChangeEvent<IntegerField, Integer>> listener) {
         this();
         addValueChangeListener(listener);
     }
 
     /**
-     * Constructs an empty {@code NumberField} with a value change listener and
+     * Constructs an empty {@code IntegerField} with a value change listener and
      * a label.
      *
      * @param label
@@ -89,16 +95,16 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      *            the value change listener
      *
      * @see #setLabel(String)
-     * @see #addValueChangeListener(com.vaadin.flow.component.HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(ValueChangeListener)
      */
-    public NumberField(String label,
-            ValueChangeListener<? super ComponentValueChangeEvent<NumberField, Double>> listener) {
+    public IntegerField(String label,
+            ValueChangeListener<? super ComponentValueChangeEvent<IntegerField, Integer>> listener) {
         this(label);
         addValueChangeListener(listener);
     }
 
     /**
-     * Constructs a {@code NumberField} with a value change listener, a label
+     * Constructs a {@code IntegerField} with a value change listener, a label
      * and an initial value.
      *
      * @param label
@@ -110,10 +116,10 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      *
      * @see #setLabel(String)
      * @see #setValue(Object)
-     * @see #addValueChangeListener(com.vaadin.flow.component.HasValue.ValueChangeListener)
+     * @see #addValueChangeListener(ValueChangeListener)
      */
-    public NumberField(String label, Double initialValue,
-            ValueChangeListener<? super ComponentValueChangeEvent<NumberField, Double>> listener) {
+    public IntegerField(String label, Integer initialValue,
+            ValueChangeListener<? super ComponentValueChangeEvent<IntegerField, Integer>> listener) {
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
