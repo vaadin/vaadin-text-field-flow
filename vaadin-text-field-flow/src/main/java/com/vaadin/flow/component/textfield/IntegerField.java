@@ -43,7 +43,7 @@ public class IntegerField extends AbstractNumberField<IntegerField, Integer> {
      * Constructs an empty {@code IntegerField}.
      */
     public IntegerField() {
-        super(PARSER, FORMATTER);
+        super(PARSER, FORMATTER, Integer.MIN_VALUE, Integer.MAX_VALUE, 0);
     }
 
     /**

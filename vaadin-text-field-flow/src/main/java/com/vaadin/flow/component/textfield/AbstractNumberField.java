@@ -55,8 +55,12 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
      * Constructs an empty {@code NumberField}.
      */
     public AbstractNumberField(SerializableFunction<String, T> parser,
-            SerializableFunction<T, String> formatter) {
+            SerializableFunction<T, String> formatter, double initialMin,
+            double initialMax, double initialStep) {
         super(null, null, String.class, parser, formatter);
+        setMin(initialMin);
+        setMax(initialMax);
+        setStep(initialStep);
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
         addInvalidChangeListener(e -> {
