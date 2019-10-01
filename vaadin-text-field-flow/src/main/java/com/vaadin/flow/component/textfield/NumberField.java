@@ -37,7 +37,8 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(PARSER, FORMATTER, 1.0);
+        super(PARSER, FORMATTER);
+        setStep(1);
     }
 
     /**
@@ -117,6 +118,48 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
+    }
+
+    @Override
+    public void setMin(double min) {
+        super.setMin(min);
+    }
+
+    /**
+     * The minimum value of the field.
+     *
+     * @return the {@code min} property from the webcomponent
+     */
+    public double getMin() {
+        return getMinDouble();
+    }
+
+    @Override
+    public void setMax(double max) {
+        super.setMax(max);
+    }
+
+    /**
+     * The maximum value of the field.
+     *
+     * @return the {@code max} property from the webcomponent
+     */
+    public double getMax() {
+        return getMaxDouble();
+    }
+
+    @Override
+    public void setStep(double step) {
+        super.setStep(step);
+    }
+
+    /**
+     * Specifies the allowed number intervals of the field.
+     *
+     * @return the {@code step} property from the webcomponent
+     */
+    public double getStep() {
+        return getStepDouble();
     }
 
 }

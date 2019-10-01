@@ -45,19 +45,18 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
 
     private int valueChangeTimeout = DEFAULT_CHANGE_TIMEOUT;
 
-    private T max;
-    private T min;
-    private T step;
-
     private boolean required;
+
+    private double min;
+    private double max;
+    private double step;
 
     /**
      * Constructs an empty {@code NumberField}.
      */
     public AbstractNumberField(SerializableFunction<String, T> parser,
-            SerializableFunction<T, String> formatter, T defaultStep) {
+            SerializableFunction<T, String> formatter) {
         super(null, null, String.class, parser, formatter);
-        setStep(defaultStep);
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
         addInvalidChangeListener(e -> {
@@ -125,10 +124,10 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     private boolean isInvalid(T value) {
         final boolean isRequiredButEmpty = required
                 && Objects.equals(getEmptyValue(), value);
-        final boolean isGreaterThanMax = value != null && max != null
-                && value.doubleValue() > max.doubleValue();
-        final boolean isSmallerThanMin = (value != null && min != null
-                && value.doubleValue() < min.doubleValue());
+        final boolean isGreaterThanMax = value != null
+                && value.doubleValue() > max;
+        final boolean isSmallerThanMin = value != null
+                && value.doubleValue() < min;
         return isRequiredButEmpty || isGreaterThanMax || isSmallerThanMin;
     }
 
@@ -151,58 +150,10 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
         return getLabelString();
     }
 
-    /**
-     * 
-     * @param max
-     */
-    public void setMax(T max) {
-        super.setMax(max.doubleValue());
-        this.max = max;
-    }
-
-    /**
-     * The maximum value of the field.
-     * 
-     * @return the {@code max} property from the webcomponent
-     */
-    public T getMax() {
-        return max;
-    }
-
-    /**
-     * 
-     * @param min
-     */
-    public void setMin(T min) {
-        super.setMin(min.doubleValue());
+    @Override
+    protected void setMin(double min) {
+        super.setMin(min);
         this.min = min;
-    }
-
-    /**
-     * The minimum value of the field.
-     * 
-     * @return the {@code min} property from the webcomponent
-     */
-    public T getMin() {
-        return min;
-    }
-
-    /**
-     * 
-     * @param step
-     */
-    public void setStep(T step) {
-        super.setStep(step.doubleValue());
-        this.step = step;
-    }
-
-    /**
-     * Specifies the allowed number intervals of the field.
-     * 
-     * @return the {@code step} property from the webcomponent
-     */
-    public T getStep() {
-        return step;
     }
 
     @Override
@@ -409,6 +360,33 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     @Override
     public T getValue() {
         return super.getValue();
+    }
+
+    @Override
+    protected double getMinDouble() {
+        return min;
+    }
+
+    @Override
+    protected void setMax(double max) {
+        super.setMax(max);
+        this.max = max;
+    }
+
+    @Override
+    protected double getMaxDouble() {
+        return max;
+    }
+
+    @Override
+    protected void setStep(double step) {
+        super.setStep(step);
+        this.step = step;
+    }
+
+    @Override
+    protected double getStepDouble() {
+        return step;
     }
 
     @Override
