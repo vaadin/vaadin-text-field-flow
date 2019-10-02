@@ -18,6 +18,12 @@ package com.vaadin.flow.component.textfield;
 
 import com.vaadin.flow.function.SerializableFunction;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Locale;
+import java.util.Objects;
+
 /**
  * Server-side component for the {@code vaadin-number-field} element.
  *
@@ -37,7 +43,7 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(PARSER, FORMATTER, Double.NEGATIVE_INFINITY,
+        super(PARSER, new Formatter(), Double.NEGATIVE_INFINITY,
                 Double.POSITIVE_INFINITY);
     }
 
@@ -234,4 +240,29 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         return getPatternString();
     }
 
+    private static class Formatter implements SerializableFunction<Double, String> {
+
+        private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
+            DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        {
+            decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+        }
+
+        @Override
+        public String apply(Double valueFromModel) {
+            return valueFromModel == null ?
+                "" :
+                decimalFormat.format(valueFromModel.doubleValue());
+        }
+
+        private Double parse(String valueFromClient) {
+            try {
+                return valueFromClient == null
+                    || valueFromClient.isEmpty() ? null
+                    : decimalFormat.parse(valueFromClient).doubleValue();
+            } catch (ParseException e) {
+                throw new NumberFormatException(valueFromClient);
+            }
+        }
+    }
 }
