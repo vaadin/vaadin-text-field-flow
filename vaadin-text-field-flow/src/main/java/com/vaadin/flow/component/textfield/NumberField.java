@@ -25,6 +25,10 @@ import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -42,10 +46,6 @@ public class NumberField
             || valueFromClient.isEmpty() ? null
                     : Double.parseDouble(valueFromClient);
 
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toString();
-
     private ValueChangeMode currentMode;
 
     private boolean isConnectorAttached;
@@ -60,7 +60,7 @@ public class NumberField
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(null, null, String.class, PARSER, FORMATTER);
+        super(null, null, String.class, PARSER, new Formatter());
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
@@ -494,5 +494,31 @@ public class NumberField
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
         this.required = requiredIndicatorVisible;
+    }
+
+    private static class Formatter implements SerializableFunction<Double, String> {
+
+        private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
+            DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        {
+            decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+        }
+
+        @Override
+        public String apply(Double valueFromModel) {
+            return valueFromModel == null ?
+                "" :
+                decimalFormat.format(valueFromModel.doubleValue());
+        }
+
+        private Double parse(String valueFromClient) {
+            try {
+                return valueFromClient == null
+                    || valueFromClient.isEmpty() ? null
+                    : decimalFormat.parse(valueFromClient).doubleValue();
+            } catch (ParseException e) {
+                throw new NumberFormatException(valueFromClient);
+            }
+        }
     }
 }
