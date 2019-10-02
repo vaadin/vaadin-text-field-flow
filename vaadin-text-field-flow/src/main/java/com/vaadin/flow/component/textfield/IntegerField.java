@@ -133,4 +133,70 @@ public class IntegerField extends AbstractNumberField<IntegerField, Integer> {
         addValueChangeListener(listener);
     }
 
+    /**
+     * Sets the minimum value of the field. Entering a value which is smaller
+     * than {@code min} invalidates the field.
+     * 
+     * @param min
+     *            the min value to set
+     */
+    public void setMin(int min) {
+        super.setMin(min);
+    }
+
+    /**
+     * Gets the minimum allowed value of the field.
+     *
+     * @return the min property of the field
+     * @see #setMin(int)
+     */
+    public int getMin() {
+        return (int) getMinDouble();
+    }
+
+    /**
+     * Sets the maximum value of the field. Entering a value which is greater
+     * than {@code max} invalidates the field.
+     *
+     * @param max
+     *            the max value to set
+     */
+    public void setMax(int max) {
+        super.setMax(max);
+    }
+
+    /**
+     * Gets the maximum allowed value of the field.
+     *
+     * @return the max property of the field
+     * @see #setMax(int)
+     */
+    public int getMax() {
+        return (int) getMaxDouble();
+    }
+
+    /**
+     * Sets the allowed number intervals of the field. This specifies how much
+     * the value will be increased/decreased when clicking on the
+     * {@link #setHasControls(boolean) control buttons}. It is also used to
+     * invalidate the field, if the value doesn't align with the specified step
+     * and {@link #setMin(int) min} (if specified by user).
+     * 
+     * @param step
+     *            the new step to set
+     */
+    public void setStep(int step) {
+        super.setStep(step);
+    }
+
+    /**
+     * Gets the allowed number intervals of the field.
+     *
+     * @return the step property of the field
+     * @see #setStep(int)
+     */
+    public int getStep() {
+        return (int) getStepDouble();
+    }
+
 }
