@@ -17,9 +17,10 @@ package com.vaadin.flow.component.textfield.tests;
 
 import org.junit.Assert;
 import org.junit.Before;
+import com.vaadin.flow.component.textfield.NumberField;
 import org.junit.Test;
 
-import com.vaadin.flow.component.textfield.NumberField;
+import java.text.DecimalFormat;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -96,5 +97,22 @@ public class NumberFieldTest extends TextFieldTest {
 
         field.setValue(99.999);
         Assert.assertFalse(field.isInvalid());
+    }
+
+    @Test
+    public void testPropertyValue() {
+        testValueProperty(1.0d, "1");
+        testValueProperty(2.0d, "2");
+        testValueProperty(5.0d, "5");
+        testValueProperty(9.0d, "9");
+        testValueProperty(21.4d, "21.4");
+        testValueProperty(123456789.01d, "123456789.01");
+        testValueProperty(-1.050d, "-1.05");
+    }
+
+    private void testValueProperty(double value, String expected) {
+        final NumberField numberField = new NumberField();
+        numberField.setValue(value);
+        assertEquals(expected, numberField.getElement().getProperty("value"));
     }
 }
