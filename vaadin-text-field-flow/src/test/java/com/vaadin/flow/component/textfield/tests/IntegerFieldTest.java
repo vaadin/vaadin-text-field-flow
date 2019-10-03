@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2017 Vaadin Ltd.
+ * Copyright 2000-2019 Vaadin Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -19,21 +19,18 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.IntegerField;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-/**
- * Tests for the {@link NumberField}.
- */
-public class NumberFieldTest extends TextFieldTest {
+public class IntegerFieldTest extends TextFieldTest {
 
-    private NumberField field;
+    private IntegerField field;
 
     @Before
     public void init() {
-        field = new NumberField();
+        field = new IntegerField();
     }
 
     @Override
@@ -52,35 +49,33 @@ public class NumberFieldTest extends TextFieldTest {
 
     @Test
     public void assertDefaultValuesForMinMaxStep() {
-        // For some reason assertEquals with doubles (at least when using
-        // Double.MAX_VALUE) is not reliable
-        Assert.assertTrue(
-                "The default max of NumberField should be the largest possible double value",
-                field.getMax() - Double.MAX_VALUE == 0.0);
-        Assert.assertTrue(
-                "The default min of NumberField should be the smallest possible double value",
-                field.getMin() + Double.MAX_VALUE == 0.0);
-        Assert.assertTrue("The default step of NumberField should be 1.0",
-                field.getStep() - 1.0 == 0.0);
+        Assert.assertEquals(
+                "The default max of IntegerField should be the largest possible int value",
+                2147483647, field.getMax());
+        Assert.assertEquals(
+                "The default min of IntegerField should be the smallest possible int value",
+                -2147483648, field.getMin());
+        Assert.assertEquals("The default step of IntegerField should be 1", 1,
+                field.getStep());
     }
 
     @Test
     public void assertMinValidation() {
-        field.setValue(-10.5);
+        field.setValue(-10);
         Assert.assertFalse(field.isInvalid());
-        field.setMin(-10.4);
+        field.setMin(-9);
         Assert.assertTrue(field.isInvalid());
-        field.setValue(-10.4);
+        field.setValue(-9);
         Assert.assertFalse(field.isInvalid());
     }
 
     @Test
     public void assertMaxValidation() {
-        field.setValue(100.0);
+        field.setValue(100);
         Assert.assertFalse(field.isInvalid());
-        field.setMax(99.999);
+        field.setMax(99);
         Assert.assertTrue(field.isInvalid());
-        field.setValue(99.999);
+        field.setValue(99);
         Assert.assertFalse(field.isInvalid());
     }
 

@@ -66,7 +66,7 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
             if (e.isFromClient() && !e.isInvalid()) {
-                setInvalid(isInvalid(getValue()));
+                validate();
             }
         });
     }
@@ -121,6 +121,14 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     }
 
     /**
+     * Sets this field valid/invalid based on the current state.
+     */
+    @Override
+    protected void validate() {
+        setInvalid(isInvalid(getValue()));
+    }
+
+    /**
      * Performs a server-side validation of the given value. This is needed
      * because it is possible to circumvent the client side validation
      * constraints using browser development tools.
@@ -158,6 +166,7 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     protected void setMin(double min) {
         super.setMin(min);
         this.min = min;
+        validate();
     }
 
     @Override
@@ -375,6 +384,7 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     protected void setMax(double max) {
         super.setMax(max);
         this.max = max;
+        validate();
     }
 
     @Override
@@ -396,7 +406,7 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     @Override
     protected void setModelValue(T newModelValue, boolean fromClient) {
         super.setModelValue(newModelValue, fromClient);
-        setInvalid(isInvalid(newModelValue));
+        validate();
     }
 
     @Override
