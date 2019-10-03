@@ -47,6 +47,12 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
 
     private boolean required;
 
+    /*
+     * Note: setters and getters for min/max/step needed to be duplicated in
+     * NumberField and IntegerField, because they use primitive double and int
+     * types, which can't be used as generic type parameters. Changing to Double
+     * and Integer classes would be API-breaking change.
+     */
     private double min;
     private double max;
     private double step;
