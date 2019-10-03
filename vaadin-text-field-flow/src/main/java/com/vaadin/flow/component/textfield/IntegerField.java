@@ -19,6 +19,7 @@ package com.vaadin.flow.component.textfield;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.function.SerializableFunction;
 
 /**
  * Server-side component for the {@code vaadin-integer-field} element.
@@ -30,28 +31,26 @@ import com.vaadin.flow.component.dependency.JsModule;
 @JsModule("@vaadin/vaadin-text-field/src/vaadin-integer-field.js")
 public class IntegerField extends AbstractNumberField<IntegerField, Integer> {
 
-    private static Integer presentationToModel(String presentation) {
-        if (presentation == null || presentation.isEmpty()) {
+    private static final SerializableFunction<String, Integer> PARSER = valueFormClient -> {
+        if (valueFormClient == null || valueFormClient.isEmpty()) {
             return null;
         }
         try {
-            return Integer.parseInt(presentation);
+            return Integer.parseInt(valueFormClient);
         } catch (NumberFormatException e) {
             return null;
         }
-    }
+    };
 
-    private static String modelToPresentation(Integer model) {
-        return model == null ? "" : model.toString();
-    }
+    private static final SerializableFunction<Integer, String> FORMATTER = valueFromModel -> valueFromModel == null
+            ? ""
+            : valueFromModel.toString();
 
     /**
      * Constructs an empty {@code IntegerField}.
      */
     public IntegerField() {
-        super(IntegerField::presentationToModel,
-                IntegerField::modelToPresentation, Integer.MIN_VALUE,
-                Integer.MAX_VALUE, 1);
+        super(PARSER, FORMATTER, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
     }
 
     /**
