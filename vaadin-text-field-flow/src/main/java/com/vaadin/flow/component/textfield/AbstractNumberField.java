@@ -58,15 +58,31 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     private double step;
 
     /**
-     * Constructs an empty {@code NumberField}.
+     * Sets up the common logic for number fields.
+     * 
+     * @param parser
+     *            function to parse the client-side value string into
+     *            server-side value
+     * @param formatter
+     *            function to format the server-side value into client-side
+     *            value string
+     * @param absoluteMin
+     *            the smallest possible value of the number type of the field,
+     *            will be used as the default min value at server-side
+     * @param absoluteMax
+     *            the largest possible value of the number type of the field,
+     *            will be used as the default max value at server-side
      */
     public AbstractNumberField(SerializableFunction<String, T> parser,
-            SerializableFunction<T, String> formatter, double initialMin,
-            double initialMax, double initialStep) {
+            SerializableFunction<T, String> formatter, double absoluteMin,
+            double absoluteMax) {
         super(null, null, String.class, parser, formatter);
-        setMin(initialMin);
-        setMax(initialMax);
-        setStep(initialStep);
+
+        // Not setting these defaults to the web component, so it will have
+        // undefined as min and max
+        this.min = absoluteMin;
+        this.max = absoluteMax;
+        this.step = 1.0;
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
         addInvalidChangeListener(e -> {

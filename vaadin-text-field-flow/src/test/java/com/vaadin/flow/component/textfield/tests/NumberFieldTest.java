@@ -52,16 +52,14 @@ public class NumberFieldTest extends TextFieldTest {
 
     @Test
     public void assertDefaultValuesForMinMaxStep() {
-        // For some reason assertEquals with doubles (at least when using
-        // Double.MAX_VALUE) is not reliable
-        Assert.assertTrue(
+        Assert.assertEquals(
                 "The default max of NumberField should be the largest possible double value",
-                field.getMax() - Double.MAX_VALUE == 0.0);
-        Assert.assertTrue(
+                Double.POSITIVE_INFINITY, field.getMax(), 0);
+        Assert.assertEquals(
                 "The default min of NumberField should be the smallest possible double value",
-                field.getMin() + Double.MAX_VALUE == 0.0);
-        Assert.assertTrue("The default step of NumberField should be 1.0",
-                field.getStep() - 1.0 == 0.0);
+                Double.NEGATIVE_INFINITY, field.getMin(), 0);
+        Assert.assertEquals("The default step of NumberField should be 1.0",
+                1.0, field.getStep(), 0);
     }
 
     @Test

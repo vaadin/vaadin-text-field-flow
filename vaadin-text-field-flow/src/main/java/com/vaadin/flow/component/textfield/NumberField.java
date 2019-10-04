@@ -37,7 +37,8 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(PARSER, FORMATTER, -Double.MAX_VALUE, Double.MAX_VALUE, 1);
+        super(PARSER, FORMATTER, Double.NEGATIVE_INFINITY,
+                Double.POSITIVE_INFINITY);
     }
 
     /**

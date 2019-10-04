@@ -41,6 +41,14 @@ public class NumberFieldPageIT extends AbstractComponentIT {
     }
 
     @Test
+    public void assertDefaultMinMaxStepNotOverridden() {
+        NumberFieldElement numberField = $(NumberFieldElement.class).first();
+        Assert.assertNull(numberField.getProperty("min"));
+        Assert.assertNull(numberField.getProperty("max"));
+        Assert.assertEquals("1", numberField.getPropertyString("step"));
+    }
+
+    @Test
     public void assertReadOnly() {
         NumberFieldElement numberField = $(NumberFieldElement.class).first();
         WebElement messageDiv = $("div").id("message");
