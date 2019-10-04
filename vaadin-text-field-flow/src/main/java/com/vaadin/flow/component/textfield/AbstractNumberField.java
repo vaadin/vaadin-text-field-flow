@@ -188,7 +188,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     protected void setMin(double min) {
         super.setMin(min);
         this.min = min;
-        validate();
     }
 
     @Override
@@ -406,7 +405,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     protected void setMax(double max) {
         super.setMax(max);
         this.max = max;
-        validate();
     }
 
     @Override
