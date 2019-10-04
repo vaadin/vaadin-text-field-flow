@@ -138,39 +138,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     }
 
     @Override
-    public boolean isInvalid() {
-        return isInvalidBoolean();
-    }
-
-    /**
-     * Sets this field valid/invalid based on the current state.
-     */
-    @Override
-    protected void validate() {
-        setInvalid(isInvalid(getValue()));
-    }
-
-    /**
-     * Performs a server-side validation of the given value. This is needed
-     * because it is possible to circumvent the client side validation
-     * constraints using browser development tools.
-     */
-    private boolean isInvalid(T value) {
-        final boolean isRequiredButEmpty = required
-                && Objects.equals(getEmptyValue(), value);
-        final boolean isGreaterThanMax = value != null
-                && value.doubleValue() > max;
-        final boolean isSmallerThanMin = value != null
-                && value.doubleValue() < min;
-        return isRequiredButEmpty || isGreaterThanMax || isSmallerThanMin;
-    }
-
-    @Override
-    public void setInvalid(boolean invalid) {
-        super.setInvalid(invalid);
-    }
-
-    @Override
     public void setLabel(String label) {
         super.setLabel(label);
     }
@@ -182,12 +149,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
      */
     public String getLabel() {
         return getLabelString();
-    }
-
-    @Override
-    protected void setMin(double min) {
-        super.setMin(min);
-        this.min = min;
     }
 
     @Override
@@ -397,6 +358,12 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     }
 
     @Override
+    protected void setMin(double min) {
+        super.setMin(min);
+        this.min = min;
+    }
+
+    @Override
     protected double getMinDouble() {
         return min;
     }
@@ -427,6 +394,34 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     protected void setModelValue(T newModelValue, boolean fromClient) {
         super.setModelValue(newModelValue, fromClient);
         validate();
+    }
+
+    @Override
+    public void setInvalid(boolean invalid) {
+        super.setInvalid(invalid);
+    }
+
+    @Override
+    public boolean isInvalid() {
+        return isInvalidBoolean();
+    }
+
+    /**
+     * Performs server-side validation of the current value. This is needed
+     * because it is possible to circumvent the client-side validation
+     * constraints using browser development tools.
+     */
+    @Override
+    protected void validate() {
+        T value = getValue();
+        final boolean isRequiredButEmpty = required
+                && Objects.equals(getEmptyValue(), value);
+        final boolean isGreaterThanMax = value != null
+                && value.doubleValue() > max;
+        final boolean isSmallerThanMin = value != null
+                && value.doubleValue() < min;
+
+        setInvalid(isRequiredButEmpty || isGreaterThanMax || isSmallerThanMin);
     }
 
     @Override
