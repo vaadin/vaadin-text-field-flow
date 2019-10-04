@@ -63,12 +63,25 @@ public class NumberFieldTest extends TextFieldTest {
     }
 
     @Test
+    public void setInitialMinMaxRequired_shouldNotInvalidateField() {
+        field.setRequiredIndicatorVisible(true);
+        field.setMin(3);
+        Assert.assertFalse(field.isInvalid());
+        field.setMin(-5);
+        field.setMax(-1);
+        Assert.assertFalse(field.isInvalid());
+    }
+
+    @Test
     public void assertMinValidation() {
         field.setValue(-10.5);
         Assert.assertFalse(field.isInvalid());
-        field.setMin(-10.4);
+
+        field.setMin(-10.3);
+        field.setValue(-10.4); // need to update value to run validation
         Assert.assertTrue(field.isInvalid());
-        field.setValue(-10.4);
+
+        field.setValue(-10.3);
         Assert.assertFalse(field.isInvalid());
     }
 
@@ -76,10 +89,12 @@ public class NumberFieldTest extends TextFieldTest {
     public void assertMaxValidation() {
         field.setValue(100.0);
         Assert.assertFalse(field.isInvalid());
+
         field.setMax(99.999);
+        field.setValue(99.9991); // need to update value to run validation
         Assert.assertTrue(field.isInvalid());
+
         field.setValue(99.999);
         Assert.assertFalse(field.isInvalid());
     }
-
 }

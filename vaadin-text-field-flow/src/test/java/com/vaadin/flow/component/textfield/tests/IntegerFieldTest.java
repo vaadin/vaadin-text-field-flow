@@ -60,12 +60,25 @@ public class IntegerFieldTest extends TextFieldTest {
     }
 
     @Test
+    public void setInitialMinMaxRequired_shouldNotInvalidateField() {
+        field.setRequiredIndicatorVisible(true);
+        field.setMin(3);
+        Assert.assertFalse(field.isInvalid());
+        field.setMin(-5);
+        field.setMax(-1);
+        Assert.assertFalse(field.isInvalid());
+    }
+
+    @Test
     public void assertMinValidation() {
         field.setValue(-10);
         Assert.assertFalse(field.isInvalid());
-        field.setMin(-9);
+
+        field.setMin(-8);
+        field.setValue(-9); // need to update value to run validation
         Assert.assertTrue(field.isInvalid());
-        field.setValue(-9);
+
+        field.setValue(-8);
         Assert.assertFalse(field.isInvalid());
     }
 
@@ -73,9 +86,12 @@ public class IntegerFieldTest extends TextFieldTest {
     public void assertMaxValidation() {
         field.setValue(100);
         Assert.assertFalse(field.isInvalid());
-        field.setMax(99);
+
+        field.setMax(98);
+        field.setValue(99); // need to update value to run validation
         Assert.assertTrue(field.isInvalid());
-        field.setValue(99);
+
+        field.setValue(98);
         Assert.assertFalse(field.isInvalid());
     }
 
