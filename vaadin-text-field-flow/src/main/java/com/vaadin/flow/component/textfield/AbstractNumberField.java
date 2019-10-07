@@ -335,6 +335,36 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     }
 
     /**
+     * When set to <code>true</code>, user is prevented from typing a value that
+     * conflicts with the given {@code pattern}.
+     *
+     * @return the {@code preventInvalidInput} property from the webcomponent
+     */
+    public boolean isPreventInvalidInput() {
+        return isPreventInvalidInputBoolean();
+    }
+
+    @Override
+    public void setPreventInvalidInput(boolean preventInvalidInput) {
+        super.setPreventInvalidInput(preventInvalidInput);
+    }
+
+    @Override
+    public void setPattern(String pattern) {
+        super.setPattern(pattern);
+    }
+
+    /**
+     * A regular expression that the value is checked against. The pattern must
+     * match the entire value, not just some subset.
+     *
+     * @return the {@code pattern} property from the webcomponent
+     */
+    public String getPattern() {
+        return getPatternString();
+    }
+
+    /**
      * Performs server-side validation of the current value. This is needed
      * because it is possible to circumvent the client-side validation
      * constraints using browser development tools.
@@ -359,8 +389,8 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
             RequiredValidationUtil.attachConnector(this);
             isConnectorAttached = true;
         }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
+        RequiredValidationUtil.updateClientValidation(
+                isPreventInvalidInput() || !requiredIndicatorVisible, this);
         this.required = requiredIndicatorVisible;
     }
 }
