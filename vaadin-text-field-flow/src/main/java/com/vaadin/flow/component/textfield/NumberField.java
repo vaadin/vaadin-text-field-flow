@@ -245,7 +245,8 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
 
         private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
             DecimalFormatSymbols.getInstance(Locale.ENGLISH));
-        {
+ 
+        private Formatter() {
             decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
         }
 
