@@ -15,10 +15,9 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import com.vaadin.flow.component.textfield.NumberField;
-import com.vaadin.flow.component.textfield.testbench.NumberFieldElement;
-import com.vaadin.flow.testutil.AbstractComponentIT;
-import com.vaadin.flow.testutil.TestPath;
+import static org.junit.Assert.assertFalse;
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +28,6 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.testbench.NumberFieldElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
-
-import static org.junit.Assert.assertFalse;
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
 
 /**
  * Integration tests for {@link NumberField}.
