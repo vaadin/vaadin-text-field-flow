@@ -15,15 +15,14 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import org.junit.Assert;
-import org.junit.Before;
-import com.vaadin.flow.component.textfield.NumberField;
-import org.junit.Test;
-
-import java.text.DecimalFormat;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.vaadin.flow.component.textfield.NumberField;
 
 /**
  * Tests for the {@link NumberField}.
