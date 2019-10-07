@@ -22,7 +22,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * Server-side component for the {@code vaadin-number-field} element.
