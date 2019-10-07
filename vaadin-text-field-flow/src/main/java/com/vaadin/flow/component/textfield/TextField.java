@@ -463,8 +463,8 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
             RequiredValidationUtil.attachConnector(this);
             isConnectorAttached = true;
         }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
+        RequiredValidationUtil.updateClientValidation(
+                isPreventInvalidInput() || !requiredIndicatorVisible, this);
         getValidationSupport().setRequired(requiredIndicatorVisible);
     }
 }

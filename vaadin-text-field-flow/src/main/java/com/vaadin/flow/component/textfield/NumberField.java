@@ -37,7 +37,7 @@ public class NumberField
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
         HasAutocomplete, HasAutocapitalize, HasAutocorrect {
-    
+
     private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
             || valueFromClient.isEmpty() ? null
                     : Double.parseDouble(valueFromClient);
@@ -236,7 +236,7 @@ public class NumberField
 
     /**
      * The maximum value of the field.
-     * 
+     *
      * @return the {@code max} property from the webcomponent
      */
     public double getMax() {
@@ -251,7 +251,7 @@ public class NumberField
 
     /**
      * The minimum value of the field.
-     * 
+     *
      * @return the {@code min} property from the webcomponent
      */
     public double getMin() {
@@ -265,7 +265,7 @@ public class NumberField
 
     /**
      * Specifies the allowed number intervals of the field.
-     * 
+     *
      * @return the {@code step} property from the webcomponent
      */
     public double getStep() {
@@ -457,7 +457,7 @@ public class NumberField
 
     /**
      * Sets the value of this number field. If the new value is not equal to
-     * {@code getValue()}, fires a value change event. 
+     * {@code getValue()}, fires a value change event.
      *
      * @param value
      *            the new value
@@ -491,8 +491,8 @@ public class NumberField
             RequiredValidationUtil.attachConnector(this);
             isConnectorAttached = true;
         }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
+        RequiredValidationUtil.updateClientValidation(
+                isPreventInvalidInput() || !requiredIndicatorVisible, this);
         this.required = requiredIndicatorVisible;
     }
 }

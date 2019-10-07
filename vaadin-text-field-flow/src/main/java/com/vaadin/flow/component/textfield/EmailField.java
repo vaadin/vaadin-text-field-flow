@@ -423,8 +423,8 @@ public class EmailField
             RequiredValidationUtil.attachConnector(this);
             isConnectorAttached = true;
         }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
+        RequiredValidationUtil.updateClientValidation(
+                isPreventInvalidInput() || !requiredIndicatorVisible, this);
         getValidationSupport().setRequired(requiredIndicatorVisible);
     }
 }

@@ -56,9 +56,10 @@ final class RequiredValidationUtil {
                 + "            }\n  }\n }", null);
     }
 
-    static void updateClientValidation(boolean requiredIndicatorVisible,
-                                       Component component) {
-        if (requiredIndicatorVisible) {
+    static void updateClientValidation(boolean enabled, Component component) {
+        if (enabled) {
+            enableClientValiation(component);
+        } else {
             disableClientValiation(component, result -> {
                 if (component instanceof HasValidation && ((HasValidation) component).isInvalid()) {
                     // By default, the invalid flag is always false when a component is created.
@@ -73,8 +74,6 @@ final class RequiredValidationUtil {
                             component.getElement()));
                 }
             });
-        } else {
-            enableClientValiation(component);
         }
     }
 
