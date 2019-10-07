@@ -31,20 +31,11 @@ import java.util.Objects;
  */
 public class NumberField extends AbstractNumberField<NumberField, Double> {
 
-    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
-            || valueFromClient.isEmpty() ? null
-                    : Double.parseDouble(valueFromClient);
-
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toString();
-
     /**
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(PARSER, new Formatter(), Double.NEGATIVE_INFINITY,
-                Double.POSITIVE_INFINITY);
+        this(new Formatter());
     }
 
     /**
@@ -124,6 +115,16 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         this(label);
         setValue(initialValue);
         addValueChangeListener(listener);
+    }
+
+    /**
+     * Constructs an empty {@code NumberField}.
+     *
+     * @param formatter Formatter for the field.
+     */
+    private NumberField(Formatter formatter) {
+        super(formatter::parse, formatter, Double.NEGATIVE_INFINITY,
+                Double.POSITIVE_INFINITY);
     }
 
     @Override
