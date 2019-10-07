@@ -145,7 +145,7 @@ public class NumberFieldPageIT extends AbstractComponentIT {
     public void assertInvalidAfterClientChange() {
         final boolean valid = true;
         NumberFieldElement field = $(NumberFieldElement.class)
-            .id("step-number-field");
+                .id("step-number-field");
         assertValidStateOfStepNumberField(valid);
 
         // max is 10
