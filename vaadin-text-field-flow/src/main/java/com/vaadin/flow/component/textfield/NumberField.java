@@ -203,4 +203,34 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
     public int getMinLength() {
         return (int) getMinlengthDouble();
     }
+
+    /**
+     * When set to <code>true</code>, user is prevented from typing a value that
+     * conflicts with the given {@code pattern}.
+     *
+     * @return the {@code preventInvalidInput} property from the webcomponent
+     */
+    public boolean isPreventInvalidInput() {
+        return isPreventInvalidInputBoolean();
+    }
+
+    @Override
+    public void setPreventInvalidInput(boolean preventInvalidInput) {
+        super.setPreventInvalidInput(preventInvalidInput);
+    }
+
+    @Override
+    public void setPattern(String pattern) {
+        super.setPattern(pattern);
+    }
+
+    /**
+     * A regular expression that the value is checked against. The pattern must
+     * match the entire value, not just some subset.
+     *
+     * @return the {@code pattern} property from the webcomponent
+     */
+    public String getPattern() {
+        return getPatternString();
+    }
 }
