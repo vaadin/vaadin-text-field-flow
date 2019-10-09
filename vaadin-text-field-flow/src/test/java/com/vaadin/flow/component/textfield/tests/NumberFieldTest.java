@@ -104,6 +104,9 @@ public class NumberFieldTest extends TextFieldTest {
         testValueProperty(2.0d, "2");
         testValueProperty(5.0d, "5");
         testValueProperty(9.0d, "9");
+        testValueProperty(0.3d, "0.3");
+        testValueProperty(0.5d, "0.5");
+        testValueProperty(0.7d, "0.7");
         testValueProperty(21.4d, "21.4");
         testValueProperty(123456789.01d, "123456789.01");
         testValueProperty(-1.050d, "-1.05");
