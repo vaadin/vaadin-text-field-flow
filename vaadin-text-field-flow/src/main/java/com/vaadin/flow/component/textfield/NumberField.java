@@ -242,6 +242,8 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
 
     private static class Formatter implements SerializableFunction<Double, String> {
 
+        // Using Locale.ENGLISH to keep format independent of JVM locale
+        // settings
         private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
             DecimalFormatSymbols.getInstance(Locale.ENGLISH));
  
