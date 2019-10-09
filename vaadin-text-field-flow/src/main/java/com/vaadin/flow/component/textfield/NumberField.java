@@ -119,7 +119,8 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
     /**
      * Constructs an empty {@code NumberField}.
      *
-     * @param formatter Formatter for the field.
+     * @param formatter
+     *            Formatter for the field.
      */
     private NumberField(Formatter formatter) {
         super(formatter::parse, formatter, Double.NEGATIVE_INFINITY,
@@ -240,29 +241,30 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         return getPatternString();
     }
 
-    private static class Formatter implements SerializableFunction<Double, String> {
+    private static class Formatter
+            implements SerializableFunction<Double, String> {
 
         // Using Locale.ENGLISH to keep format independent of JVM locale
-        // settings
+        // settings. The value property always uses period as the decimal
+        // separator regardless of the browser locale.
         private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
-            DecimalFormatSymbols.getInstance(Locale.ENGLISH));
- 
+                DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
         private Formatter() {
             decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
         }
 
         @Override
         public String apply(Double valueFromModel) {
-            return valueFromModel == null ?
-                "" :
-                decimalFormat.format(valueFromModel.doubleValue());
+            return valueFromModel == null ? ""
+                    : decimalFormat.format(valueFromModel.doubleValue());
         }
 
         private Double parse(String valueFromClient) {
             try {
-                return valueFromClient == null
-                    || valueFromClient.isEmpty() ? null
-                    : decimalFormat.parse(valueFromClient).doubleValue();
+                return valueFromClient == null || valueFromClient.isEmpty()
+                        ? null
+                        : decimalFormat.parse(valueFromClient).doubleValue();
             } catch (ParseException e) {
                 throw new NumberFormatException(valueFromClient);
             }
