@@ -81,6 +81,7 @@ public class TextFieldPage extends Div {
         addBasicFeatures();
         addFocusShortcut();
         addInvalidCheck();
+        requiredIndicatorVisible();
     }
 
     private void handleTextFieldValue(TextField field) {
@@ -134,5 +135,14 @@ public class TextFieldPage extends Div {
         field.setMaxLength(10);
         field.setMinLength(5);
         TextFieldTestPageUtil.addInvalidCheck(this, field);
+    }
+
+    private void requiredIndicatorVisible() {
+        TextField textField = new TextField();
+        textField.setPattern("[0-9]*");
+        textField.setPreventInvalidInput(true);
+        textField.setRequiredIndicatorVisible(true);
+        textField.setId("required-indicator-visibility");
+        add(textField);
     }
 }

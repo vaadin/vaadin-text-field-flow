@@ -154,6 +154,14 @@ public class TextFieldPageIT extends AbstractComponentIT {
                         || shortcutField.getAttribute("focused").equals(""));
     }
 
+    @Test
+    public void requiredIndicatorVisible_preventInvalidInput() {
+        TextFieldElement field = $(TextFieldElement.class)
+                .id("required-indicator-visibility");
+        field.sendKeys("0a1b");
+        Assert.assertEquals("01", field.getProperty("value"));
+    }
+
     private void updateValues(WebElement textFieldValueDiv,
                               WebElement textField, boolean toggleBlur) {
         textField.sendKeys("a");
