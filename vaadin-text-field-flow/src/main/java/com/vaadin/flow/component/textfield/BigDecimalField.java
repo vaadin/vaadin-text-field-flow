@@ -23,10 +23,14 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.InputNotifier;
 import com.vaadin.flow.component.KeyNotifier;
+import com.vaadin.flow.component.dependency.JavaScript;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
+@JavaScript("frontend://bigDecimalFieldConnector.js")
+@JsModule("./bigDecimalFieldConnector.js")
 public class BigDecimalField
         extends GeneratedVaadinTextField<BigDecimalField, BigDecimal>
         implements HasSize, HasValidation, HasValueChangeMode,
@@ -40,9 +44,16 @@ public class BigDecimalField
 
     private boolean required;
 
-    private static final SerializableFunction<String, BigDecimal> PARSER = valueFromClient -> valueFromClient == null
-            || valueFromClient.isEmpty() ? null
-                    : new BigDecimal(valueFromClient);
+    private static final SerializableFunction<String, BigDecimal> PARSER = valueFromClient -> {
+        if (valueFromClient == null || valueFromClient.isEmpty()) {
+            return null;
+        }
+        try {
+            return new BigDecimal(valueFromClient);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    };
 
     private static final SerializableFunction<BigDecimal, String> FORMATTER = valueFromModel -> valueFromModel == null
             ? ""
@@ -55,8 +66,8 @@ public class BigDecimalField
         super(null, null, String.class, PARSER, FORMATTER);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
-        setPattern("^[\\d,.-]*$");
-        setPreventInvalidInput(true);
+        addAttachListener(e -> getElement().executeJs(
+                "window.Vaadin.Flow.bigDecimalFieldConnector.preventInvalidInput(this)"));
 
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
