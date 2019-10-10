@@ -16,6 +16,12 @@
 
 package com.vaadin.flow.component.textfield;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Locale;
+import java.util.Objects;
+
 import com.vaadin.flow.component.CompositionNotifier;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
@@ -25,26 +31,15 @@ import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
-import java.util.Objects;
-
 /**
  * Server-side component for the {@code vaadin-number-field} element.
  *
  * @author Vaadin Ltd.
  */
-public class NumberField
-        extends GeneratedVaadinNumberField<NumberField, Double>
+public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
         HasAutocomplete, HasAutocapitalize, HasAutocorrect {
-    
-    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
-            || valueFromClient.isEmpty() ? null
-                    : Double.parseDouble(valueFromClient);
-
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toString();
 
     private ValueChangeMode currentMode;
 
@@ -60,14 +55,7 @@ public class NumberField
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(null, null, String.class, PARSER, FORMATTER);
-        setValueChangeMode(ValueChangeMode.ON_CHANGE);
-        addInvalidChangeListener(e -> {
-            // If invalid is updated from client to false, check it
-            if(e.isFromClient() && !e.isInvalid()) {
-                setInvalid(isInvalid(getValue()));
-            }
-        });
+        this(new Formatter());
     }
 
     /**
@@ -110,8 +98,8 @@ public class NumberField
     }
 
     /**
-     * Constructs an empty {@code NumberField} with a value change listener
-     * and a label.
+     * Constructs an empty {@code NumberField} with a value change listener and
+     * a label.
      *
      * @param label
      *            the text to set as the label
@@ -150,6 +138,23 @@ public class NumberField
     }
 
     /**
+     * Constructs an empty {@code NumberField}.
+     *
+     * @param formatter
+     *            Formatter for the field.
+     */
+    private NumberField(Formatter formatter) {
+        super(null, null, String.class, formatter::parse, formatter);
+        setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        addInvalidChangeListener(e -> {
+            // If invalid is updated from client to false, check it
+            if (e.isFromClient() && !e.isInvalid()) {
+                setInvalid(isInvalid(getValue()));
+            }
+        });
+    }
+
+    /**
      * {@inheritDoc}
      * <p>
      * The default value is {@link ValueChangeMode#ON_CHANGE}.
@@ -179,8 +184,8 @@ public class NumberField
     }
 
     private void applyChangeTimeout() {
-        ValueChangeMode.applyChangeTimeout(getValueChangeMode(), getValueChangeTimeout(),
-                getSynchronizationRegistration());
+        ValueChangeMode.applyChangeTimeout(getValueChangeMode(),
+                getValueChangeTimeout(), getSynchronizationRegistration());
     }
 
     @Override
@@ -199,13 +204,17 @@ public class NumberField
     }
 
     /**
-     * Performs a server-side validation of the given value. This is needed because it is possible to circumvent the
-     * client side validation constraints using browser development tools.
+     * Performs a server-side validation of the given value. This is needed
+     * because it is possible to circumvent the client side validation
+     * constraints using browser development tools.
      */
     private boolean isInvalid(Double value) {
-        final boolean isRequiredButEmpty = required && Objects.equals(getEmptyValue(), value);
-        final boolean isGreaterThanMax  = value != null && max != null && value > max;
-        final boolean isSmallerThenMin = (value != null && min != null && value < min);
+        final boolean isRequiredButEmpty = required
+                && Objects.equals(getEmptyValue(), value);
+        final boolean isGreaterThanMax = value != null && max != null
+                && value > max;
+        final boolean isSmallerThenMin = (value != null && min != null
+                && value < min);
         return isRequiredButEmpty || isGreaterThanMax || isSmallerThenMin;
     }
 
@@ -401,8 +410,8 @@ public class NumberField
     }
 
     /**
-     * Specifies if the field value gets automatically selected when
-     * the field gains focus.
+     * Specifies if the field value gets automatically selected when the field
+     * gains focus.
      *
      * @return <code>true</code> if autoselect is active, <code>false</code>
      *         otherwise
@@ -416,8 +425,8 @@ public class NumberField
      * selected when the field gains focus, <code>false</code> otherwise.
      *
      * @param autoselect
-     *            <code>true</code> to set auto select on,
-     *            <code>false</code> otherwise
+     *            <code>true</code> to set auto select on, <code>false</code>
+     *            otherwise
      */
     @Override
     public void setAutoselect(boolean autoselect) {
@@ -435,8 +444,8 @@ public class NumberField
     }
 
     /**
-     * Set to <code>false</code> to hide the clear button which clears the number
-     * field.
+     * Set to <code>false</code> to hide the clear button which clears the
+     * number field.
      *
      * @param clearButtonVisible
      *            <code>true</code> to set the button visible,
@@ -457,7 +466,7 @@ public class NumberField
 
     /**
      * Sets the value of this number field. If the new value is not equal to
-     * {@code getValue()}, fires a value change event. 
+     * {@code getValue()}, fires a value change event.
      *
      * @param value
      *            the new value
@@ -494,5 +503,35 @@ public class NumberField
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
         this.required = requiredIndicatorVisible;
+    }
+
+    private static class Formatter
+            implements SerializableFunction<Double, String> {
+
+        // Using Locale.ENGLISH to keep format independent of JVM locale
+        // settings. The value property always uses period as the decimal
+        // separator regardless of the browser locale.
+        private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
+                DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
+        private Formatter() {
+            decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+        }
+
+        @Override
+        public String apply(Double valueFromModel) {
+            return valueFromModel == null ? ""
+                    : decimalFormat.format(valueFromModel.doubleValue());
+        }
+
+        private Double parse(String valueFromClient) {
+            try {
+                return valueFromClient == null || valueFromClient.isEmpty()
+                        ? null
+                        : decimalFormat.parse(valueFromClient).doubleValue();
+            } catch (ParseException e) {
+                throw new NumberFormatException(valueFromClient);
+            }
+        }
     }
 }

@@ -15,8 +15,9 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import com.vaadin.flow.component.textfield.NumberField;
 import org.junit.Test;
+
+import com.vaadin.flow.component.textfield.NumberField;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -24,8 +25,9 @@ import static org.junit.Assert.assertNull;
 /**
  * Tests for the {@link NumberField}.
  */
-public class NumberFieldTest extends TextFieldTest{
+public class NumberFieldTest extends TextFieldTest {
 
+    @Override
     @Test
     public void setValueNull() {
         NumberField numberField = new NumberField();
@@ -33,6 +35,7 @@ public class NumberFieldTest extends TextFieldTest{
         numberField.setValue(null);
     }
 
+    @Override
     @Test
     public void initialValuePropertyValue() {
         NumberField numberField = new NumberField();
@@ -40,4 +43,23 @@ public class NumberFieldTest extends TextFieldTest{
                 numberField.getElement().getProperty("value"));
     }
 
+    @Test
+    public void setValue_valuePropertyFormatted() {
+        testValuePropertyFormatting(1.0d, "1");
+        testValuePropertyFormatting(2.0d, "2");
+        testValuePropertyFormatting(5.0d, "5");
+        testValuePropertyFormatting(9.0d, "9");
+        testValuePropertyFormatting(0.3d, "0.3");
+        testValuePropertyFormatting(0.5d, "0.5");
+        testValuePropertyFormatting(0.7d, "0.7");
+        testValuePropertyFormatting(21.4d, "21.4");
+        testValuePropertyFormatting(123456789.01d, "123456789.01");
+        testValuePropertyFormatting(-1.050d, "-1.05");
+    }
+
+    private void testValuePropertyFormatting(double value, String expected) {
+        final NumberField numberField = new NumberField();
+        numberField.setValue(value);
+        assertEquals(expected, numberField.getElement().getProperty("value"));
+    }
 }
