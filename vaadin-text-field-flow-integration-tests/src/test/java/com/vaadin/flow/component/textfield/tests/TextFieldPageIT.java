@@ -15,11 +15,8 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import com.vaadin.flow.component.radiobutton.testbench.RadioButtonGroupElement;
-import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.textfield.testbench.TextFieldElement;
-import com.vaadin.flow.testutil.AbstractComponentIT;
-import com.vaadin.flow.testutil.TestPath;
+import static com.vaadin.flow.data.value.ValueChangeMode.EAGER;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +25,11 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import static com.vaadin.flow.data.value.ValueChangeMode.EAGER;
+import com.vaadin.flow.component.radiobutton.testbench.RadioButtonGroupElement;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.testbench.TextFieldElement;
+import com.vaadin.flow.testutil.AbstractComponentIT;
+import com.vaadin.flow.testutil.TestPath;
 
 /**
  * Integration tests for {@link TextField}.
@@ -152,6 +153,20 @@ public class TextFieldPageIT extends AbstractComponentIT {
         Assert.assertTrue("TextField should be focused after the shortcut event is triggered.",
                 shortcutField.getAttribute("focused").equals("true")
                         || shortcutField.getAttribute("focused").equals(""));
+    }
+
+    @Test
+    public void assertHelperText() {
+        WebElement textFieldHelperText = findElement(
+                By.id("text-field-helper-text"));
+        Assert.assertEquals("Helper text test",
+                textFieldHelperText.getAttribute("helper-text"));
+
+        WebElement textFieldHelperComponent = findElement(
+                By.id("text-field-helper-component"));
+        WebElement icon = textFieldHelperComponent
+                .findElement(By.tagName("iron-icon"));
+        Assert.assertEquals("vaadin:info-circle-o", icon.getAttribute("icon"));
     }
 
     private void updateValues(WebElement textFieldValueDiv,

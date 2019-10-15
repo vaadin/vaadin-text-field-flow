@@ -15,6 +15,9 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import static org.junit.Assert.assertFalse;
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,9 +28,6 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.testbench.NumberFieldElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
-
-import static org.junit.Assert.assertFalse;
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
 
 /**
  * Integration tests for {@link NumberField}.
@@ -220,5 +220,19 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         Assert.assertTrue(
                 "The euro sign should be located on the right side of the text field",
                 spanX > middleX);
+    }
+
+    @Test
+    public void assertHelperText() {
+        WebElement numberHelperText = findElement(
+                By.id("number-field-helper-text"));
+        Assert.assertEquals("Helper text test",
+                numberHelperText.getAttribute("helper-text"));
+
+        WebElement numberHelperComponent = findElement(
+                By.id("number-field-helper-component"));
+        WebElement icon = numberHelperComponent
+                .findElement(By.tagName("iron-icon"));
+        Assert.assertEquals("vaadin:info-circle-o", icon.getAttribute("icon"));
     }
 }

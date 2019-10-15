@@ -15,19 +15,20 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.testbench.EmailFieldElement;
-import com.vaadin.flow.testutil.AbstractComponentIT;
-import com.vaadin.flow.testutil.TestPath;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeToBe;
+import com.vaadin.flow.component.textfield.EmailField;
+import com.vaadin.flow.component.textfield.testbench.EmailFieldElement;
+import com.vaadin.flow.testutil.AbstractComponentIT;
+import com.vaadin.flow.testutil.TestPath;
 
 /**
  * Integration tests for {@link EmailField}.
@@ -134,6 +135,21 @@ public class EmailFieldPageIT extends AbstractComponentIT {
         EmailFieldElement field = $(EmailFieldElement.class).id("clear-email-field");
         field.setValue("account@domain.com");
         String message = $("div").id("clear-message").getText();
-        Assert.assertEquals("Old value: ''. New value: 'account@domain.com'.", message);
+        Assert.assertEquals("Old value: ''. New value: 'account@domain.com'.",
+                message);
+    }
+
+    @Test
+    public void assertHelperText() {
+        WebElement emailHelperText = findElement(
+                By.id("email-field-helper-text"));
+        Assert.assertEquals("Helper text test",
+                emailHelperText.getAttribute("helper-text"));
+
+        WebElement emailHelperComponent = findElement(
+                By.id("email-field-helper-component"));
+        WebElement icon = emailHelperComponent
+                .findElement(By.tagName("iron-icon"));
+        Assert.assertEquals("vaadin:info-circle-o", icon.getAttribute("icon"));
     }
 }
