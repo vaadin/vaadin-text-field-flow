@@ -144,7 +144,7 @@ public class EmailFieldPageIT extends AbstractComponentIT {
         WebElement emailHelperText = findElement(
                 By.id("email-field-helper-text"));
         Assert.assertEquals("Helper text test",
-                emailHelperText.getAttribute("helper-text"));
+                emailHelperText.getAttribute("helperText"));
 
         WebElement emailHelperComponent = findElement(
                 By.id("email-field-helper-component"));

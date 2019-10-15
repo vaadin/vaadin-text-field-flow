@@ -157,7 +157,7 @@ public class TextAreaPageIT extends AbstractComponentIT {
         WebElement textAreaHelperText = findElement(
                 By.id("text-area-helper-text"));
         Assert.assertEquals("Helper text test",
-                textAreaHelperText.getAttribute("helper-text"));
+                textAreaHelperText.getAttribute("helperText"));
 
         WebElement textAreaHelperComponent = findElement(
                 By.id("text-area-helper-component"));

@@ -146,7 +146,7 @@ public class PasswordFieldPageIT extends AbstractComponentIT {
         WebElement passwordHelperText = findElement(
                 By.id("password-helper-text"));
         Assert.assertEquals("Helper text test",
-                passwordHelperText.getAttribute("helper-text"));
+                passwordHelperText.getAttribute("helperText"));
 
         WebElement passwordHelperComponent = findElement(
                 By.id("password-helper-component"));

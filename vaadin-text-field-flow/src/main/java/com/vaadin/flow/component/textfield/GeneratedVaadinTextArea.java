@@ -508,7 +508,7 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
      * @return the {@code helper-text} property from the webcomponent
      */
     protected String getHelperTextString() {
-        return getElement().getProperty("helper-text");
+        return getElement().getProperty("helperText");
     }
 
     /**
@@ -523,7 +523,7 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
      *            the String value to set
      */
     protected void setHelperText(String helperText) {
-        getElement().setProperty("helper-text",
+        getElement().setProperty("helperText",
                 helperText == null ? "" : helperText);
     }
 

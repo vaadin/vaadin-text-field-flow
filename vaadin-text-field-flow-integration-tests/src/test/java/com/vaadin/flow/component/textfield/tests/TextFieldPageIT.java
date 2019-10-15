@@ -160,7 +160,7 @@ public class TextFieldPageIT extends AbstractComponentIT {
         WebElement textFieldHelperText = findElement(
                 By.id("text-field-helper-text"));
         Assert.assertEquals("Helper text test",
-                textFieldHelperText.getAttribute("helper-text"));
+                textFieldHelperText.getAttribute("helperText"));
 
         WebElement textFieldHelperComponent = findElement(
                 By.id("text-field-helper-component"));

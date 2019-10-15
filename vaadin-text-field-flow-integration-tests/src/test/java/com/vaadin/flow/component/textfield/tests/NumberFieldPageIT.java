@@ -227,7 +227,7 @@ public class NumberFieldPageIT extends AbstractComponentIT {
         WebElement numberHelperText = findElement(
                 By.id("number-field-helper-text"));
         Assert.assertEquals("Helper text test",
-                numberHelperText.getAttribute("helper-text"));
+                numberHelperText.getAttribute("helperText"));
 
         WebElement numberHelperComponent = findElement(
                 By.id("number-field-helper-component"));
