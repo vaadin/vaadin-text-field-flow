@@ -242,9 +242,23 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         return getPlaceholderString();
     }
 
+    @Override
+    public void setHelperText(String helperText) {
+        super.setHelperText(helperText);
+    }
+
     /**
-     * Specifies if the field value gets automatically selected when
-     * the field gains focus.
+     * String used for the helper text.
+     *
+     * @return the {@code helper-text} property from the webcomponent
+     */
+    public String getHelperText() {
+        return getHelperTextString();
+    }
+
+    /**
+     * Specifies if the field value gets automatically selected when the field
+     * gains focus.
      *
      * @return <code>true</code> if autoselect is active, <code>false</code>
      *         otherwise
