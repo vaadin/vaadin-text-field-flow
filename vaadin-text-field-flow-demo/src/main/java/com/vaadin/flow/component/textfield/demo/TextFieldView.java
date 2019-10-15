@@ -55,6 +55,7 @@ public class TextFieldView extends DemoView {
         textFieldAutoselect();
         textFieldClearButton();
         textFieldFocusShortcut();
+        textFieldHelperTextString();
         passwordFieldBasic(); // PasswordField
         passwordFieldHideRevealButton();
         emailFieldBasic(); // EmailField
@@ -73,6 +74,7 @@ public class TextFieldView extends DemoView {
         customValidation();
         themeVariantsTextAlign(); // Theme Variants
         themeVariantsSmallSize();
+        themeVariantsHelperAboveField();
         styling(); // Styling
     }
 
@@ -156,6 +158,24 @@ public class TextFieldView extends DemoView {
 
         textField.setId("shortcut-field");
         this.addCard("Text field", "Focus shortcut usage", textField);
+    }
+
+    private void textFieldHelperTextString() {
+        // begin-source-example
+        // source-example-heading: Helper text usage
+        TextField hintTextField = new TextField("Username");
+        hintTextField.setHelperText("Typically \"firstname.lastname\"");
+
+        TextField hintComponentField = new TextField("Username");
+        Icon icon = VaadinIcon.INFO_CIRCLE_O.create();
+        hintComponentField.setHelperComponent(new HorizontalLayout(icon,
+                new Span("Sample helper text info")));
+        // end-source-example
+        icon.getStyle().set("width", "16px");
+        hintTextField.setId("helpertext-textfield");
+        hintComponentField.setId("helpercomponent-textfield");
+        this.addCard("Text field", "Helper text usage", hintTextField,
+                hintComponentField);
     }
 
     private void passwordFieldBasic() {
@@ -446,19 +466,34 @@ public class TextFieldView extends DemoView {
         addCard("Theme Variants", "Small size", textField);
     }
 
+    private void themeVariantsHelperAboveField() {
+        // begin-source-example
+        // source-example-heading: Helper above field
+        TextField helperTextBelow = new TextField("Label");
+        helperTextBelow.setHelperText("Helper below field");
+
+        TextField helperTextAbove = new TextField("Label");
+        helperTextAbove.setHelperText("Helper above field");
+        helperTextAbove
+                .addThemeVariants(TextFieldVariant.LUMO_HELPER_ABOVE_FIELD);
+        // end-source-example
+        addCard("Theme Variants", "Helper above field",
+                new HorizontalLayout(helperTextBelow, helperTextAbove));
+    }
+
     private void styling() {
 
         Div firstDiv = new Div();
         firstDiv.setText(
                 "To read about styling you can read the related tutorial in");
-        Anchor firstAnchor = new Anchor("https://vaadin.com/docs/flow/theme/using-component-themes.html",
+        Anchor firstAnchor = new Anchor(
+                "https://vaadin.com/docs/flow/theme/using-component-themes.html",
                 "Using Component Themes");
 
         Div secondDiv = new Div();
         secondDiv.setText("To know about styling in html you can read the ");
-        Anchor secondAnchor = new Anchor(
-                "https://vaadin.com/components/" +
-                        "vaadin-text-field/html-examples/text-field-styling-demos",
+        Anchor secondAnchor = new Anchor("https://vaadin.com/components/"
+                + "vaadin-text-field/html-examples/text-field-styling-demos",
                 "HTML Styling Demos");
 
         HorizontalLayout firstHorizontalLayout = new HorizontalLayout(firstDiv,
@@ -473,4 +508,3 @@ public class TextFieldView extends DemoView {
                 secondHorizontalLayout);
     }
 }
-
