@@ -34,7 +34,7 @@ public class PasswordField
         extends GeneratedVaadinPasswordField<PasswordField, String>
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
-        HasAutocomplete, HasAutocapitalize, HasAutocorrect {
+        HasAutocomplete, HasAutocapitalize, HasAutocorrect, HasHelper {
     private ValueChangeMode currentMode;
 
     private boolean isConnectorAttached;
@@ -223,6 +223,20 @@ public class PasswordField
      */
     public String getPlaceholder() {
         return getPlaceholderString();
+    }
+
+    @Override
+    public void setHelperText(String helperText) {
+        super.setHelperText(helperText);
+    }
+
+    /**
+     * String used for the helper text.
+     *
+     * @return the {@code helper-text} property from the webcomponent
+     */
+    public String getHelperText() {
+        return getHelperTextString();
     }
 
     @Override
