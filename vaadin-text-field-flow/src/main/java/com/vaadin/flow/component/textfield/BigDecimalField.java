@@ -23,14 +23,16 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.InputNotifier;
 import com.vaadin.flow.component.KeyNotifier;
+import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
-@JavaScript("frontend://bigDecimalFieldConnector.js")
-@JsModule("./bigDecimalFieldConnector.js")
+@Tag("vaadin-big-decimal-field")
+@JavaScript("frontend://vaadin-big-decimal-field.js")
+@JsModule("./vaadin-big-decimal-field.js")
 public class BigDecimalField
         extends GeneratedVaadinTextField<BigDecimalField, BigDecimal>
         implements HasSize, HasValidation, HasValueChangeMode,
@@ -65,9 +67,6 @@ public class BigDecimalField
     public BigDecimalField() {
         super(null, null, String.class, PARSER, FORMATTER);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
-
-        addAttachListener(e -> getElement().executeJs(
-                "window.Vaadin.Flow.bigDecimalFieldConnector.preventInvalidInput(this)"));
 
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
