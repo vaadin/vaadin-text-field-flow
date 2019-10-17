@@ -39,6 +39,10 @@ public class ValueChangeModeIT extends AbstractComponentIT {
     private WebElement textField;
     private WebElement textArea;
     private WebElement passwordField;
+    private WebElement emailField;
+    private WebElement numberField;
+    private WebElement integerField;
+    private WebElement bigDecimalField;
 
     @Before
     public void init() {
@@ -48,6 +52,10 @@ public class ValueChangeModeIT extends AbstractComponentIT {
         textField = findElement(By.tagName("vaadin-text-field"));
         textArea = findElement(By.tagName("vaadin-text-area"));
         passwordField = findElement(By.tagName("vaadin-password-field"));
+        emailField = findElement(By.tagName("vaadin-email-field"));
+        numberField = findElement(By.tagName("vaadin-number-field"));
+        integerField = findElement(By.tagName("vaadin-integer-field"));
+        bigDecimalField = findElement(By.tagName("vaadin-big-decimal-field"));
     }
 
     @Test
@@ -66,9 +74,33 @@ public class ValueChangeModeIT extends AbstractComponentIT {
         testValueChangeModes(passwordField, "passwordfield");
     }
 
+    @Test
+    public void testValueChangeModesForEmailField()
+            throws InterruptedException {
+        testValueChangeModes(emailField, "emailfield");
+    }
+
+    @Test
+    public void testValueChangeModesForNumberField()
+            throws InterruptedException {
+        testValueChangeModes(numberField, "numberfield");
+    }
+
+    @Test
+    public void testValueChangeModesForIntegerField()
+            throws InterruptedException {
+        testValueChangeModes(integerField, "integerfield");
+    }
+
+    @Test
+    public void testValueChangeModesForBigDecimalField()
+            throws InterruptedException {
+        testValueChangeModes(bigDecimalField, "bigdecimalfield");
+    }
+
     private void testValueChangeModes(WebElement field, String componentName)
             throws InterruptedException {
-        field.sendKeys("a");
+        field.sendKeys("1");
         assertMessageNotUpdated(
                 "By default the value change events should not be sent on every key stroke (ValueChangeMode should be ON_CHANGE)");
 
@@ -80,7 +112,7 @@ public class ValueChangeModeIT extends AbstractComponentIT {
                     "By default the value change events should be sent when clicking enter (ValueChangeMode should be ON_CHANGE)");
         }
 
-        field.sendKeys("a");
+        field.sendKeys("1");
         assertMessageNotUpdated(
                 "By default the value change events should not be sent on every key stroke (ValueChangeMode should be ON_CHANGE)");
         blur();
@@ -88,7 +120,7 @@ public class ValueChangeModeIT extends AbstractComponentIT {
 
         clickButton(componentName + "-on-blur");
 
-        field.sendKeys("a");
+        field.sendKeys("1");
         assertMessageNotUpdated(
                 "The value change events should not be sent on every key stroke when using ValueChangeMode.ON_BLUR");
 
@@ -102,7 +134,7 @@ public class ValueChangeModeIT extends AbstractComponentIT {
 
         clickButton(componentName + "-eager");
 
-        field.sendKeys("a");
+        field.sendKeys("1");
         assertMessageUpdated(
                 "The value change events should be sent on every key stroke when using ValueChangeMode.EAGER");
         blur();
@@ -119,12 +151,12 @@ public class ValueChangeModeIT extends AbstractComponentIT {
     private void testValueChangeTimeout(WebElement field, String componentName)
             throws InterruptedException {
         clickButton(componentName + "-lazy");
-        field.sendKeys("a");
+        field.sendKeys("1");
         assertMessageNotUpdated(
                 "The value change event should not be sent on first key stroke when using ValueChangeMode.LAZY");
 
         for (int i = 0; i < 2; i++) {
-            field.sendKeys("a");
+            field.sendKeys("1");
             Thread.sleep(800);
             assertMessageNotUpdated(
                     "The value change event should not be sent until timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
@@ -134,11 +166,11 @@ public class ValueChangeModeIT extends AbstractComponentIT {
                 "The value change event should be sent when timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
 
         clickButton(componentName + "-timeout");
-        field.sendKeys("a");
+        field.sendKeys("1");
         assertMessageUpdated(
                 "The value change event should be sent on first key stroke when using ValueChangeMode.TIMEOUT");
 
-        field.sendKeys("a");
+        field.sendKeys("1");
         Thread.sleep(800);
         assertMessageNotUpdated(
                 "The value change event should not be sent until timeout elapsed since last event when using ValueChangeMode.TIMEOUT");
