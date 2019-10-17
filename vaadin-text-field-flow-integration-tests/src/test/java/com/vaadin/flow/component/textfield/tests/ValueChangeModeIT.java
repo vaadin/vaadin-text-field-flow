@@ -15,8 +15,6 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import com.vaadin.flow.testutil.AbstractComponentIT;
-import com.vaadin.flow.testutil.TestPath;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,6 +22,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.vaadin.flow.testutil.AbstractComponentIT;
+import com.vaadin.flow.testutil.TestPath;
 
 /**
  * Integration tests for changing the ValueChangeMode of TextField, TextArea and
@@ -60,11 +61,13 @@ public class ValueChangeModeIT extends AbstractComponentIT {
     }
 
     @Test
-    public void testValueChangeModesForPasswordField() throws InterruptedException {
+    public void testValueChangeModesForPasswordField()
+            throws InterruptedException {
         testValueChangeModes(passwordField, "passwordfield");
     }
 
-    private void testValueChangeModes(WebElement field, String componentName) throws InterruptedException {
+    private void testValueChangeModes(WebElement field, String componentName)
+            throws InterruptedException {
         field.sendKeys("a");
         assertMessageNotUpdated(
                 "By default the value change events should not be sent on every key stroke (ValueChangeMode should be ON_CHANGE)");
@@ -106,13 +109,15 @@ public class ValueChangeModeIT extends AbstractComponentIT {
         assertMessageNotUpdated(
                 "The value change event should not be sent again on blur, because it was already sent eagerly when typing");
 
-        WebElement changeTimeoutField = findElement(By.id(componentName + "-set-change-timeout"));
+        WebElement changeTimeoutField = findElement(
+                By.id(componentName + "-set-change-timeout"));
         changeTimeoutField.sendKeys("1000");
         blur();
         testValueChangeTimeout(field, componentName);
     }
 
-    private void testValueChangeTimeout(WebElement field, String componentName) throws InterruptedException {
+    private void testValueChangeTimeout(WebElement field, String componentName)
+            throws InterruptedException {
         clickButton(componentName + "-lazy");
         field.sendKeys("a");
         assertMessageNotUpdated(
@@ -162,8 +167,7 @@ public class ValueChangeModeIT extends AbstractComponentIT {
     }
 
     private void waitUntilMessageUpdated(long timeout, String failMessage) {
-        new WebDriverWait(getDriver(), timeout)
-                .withMessage(failMessage)
+        new WebDriverWait(getDriver(), timeout).withMessage(failMessage)
                 .until(webDriver -> isMessageUpdated());
     }
 }
