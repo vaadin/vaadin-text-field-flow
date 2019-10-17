@@ -25,7 +25,7 @@
       ready() {
         super.ready();
         this.inputElement.setAttribute('inputmode', 'numeric');
-        this._enabledCharPattern = "[\\d-+.eE]";
+        this._enabledCharPattern = "[\\d-+.]";
       }
 
     }
