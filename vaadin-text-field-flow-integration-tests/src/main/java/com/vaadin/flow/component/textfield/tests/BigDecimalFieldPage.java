@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 
 import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.router.Route;
@@ -35,7 +36,31 @@ public class BigDecimalFieldPage extends Div {
         BigDecimalField field = new BigDecimalField();
         field.addValueChangeListener(this::logValueChangeEvent);
 
-        add(field, messageContainer);
+        NativeButton setValueWithScale = new NativeButton("set value",
+                e -> field.setValue(new BigDecimal("1.2").setScale(3)));
+        setValueWithScale.setId("set-value-with-scale");
+
+        NativeButton toggleReadOnly = new NativeButton("toggle read-only",
+                e -> field.setReadOnly(!field.isReadOnly()));
+        toggleReadOnly.setId("toggle-read-only");
+
+        NativeButton toggleRequired = new NativeButton("toggle required",
+                e -> field.setRequiredIndicatorVisible(
+                        !field.isRequiredIndicatorVisible()));
+        toggleRequired.setId("toggle-required");
+
+        NativeButton toggleEnabled = new NativeButton("toggle enabled",
+                e -> field.setEnabled(!field.isEnabled()));
+        toggleEnabled.setId("toggle-enabled");
+
+        BigDecimalField fieldWithClearButton = new BigDecimalField();
+        fieldWithClearButton.setClearButtonVisible(true);
+        fieldWithClearButton.setId("clear-big-decimal-field");
+        fieldWithClearButton.addValueChangeListener(this::logValueChangeEvent);
+
+        Div buttons = new Div(setValueWithScale, toggleReadOnly, toggleRequired,
+                toggleEnabled);
+        add(field, buttons, fieldWithClearButton, messageContainer);
     }
 
     private void logValueChangeEvent(
