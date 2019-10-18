@@ -68,7 +68,7 @@ public class BigDecimalField
 
     private static final SerializableFunction<BigDecimal, String> FORMATTER = valueFromModel -> valueFromModel == null
             ? ""
-            : valueFromModel.toString();
+            : valueFromModel.toPlainString();
 
     /**
      * Constructs an empty {@code BigDecimalField}.
