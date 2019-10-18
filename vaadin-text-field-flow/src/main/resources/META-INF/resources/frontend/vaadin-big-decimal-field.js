@@ -16,7 +16,7 @@
 (function() {
   customElements.whenDefined('vaadin-text-field').then(() => {
 
-    class BigDecimalFieldElement extends Vaadin.TextFieldElement {
+    class BigDecimalFieldElement extends customElements.get('vaadin-text-field') {
 
       static get is() {
         return 'vaadin-big-decimal-field';
@@ -25,18 +25,12 @@
       ready() {
         super.ready();
         this.inputElement.setAttribute('inputmode', 'numeric');
-        this._enabledCharPattern = "[\\d-+.]";
+        this._enabledCharPattern = '[\\d-+.]';
       }
 
     }
 
     customElements.define(BigDecimalFieldElement.is, BigDecimalFieldElement);
-
-    /**
-     * @namespace Vaadin
-     */
-    window.Vaadin = window.Vaadin || {};
-    Vaadin.BigDecimalFieldElement = BigDecimalFieldElement;
 
   });
 })();
