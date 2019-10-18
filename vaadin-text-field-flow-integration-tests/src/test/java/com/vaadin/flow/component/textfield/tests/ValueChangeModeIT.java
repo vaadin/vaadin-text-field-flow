@@ -120,12 +120,12 @@ public class ValueChangeModeIT extends AbstractComponentIT {
 
         for (int i = 0; i < 2; i++) {
             field.sendKeys("a");
-            Thread.sleep(800);
+            Thread.sleep(600);
             assertMessageNotUpdated(
                     "The value change event should not be sent until timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
         }
 
-        waitUntilMessageUpdated(200,
+        waitUntilMessageUpdated(400,
                 "The value change event should be sent when timeout elapsed since last keystroke when using ValueChangeMode.LAZY");
 
         clickButton(componentName + "-timeout");
@@ -134,11 +134,11 @@ public class ValueChangeModeIT extends AbstractComponentIT {
                 "The value change event should be sent on first key stroke when using ValueChangeMode.TIMEOUT");
 
         field.sendKeys("a");
-        Thread.sleep(800);
+        Thread.sleep(600);
         assertMessageNotUpdated(
                 "The value change event should not be sent until timeout elapsed since last event when using ValueChangeMode.TIMEOUT");
 
-        waitUntilMessageUpdated(200,
+        waitUntilMessageUpdated(400,
                 "The value change event should be sent when timeout elapsed since last event when using ValueChangeMode.TIMEOUT");
     }
 
