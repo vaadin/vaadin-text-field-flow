@@ -30,6 +30,15 @@ import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
 
+/**
+ * Server-side component for the {@code vaadin-big-decimal-field} element. This
+ * field uses {@link BigDecimal} as the server-side value type, which allows
+ * handling decimal numbers with high precision. The component also prevents
+ * users from entering characters which can't be used in a decimal number, such
+ * as alphabets.
+ *
+ * @author Vaadin Ltd.
+ */
 @Tag("vaadin-big-decimal-field")
 @JavaScript("frontend://vaadin-big-decimal-field.js")
 @JsModule("./vaadin-big-decimal-field.js")
