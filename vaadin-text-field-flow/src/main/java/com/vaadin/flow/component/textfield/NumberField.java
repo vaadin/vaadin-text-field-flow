@@ -210,19 +210,16 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      *
      * @return the {@code preventInvalidInput} property from the webcomponent
      */
-    @Deprecated
     public boolean isPreventInvalidInput() {
         return isPreventInvalidInputBoolean();
     }
 
     @Override
-    @Deprecated
     public void setPreventInvalidInput(boolean preventInvalidInput) {
         super.setPreventInvalidInput(preventInvalidInput);
     }
 
     @Override
-    @Deprecated
     public void setPattern(String pattern) {
         super.setPattern(pattern);
     }
@@ -233,8 +230,8 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
      *
      * @return the {@code pattern} property from the webcomponent
      */
-    @Deprecated
     public String getPattern() {
         return getPatternString();
     }
+
 }
