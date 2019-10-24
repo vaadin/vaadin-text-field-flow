@@ -154,7 +154,7 @@ import com.vaadin.flow.shared.Registration;
 @JsModule("@vaadin/vaadin-text-field/src/vaadin-text-area.js")
 public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<R, T>, T>
         extends AbstractSinglePropertyField<R, T>
-        implements HasStyle, HasHelper, Focusable<R>, HasTheme {
+        implements HasStyle, Focusable<R>, HasTheme {
 
     /**
      * Adds theme variants to the component.
