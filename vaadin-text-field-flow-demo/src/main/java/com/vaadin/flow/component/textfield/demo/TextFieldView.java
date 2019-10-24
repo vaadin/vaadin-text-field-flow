@@ -283,7 +283,7 @@ public class TextFieldView extends DemoView {
 
         bigDecimalField.setValue(new BigDecimal(15).setScale(2));
         // end-source-example
-        addCard("Big decimal field", "Big decimal field", bigDecimalField, tax);
+        addCard("Number field", "Big decimal field", bigDecimalField, tax);
     }
 
     private void textAreaBasic() {
