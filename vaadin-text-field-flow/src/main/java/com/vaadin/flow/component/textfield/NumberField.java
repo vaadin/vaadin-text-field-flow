@@ -18,6 +18,11 @@ package com.vaadin.flow.component.textfield;
 
 import com.vaadin.flow.function.SerializableFunction;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.util.Locale;
+
 /**
  * Server-side component for the {@code vaadin-number-field} element.
  *
@@ -25,20 +30,11 @@ import com.vaadin.flow.function.SerializableFunction;
  */
 public class NumberField extends AbstractNumberField<NumberField, Double> {
 
-    private static final SerializableFunction<String, Double> PARSER = valueFromClient -> valueFromClient == null
-            || valueFromClient.isEmpty() ? null
-                    : Double.parseDouble(valueFromClient);
-
-    private static final SerializableFunction<Double, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toString();
-
     /**
      * Constructs an empty {@code NumberField}.
      */
     public NumberField() {
-        super(PARSER, FORMATTER, Double.NEGATIVE_INFINITY,
-                Double.POSITIVE_INFINITY);
+        this(new Formatter());
     }
 
     /**
@@ -120,6 +116,17 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         addValueChangeListener(listener);
     }
 
+    /**
+     * Constructs an empty {@code NumberField}.
+     *
+     * @param formatter
+     *            Formatter for the field.
+     */
+    private NumberField(Formatter formatter) {
+        super(formatter::parse, formatter, Double.NEGATIVE_INFINITY,
+                Double.POSITIVE_INFINITY);
+    }
+
     @Override
     public void setMin(double min) {
         super.setMin(min);
@@ -148,8 +155,22 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         return getMaxDouble();
     }
 
+    /**
+     * Sets the allowed number intervals of the field. This specifies how much
+     * the value will be increased/decreased. It is also used to
+     * invalidate the field, if the value doesn't align with the specified step
+     * and {@link #setMin(double) min} (if specified by user).
+     *
+     * @param step
+     *            the new step to set
+     * @throws IllegalArgumentException
+     *             if the argument is less or equal to zero.
+     */
     @Override
     public void setStep(double step) {
+        if (step <= 0) {
+            throw new IllegalArgumentException("The step cannot be less or equal to zero.");
+        }
         super.setStep(step);
     }
 
@@ -234,4 +255,33 @@ public class NumberField extends AbstractNumberField<NumberField, Double> {
         return getPatternString();
     }
 
+    private static class Formatter
+            implements SerializableFunction<Double, String> {
+
+        // Using Locale.ENGLISH to keep format independent of JVM locale
+        // settings. The value property always uses period as the decimal
+        // separator regardless of the browser locale.
+        private final DecimalFormat decimalFormat = new DecimalFormat("#.#",
+                DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+
+        private Formatter() {
+            decimalFormat.setMaximumFractionDigits(Integer.MAX_VALUE);
+        }
+
+        @Override
+        public String apply(Double valueFromModel) {
+            return valueFromModel == null ? ""
+                    : decimalFormat.format(valueFromModel.doubleValue());
+        }
+
+        private Double parse(String valueFromClient) {
+            try {
+                return valueFromClient == null || valueFromClient.isEmpty()
+                        ? null
+                        : decimalFormat.parse(valueFromClient).doubleValue();
+            } catch (ParseException e) {
+                throw new NumberFormatException(valueFromClient);
+            }
+        }
+    }
 }

@@ -52,6 +52,16 @@ public class NumberFieldTest extends TextFieldTest {
                 field.getElement().getProperty("value"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void assertStepIsNotNegative() {
+        field.setStep(-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void assertStepGreaterThanZero() {
+        field.setStep(0);
+    }
+
     @Test
     public void assertDefaultValuesForMinMaxStep() {
         Assert.assertEquals(
@@ -153,5 +163,24 @@ public class NumberFieldTest extends TextFieldTest {
             Assert.assertTrue("Expected field to be invalid with value " + v,
                     field.isInvalid());
         });
+    }
+
+    public void setValue_valuePropertyFormatted() {
+        testValuePropertyFormatting(1.0d, "1");
+        testValuePropertyFormatting(2.0d, "2");
+        testValuePropertyFormatting(5.0d, "5");
+        testValuePropertyFormatting(9.0d, "9");
+        testValuePropertyFormatting(0.3d, "0.3");
+        testValuePropertyFormatting(0.5d, "0.5");
+        testValuePropertyFormatting(0.7d, "0.7");
+        testValuePropertyFormatting(21.4d, "21.4");
+        testValuePropertyFormatting(123456789.01d, "123456789.01");
+        testValuePropertyFormatting(-1.050d, "-1.05");
+    }
+
+    private void testValuePropertyFormatting(double value, String expected) {
+        final NumberField numberField = new NumberField();
+        numberField.setValue(value);
+        assertEquals(expected, numberField.getElement().getProperty("value"));
     }
 }
