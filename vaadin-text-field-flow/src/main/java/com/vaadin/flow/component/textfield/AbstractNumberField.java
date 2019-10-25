@@ -16,6 +16,7 @@
 
 package com.vaadin.flow.component.textfield;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import com.vaadin.flow.component.CompositionNotifier;
@@ -372,7 +373,10 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
         // in the step validation.
         double min = minSetByUser ? getMinDouble() : 0.0;
 
-        return (value.doubleValue() - min) % step == 0;
+        // (value - min) % step == 0
+        return new BigDecimal(String.valueOf(value))
+                .subtract(new BigDecimal(min)).remainder(new BigDecimal(step))
+                .compareTo(BigDecimal.ZERO) == 0;
     }
 
     @Override
