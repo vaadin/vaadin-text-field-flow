@@ -375,8 +375,8 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
 
         // (value - stepBasis) % step == 0
         return new BigDecimal(String.valueOf(value))
-                .subtract(new BigDecimal(stepBasis))
-                .remainder(new BigDecimal(step))
+                .subtract(BigDecimal.valueOf(stepBasis))
+                .remainder(BigDecimal.valueOf(step))
                 .compareTo(BigDecimal.ZERO) == 0;
     }
 
