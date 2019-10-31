@@ -79,6 +79,10 @@ public class BigDecimalField
      */
     public BigDecimalField() {
         super(null, null, String.class, PARSER, FORMATTER);
+
+        // workaround for https://github.com/vaadin/flow/issues/3496
+        setInvalid(false);
+
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
         addValueChangeListener(e -> validate());
