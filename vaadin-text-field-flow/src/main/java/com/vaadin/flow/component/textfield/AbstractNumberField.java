@@ -89,6 +89,8 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
         this.step = 1.0;
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+
+        addValueChangeListener(e -> validate());
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
             if (e.isFromClient() && !e.isInvalid()) {
@@ -335,12 +337,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     @Override
     protected double getStepDouble() {
         return step;
-    }
-
-    @Override
-    protected void setModelValue(T newModelValue, boolean fromClient) {
-        super.setModelValue(newModelValue, fromClient);
-        validate();
     }
 
     @Override
