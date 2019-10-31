@@ -50,6 +50,10 @@ public class EmailField
      */
     public EmailField() {
         super("", "", false);
+
+        // workaround for https://github.com/vaadin/flow/issues/3496
+        setInvalid(false);
+
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
         addValueChangeListener(e -> validate());

@@ -82,6 +82,9 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
             double absoluteMax) {
         super(null, null, String.class, parser, formatter);
 
+        // workaround for https://github.com/vaadin/flow/issues/3496
+        setInvalid(false);
+
         // Not setting these defaults to the web component, so it will have
         // undefined as min and max
         this.min = absoluteMin;
