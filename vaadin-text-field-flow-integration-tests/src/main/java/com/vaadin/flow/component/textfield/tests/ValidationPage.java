@@ -32,15 +32,13 @@ public class ValidationPage extends Div {
         binder.forField(field)
                 .withValidator(value -> value.length() > 1, "binder")
                 .bind(Person::getName, Person::setName);
+        binder.setBean(new Person());
+
         add(field);
     }
 
     public static class Person {
         private String name;
-
-        public Person(String name) {
-            this.name = name;
-        }
 
         public String getName() {
             return name;
