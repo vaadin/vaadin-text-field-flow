@@ -47,10 +47,12 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
     public TextField() {
         super("", "", false);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+
+        addValueChangeListener(e -> validate());
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
-            if(e.isFromClient() && !e.isInvalid()) {
-                setInvalid(getValidationSupport().isInvalid(getValue()));
+            if (e.isFromClient() && !e.isInvalid()) {
+                validate();
             }
         });
     }
@@ -451,12 +453,6 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
     }
 
     @Override
-    protected void setModelValue(String newModelValue, boolean fromClient) {
-        super.setModelValue(newModelValue, fromClient);
-        setInvalid(getValidationSupport().isInvalid(newModelValue));
-    }
-
-    @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
         if (!isConnectorAttached) {
@@ -466,5 +462,16 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
         getValidationSupport().setRequired(requiredIndicatorVisible);
+    }
+
+    /**
+     * Performs server-side validation of the current value and the validation
+     * constraints of the field, such as {@link #setPattern(String)}. This is
+     * needed because it is possible to circumvent the client-side validation
+     * constraints using browser development tools.
+     */
+    @Override
+    protected void validate() {
+        setInvalid(getValidationSupport().isInvalid(getValue()));
     }
 }
