@@ -38,10 +38,23 @@
         return 'vaadin-big-decimal-field';
       }
 
+      static get properties() {
+        return {
+          _decimalSeparator: {
+            type: String,
+            value: '.',
+            observer: '__decimalSeparatorChanged'
+          }
+        }
+      }
+
       ready() {
         super.ready();
         this.inputElement.setAttribute('inputmode', 'numeric');
-        this._enabledCharPattern = '[\\d-+.]';
+      }
+
+      __decimalSeparatorChanged(separator) {
+        this._enabledCharPattern = '[\\d-+' + separator + ']';
       }
 
     }

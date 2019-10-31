@@ -16,7 +16,9 @@
 package com.vaadin.flow.component.textfield;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormatSymbols;
 import java.util.Objects;
+import java.util.Optional;
 
 import com.vaadin.flow.component.CompositionNotifier;
 import com.vaadin.flow.component.HasSize;
@@ -24,6 +26,7 @@ import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.InputNotifier;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.data.value.HasValueChangeMode;
@@ -59,12 +62,21 @@ public class BigDecimalField
 
     private boolean required;
 
+    private static char getDecimalSeparatorFromUILocale() {
+        return Optional.of(UI.getCurrent())
+                .map(ui -> new DecimalFormatSymbols(ui.getLocale())
+                        .getDecimalSeparator())
+                .orElse('.');
+    }
+
     private static final SerializableFunction<String, BigDecimal> PARSER = valueFromClient -> {
         if (valueFromClient == null || valueFromClient.isEmpty()) {
             return null;
         }
+        char decimalSeparator = getDecimalSeparatorFromUILocale();
         try {
-            return new BigDecimal(valueFromClient);
+            return new BigDecimal(
+                    valueFromClient.replace(decimalSeparator, '.'));
         } catch (NumberFormatException e) {
             return null;
         }
@@ -72,7 +84,8 @@ public class BigDecimalField
 
     private static final SerializableFunction<BigDecimal, String> FORMATTER = valueFromModel -> valueFromModel == null
             ? ""
-            : valueFromModel.toPlainString();
+            : valueFromModel.toPlainString().replace('.',
+                    getDecimalSeparatorFromUILocale());
 
     /**
      * Constructs an empty {@code BigDecimalField}.
@@ -87,6 +100,9 @@ public class BigDecimalField
                 validate();
             }
         });
+        getElement().getNode()
+                .runWhenAttached(ui -> setClientSideDecimalSeparator(
+                        getDecimalSeparatorFromUILocale()));
     }
 
     /**
@@ -407,5 +423,13 @@ public class BigDecimalField
         RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
                 this);
         this.required = requiredIndicatorVisible;
+    }
+
+    /**
+     * Updates the invalid input prevention to accept only the provided decimal
+     * separator.
+     */
+    private void setClientSideDecimalSeparator(char decimalSeparator) {
+        getElement().setProperty("_decimalSeparator", decimalSeparator + "");
     }
 }
