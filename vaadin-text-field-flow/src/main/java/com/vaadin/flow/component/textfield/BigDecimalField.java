@@ -81,6 +81,7 @@ public class BigDecimalField
         super(null, null, String.class, PARSER, FORMATTER);
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
+        addValueChangeListener(e -> validate());
         addInvalidChangeListener(e -> {
             // If invalid is updated from client to false, check it
             if (e.isFromClient() && !e.isInvalid()) {
@@ -377,12 +378,6 @@ public class BigDecimalField
     @Override
     public BigDecimal getValue() {
         return super.getValue();
-    }
-
-    @Override
-    protected void setModelValue(BigDecimal newModelValue, boolean fromClient) {
-        super.setModelValue(newModelValue, fromClient);
-        validate();
     }
 
     /**
