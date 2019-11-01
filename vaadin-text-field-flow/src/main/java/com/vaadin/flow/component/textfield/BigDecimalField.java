@@ -63,7 +63,7 @@ public class BigDecimalField
     private boolean required;
 
     private static char getDecimalSeparatorFromUILocale() {
-        return Optional.of(UI.getCurrent())
+        return Optional.ofNullable(UI.getCurrent())
                 .map(ui -> new DecimalFormatSymbols(ui.getLocale())
                         .getDecimalSeparator())
                 .orElse('.');
