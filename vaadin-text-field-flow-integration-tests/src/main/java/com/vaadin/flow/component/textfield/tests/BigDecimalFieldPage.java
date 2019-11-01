@@ -19,7 +19,6 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 import com.vaadin.flow.component.AbstractField.ComponentValueChangeEvent;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Paragraph;
@@ -55,34 +54,18 @@ public class BigDecimalFieldPage extends Div {
                 e -> field.setEnabled(!field.isEnabled()));
         toggleEnabled.setId("toggle-enabled");
 
+        NativeButton setFrenchLocale = new NativeButton("Set French locale",
+                e -> field.setLocale(Locale.FRENCH));
+        setFrenchLocale.setId("set-french-locale");
+
         BigDecimalField fieldWithClearButton = new BigDecimalField();
         fieldWithClearButton.setClearButtonVisible(true);
         fieldWithClearButton.setId("clear-big-decimal-field");
         fieldWithClearButton.addValueChangeListener(this::logValueChangeEvent);
 
-        NativeButton addFieldWithFrenchLocale = new NativeButton(
-                "Set French locale and add new field",
-                e -> addFieldWithFrenchLocale());
-        addFieldWithFrenchLocale.setId("add-french-locale-field");
-
         Div buttons = new Div(setValueWithScale, toggleReadOnly, toggleRequired,
-                toggleEnabled, addFieldWithFrenchLocale);
+                toggleEnabled, setFrenchLocale);
         add(field, buttons, fieldWithClearButton, messageContainer);
-    }
-
-    private void addFieldWithFrenchLocale() {
-        UI.getCurrent().setLocale(Locale.FRENCH);
-        BigDecimalField frenchField = new BigDecimalField("French locale");
-        frenchField.addValueChangeListener(this::logValueChangeEvent);
-        frenchField.setId("french-locale-field");
-        add(frenchField);
-
-        NativeButton setValueToFrenchLocaleField = new NativeButton(
-                "Set value to French locale field", e -> {
-                    frenchField.setValue(new BigDecimal("1.2"));
-                });
-        setValueToFrenchLocaleField.setId("set-value-to-french-locale-field");
-        add(setValueToFrenchLocaleField);
     }
 
     private void logValueChangeEvent(

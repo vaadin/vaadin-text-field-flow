@@ -53,8 +53,12 @@
         this.inputElement.setAttribute('inputmode', 'numeric');
       }
 
-      __decimalSeparatorChanged(separator) {
+      __decimalSeparatorChanged(separator, oldSeparator) {
         this._enabledCharPattern = '[\\d-+' + separator + ']';
+
+        if (this.value && oldSeparator) {
+          this.value = this.value.split(oldSeparator).join(separator);
+        }
       }
 
     }

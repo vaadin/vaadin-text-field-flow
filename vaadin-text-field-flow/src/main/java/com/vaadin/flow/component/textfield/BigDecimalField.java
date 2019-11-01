@@ -17,6 +17,7 @@ package com.vaadin.flow.component.textfield;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
-import com.vaadin.flow.function.SerializableFunction;
+import com.vaadin.flow.function.SerializableBiFunction;
 
 /**
  * Server-side component for the {@code vaadin-big-decimal-field} element. This
@@ -62,36 +63,35 @@ public class BigDecimalField
 
     private boolean required;
 
-    private static char getDecimalSeparatorFromUILocale() {
-        return Optional.ofNullable(UI.getCurrent())
-                .map(ui -> new DecimalFormatSymbols(ui.getLocale())
-                        .getDecimalSeparator())
-                .orElse('.');
-    }
+    private Locale locale;
 
-    private static final SerializableFunction<String, BigDecimal> PARSER = valueFromClient -> {
+    private static final SerializableBiFunction<BigDecimalField, String, BigDecimal> PARSER = (
+            field, valueFromClient) -> {
         if (valueFromClient == null || valueFromClient.isEmpty()) {
             return null;
         }
-        char decimalSeparator = getDecimalSeparatorFromUILocale();
         try {
             return new BigDecimal(
-                    valueFromClient.replace(decimalSeparator, '.'));
+                    valueFromClient.replace(field.getDecimalSeparator(), '.'));
         } catch (NumberFormatException e) {
             return null;
         }
     };
 
-    private static final SerializableFunction<BigDecimal, String> FORMATTER = valueFromModel -> valueFromModel == null
-            ? ""
-            : valueFromModel.toPlainString().replace('.',
-                    getDecimalSeparatorFromUILocale());
+    private static final SerializableBiFunction<BigDecimalField, BigDecimal, String> FORMATTER = (
+            field, valueFromModel) -> valueFromModel == null ? ""
+                    : valueFromModel.toPlainString().replace('.',
+                            field.getDecimalSeparator());
 
     /**
      * Constructs an empty {@code BigDecimalField}.
      */
     public BigDecimalField() {
         super(null, null, String.class, PARSER, FORMATTER);
+
+        setLocale(Optional.ofNullable(UI.getCurrent()).map(UI::getLocale)
+                .orElse(Locale.ROOT));
+
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
         addInvalidChangeListener(e -> {
@@ -100,9 +100,6 @@ public class BigDecimalField
                 validate();
             }
         });
-        getElement().getNode()
-                .runWhenAttached(ui -> setClientSideDecimalSeparator(
-                        getDecimalSeparatorFromUILocale()));
     }
 
     /**
@@ -426,10 +423,41 @@ public class BigDecimalField
     }
 
     /**
-     * Updates the invalid input prevention to accept only the provided decimal
-     * separator.
+     * Sets the locale for this BigDecimalField. It is used to determine which
+     * decimal separator (the radix point) should be used.
+     * 
+     * @param locale
+     *            the locale to set, not {@code null}
      */
-    private void setClientSideDecimalSeparator(char decimalSeparator) {
+    public void setLocale(Locale locale) {
+        Objects.requireNonNull(locale, "Locale to set can't be null.");
+        this.locale = locale;
+
+        setDecimalSeparator(
+                new DecimalFormatSymbols(locale).getDecimalSeparator());
+    }
+
+    /**
+     * Gets the locale used by this BigDecimalField. It is used to determine
+     * which decimal separator (the radix point) should be used.
+     * 
+     * @return the locale of this field, never {@code null}
+     */
+    @Override
+    public Locale getLocale() {
+        return locale;
+    }
+
+    /**
+     * Updates two things at client-side: changes the decimal separator in the
+     * current input value, and updates the invalid input prevention to accept
+     * the new decimal separator.
+     */
+    private void setDecimalSeparator(char decimalSeparator) {
         getElement().setProperty("_decimalSeparator", decimalSeparator + "");
+    }
+
+    private char getDecimalSeparator() {
+        return getElement().getProperty("_decimalSeparator").charAt(0);
     }
 }
