@@ -174,6 +174,31 @@ public class BigDecimalFieldPageIT extends AbstractComponentIT {
         assertValueChange(2, 300, null);
     }
 
+    @Test
+    public void setLocale_addField_parsingAndFormattingUseLocalizedDecimalSeparator() {
+        clickElementWithJs("add-french-locale-field");
+        field = $(BigDecimalFieldElement.class).id("french-locale-field");
+
+        // Parsing value with comma from client to server
+        field.setValue("5,5");
+        assertValueChange(1, null, "5.5");
+
+        // Formatting server-side value to have comma at client-side
+        clickElementWithJs("set-value-to-french-locale-field");
+        Assert.assertEquals("1,2", field.getValue());
+        assertValueChange(2, "5.5", "1.2");
+    }
+
+    @Test
+    public void setLocale_addField_fieldAcceptsLocalizedDecimalSeparatorAsInput() {
+        clickElementWithJs("add-french-locale-field");
+        field = $(BigDecimalFieldElement.class).id("french-locale-field");
+        Assert.assertEquals(
+                "BigDecimalField with French locale has unexpected pattern for "
+                        + "invalid input prevention (the _enabledCharPattern property)",
+                "[\\d-+,]", field.getPropertyString("_enabledCharPattern"));
+    }
+
     // Always checking the count of fired events to make sure it doesn't fire
     // duplicates or extra value-changes in any scenario
     private void assertValueChange(int expectedCount, Object expectedOldValue,
