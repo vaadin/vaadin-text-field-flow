@@ -57,7 +57,7 @@ public class BinderValidationPage extends Div {
         addComponent(new BigDecimalField(), Bean::getBigDecimal,
                 Bean::setBigDecimal,
                 value -> value != null
-                        && value.compareTo(new BigDecimal(2)) == 1,
+                        && value.compareTo(new BigDecimal(2)) > 0,
                 field -> field.setRequiredIndicatorVisible(true));
 
         // Couldn't reuse addComponent for all fields because of generic type
