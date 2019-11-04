@@ -53,9 +53,34 @@ public class BinderValidationPageIT extends AbstractComponentIT {
     public void textField_internalValidationPass_binderValidationFail_validateClient_fieldInvalid() {
         TextFieldElement field = $(TextFieldElement.class).first();
         field.setValue("a");
-        field.getCommandExecutor().executeScript("arguments[0].validate()",
+        field.getCommandExecutor().executeScript(
+                "arguments[0].validate(); arguments[0].immediateInvalid = arguments[0].invalid;",
                 field);
         assertInvalid(field);
+        // State before server roundtrip (avoid flash of valid state)
+        Assert.assertTrue("Unexpected immediateInvalid state",
+                field.getPropertyBoolean("immediateInvalid"));
+    }
+
+    @Test
+    public void textField_internalValidationPass_binderValidationFail_setClientValid_serverFieldInvalid() {
+        TextFieldElement field = $(TextFieldElement.class).first();
+        field.setValue("a");
+        field.getCommandExecutor().executeScript("arguments[0].invalid = false",
+                field);
+        Assert.assertEquals(field.getLabel(), "invalid");
+    }
+
+    @Test
+    public void textField_internalValidationPass_binderValidationFail_checkValidity() {
+        TextFieldElement field = $(TextFieldElement.class).first();
+        field.setValue("a");
+        field.getCommandExecutor().executeScript(
+                "arguments[0].checkedValidity = arguments[0].checkValidity()",
+                field);
+        // Ensure checkValidity still works (used by preventinvalidinput)
+        Assert.assertTrue("Unexpected checkedValidity state",
+                field.getPropertyBoolean("checkedValidity"));
     }
 
     @Test

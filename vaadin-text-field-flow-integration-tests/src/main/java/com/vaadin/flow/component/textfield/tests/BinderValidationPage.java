@@ -41,9 +41,12 @@ public class BinderValidationPage extends Div {
     public static final String BINDER_ERROR_MSG = "binder";
 
     public BinderValidationPage() {
-
-        addComponent(new TextField(), Bean::getString, Bean::setString,
+        TextField textField = new TextField();
+        addComponent(textField, Bean::getString, Bean::setString,
                 value -> value.length() > 2, field -> field.setMinLength(1));
+        textField.getElement().addPropertyChangeListener("invalid",
+                event -> textField
+                        .setLabel(textField.isInvalid() ? "invalid" : "valid"));
 
         addComponent(new TextArea(), Bean::getString, Bean::setString,
                 value -> value.length() > 2, field -> field.setMinLength(1));
