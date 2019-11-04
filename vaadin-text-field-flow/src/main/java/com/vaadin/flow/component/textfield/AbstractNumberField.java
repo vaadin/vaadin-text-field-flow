@@ -24,6 +24,8 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.InputNotifier;
 import com.vaadin.flow.component.KeyNotifier;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.function.SerializableFunction;
@@ -34,6 +36,7 @@ import com.vaadin.flow.function.SerializableFunction;
  *
  * @author Vaadin Ltd.
  */
+@JavaScript("frontend://fieldConnector.js")
 public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T extends Number>
         extends GeneratedVaadinNumberField<C, T>
         implements HasSize, HasValidation, HasValueChangeMode,
@@ -92,14 +95,13 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
         this.step = 1.0;
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        getElement().getNode()
+            .runWhenAttached(ui -> ui.beforeClientResponse(this,
+                    context -> UI.getCurrent().getPage().executeJs(
+                            "window.Vaadin.Flow.fieldConnector.patchValidation($0)",
+                            getElement())));
 
         addValueChangeListener(e -> validate());
-        addInvalidChangeListener(e -> {
-            // If invalid is updated from client to false, check it
-            if (e.isFromClient() && !e.isInvalid()) {
-                validate();
-            }
-        });
     }
 
     /**

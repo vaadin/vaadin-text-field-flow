@@ -20,6 +20,8 @@ import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.InputNotifier;
 import com.vaadin.flow.component.KeyNotifier;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.HasValueChangeMode;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -29,6 +31,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
  *
  * @author Vaadin Ltd.
  */
+@JavaScript("frontend://fieldConnector.js")
 public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         implements HasSize, HasValidation, HasValueChangeMode,
         HasPrefixAndSuffix, InputNotifier, KeyNotifier, CompositionNotifier,
@@ -51,14 +54,13 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         setInvalid(false);
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        getElement().getNode()
+            .runWhenAttached(ui -> ui.beforeClientResponse(this,
+                    context -> UI.getCurrent().getPage().executeJs(
+                            "window.Vaadin.Flow.fieldConnector.patchValidation($0)",
+                            getElement())));
 
         addValueChangeListener(e -> validate());
-        addInvalidChangeListener(e -> {
-            // If invalid is updated from client to false, check it
-            if (e.isFromClient() && !e.isInvalid()) {
-                validate();
-            }
-        });
     }
 
     /**

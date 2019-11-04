@@ -49,6 +49,7 @@ import com.vaadin.flow.function.SerializableBiFunction;
  */
 @Tag("vaadin-big-decimal-field")
 @JavaScript("frontend://vaadin-big-decimal-field.js")
+@JavaScript("frontend://fieldConnector.js")
 @JsModule("./vaadin-big-decimal-field.js")
 public class BigDecimalField
         extends GeneratedVaadinTextField<BigDecimalField, BigDecimal>
@@ -96,14 +97,13 @@ public class BigDecimalField
                 .orElse(Locale.ROOT));
 
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        getElement().getNode()
+            .runWhenAttached(ui -> ui.beforeClientResponse(this,
+                    context -> UI.getCurrent().getPage().executeJs(
+                            "window.Vaadin.Flow.fieldConnector.patchValidation($0)",
+                            getElement())));
 
         addValueChangeListener(e -> validate());
-        addInvalidChangeListener(e -> {
-            // If invalid is updated from client to false, check it
-            if (e.isFromClient() && !e.isInvalid()) {
-                validate();
-            }
-        });
     }
 
     /**
