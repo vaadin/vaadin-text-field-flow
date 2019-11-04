@@ -50,6 +50,15 @@ public class BinderValidationPageIT extends AbstractComponentIT {
     }
 
     @Test
+    public void textField_internalValidationPass_binderValidationFail_validateClient_fieldInvalid() {
+        TextFieldElement field = $(TextFieldElement.class).first();
+        field.setValue("a");
+        field.getCommandExecutor().executeScript("arguments[0].validate()",
+                field);
+        assertInvalid(field);
+    }
+
+    @Test
     public void textArea_internalValidationPass_binderValidationFail_fieldInvalid() {
         TextAreaElement field = $(TextAreaElement.class).first();
         field.setValue("a");
