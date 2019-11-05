@@ -95,9 +95,7 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
 
         addValueChangeListener(e -> validate());
 
-        addAttachListener(e -> getElement()
-                .executeJs("$0.validate = function () {return this.checkValidity();}",
-                        getElement()));
+        fieldValidationUtil.disableClientValidation(this);
     }
 
     /**
@@ -393,12 +391,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
-        if (!isConnectorAttached) {
-            RequiredValidationUtil.attachConnector(this);
-            isConnectorAttached = true;
-        }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
         this.required = requiredIndicatorVisible;
     }
 }
