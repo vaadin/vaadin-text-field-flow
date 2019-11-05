@@ -54,9 +54,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
 
         addValueChangeListener(e -> validate());
 
-        addAttachListener(e -> getElement()
-                .executeJs("$0.validate = function () {return this.checkValidity();}",
-                        getElement()));
+        fieldValidationUtil.disableClientValidation(this);
     }
 
     /**
@@ -417,12 +415,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
-        if (!isConnectorAttached) {
-            RequiredValidationUtil.attachConnector(this);
-            isConnectorAttached = true;
-        }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
         getValidationSupport().setRequired(requiredIndicatorVisible);
     }
 
