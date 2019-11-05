@@ -98,12 +98,10 @@ public class BigDecimalField
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
         addValueChangeListener(e -> validate());
-        addInvalidChangeListener(e -> {
-            // If invalid is updated from client to false, check it
-            if (e.isFromClient() && !e.isInvalid()) {
-                validate();
-            }
-        });
+
+        addAttachListener(e -> getElement()
+                .executeJs("$0.validate = function () {return this.checkValidity();}",
+                        getElement()));
     }
 
     /**
