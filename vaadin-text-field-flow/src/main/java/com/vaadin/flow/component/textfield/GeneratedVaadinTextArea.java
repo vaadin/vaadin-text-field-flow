@@ -698,9 +698,6 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
      * </p>
      * <p>
      * This property is set to true when the control value is invalid.
-     * <p>
-     * This property is synchronized automatically from client side when a
-     * 'invalid-changed' event happens.
      * </p>
      *
      * @return the {@code invalid} property from the webcomponent
