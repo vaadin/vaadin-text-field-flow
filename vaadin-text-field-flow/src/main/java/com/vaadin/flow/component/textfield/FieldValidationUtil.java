@@ -18,9 +18,6 @@ package com.vaadin.flow.component.textfield;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValidation;
 import com.vaadin.flow.component.page.PendingJavaScriptResult;
-import com.vaadin.flow.function.SerializableConsumer;
-import com.vaadin.flow.internal.StateNode;
-import elemental.json.JsonValue;
 
 /**
  * Utility class for text field mixin web components to disable client
