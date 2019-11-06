@@ -28,9 +28,9 @@ import elemental.json.JsonValue;
  *
  * @author Vaadin Ltd
  */
-final class fieldValidationUtil {
+final class FieldValidationUtil {
 
-    fieldValidationUtil() {
+    FieldValidationUtil() {
         // utility class should not be instantiated
     }
 

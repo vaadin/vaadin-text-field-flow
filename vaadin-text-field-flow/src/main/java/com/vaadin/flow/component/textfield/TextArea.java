@@ -54,7 +54,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
 
         addValueChangeListener(e -> validate());
 
-        fieldValidationUtil.disableClientValidation(this);
+        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**

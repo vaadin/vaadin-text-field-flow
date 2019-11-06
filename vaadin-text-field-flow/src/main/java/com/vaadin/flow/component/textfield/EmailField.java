@@ -58,7 +58,7 @@ public class EmailField
 
         addValueChangeListener(e -> validate());
 
-        fieldValidationUtil.disableClientValidation(this);
+        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**
