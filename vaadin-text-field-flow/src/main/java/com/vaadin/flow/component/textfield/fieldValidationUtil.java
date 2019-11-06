@@ -35,17 +35,24 @@ final class fieldValidationUtil {
     }
 
     static void disableClientValidation(Component component) {
-        execJS(component,
-                "$0.validate = function () {return this.checkValidity();}");
+        PendingJavaScriptResult javaScriptResult =
+                component.getElement()
+                        .executeJs("$0.validate = function () {return this.checkValidity();}",
+                                component.getElement());
+
+        javaScriptResult.then(result -> {
+            if (component instanceof HasValidation && ((HasValidation) component).isInvalid()) {
+                // By default, the invalid flag is always false when a component is created.
+                // However, if the component is populated and validated in the same HTTP request,
+                // the server side state may have changed before the JavaScript disabling client
+                // side validation was properly executed. This can sometimes lead to a situation
+                // where the client side thinks the value is valid (before client side validation
+                // was disabled) and the server side thinks the value is invalid. This will lead to
+                // strange behavior until the two states are synchronized again. To avoid this, we will
+                // explicitly change the client side value if the server side is invalid.
+                component.getElement().executeJs("$0.invalid = true",
+                        component.getElement());
+            }
+        });
     }
-
-    private static void execJS(Component component, String js) {
-        StateNode node = component.getElement().getNode();
-
-        node.runWhenAttached(ui -> ui.getInternals().getStateTree()
-                .beforeClientResponse(node, context ->
-                        ui.getPage().executeJs(js, component.getElement())
-                ));
-    }
-
 }
