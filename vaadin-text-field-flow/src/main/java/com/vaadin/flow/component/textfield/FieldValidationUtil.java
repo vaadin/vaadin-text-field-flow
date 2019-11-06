@@ -27,7 +27,7 @@ import com.vaadin.flow.component.page.PendingJavaScriptResult;
  */
 final class FieldValidationUtil {
 
-    FieldValidationUtil() {
+    private FieldValidationUtil() {
         // utility class should not be instantiated
     }
 
