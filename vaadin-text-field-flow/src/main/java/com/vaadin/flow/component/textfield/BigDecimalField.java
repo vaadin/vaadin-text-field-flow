@@ -99,7 +99,7 @@ public class BigDecimalField
 
         addValueChangeListener(e -> validate());
 
-        fieldValidationUtil.disableClientValidation(this);
+        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**

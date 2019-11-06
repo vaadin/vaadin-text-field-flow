@@ -54,7 +54,7 @@ public class TextField extends GeneratedVaadinTextField<TextField, String>
 
         addValueChangeListener(e -> validate());
 
-        fieldValidationUtil.disableClientValidation(this);
+        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**

@@ -56,7 +56,7 @@ public class PasswordField
 
         addValueChangeListener(e -> validate());
 
-        fieldValidationUtil.disableClientValidation(this);
+        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**
