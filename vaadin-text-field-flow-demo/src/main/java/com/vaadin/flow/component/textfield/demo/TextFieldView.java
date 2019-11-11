@@ -174,7 +174,7 @@ public class TextFieldView extends DemoView {
 
         TextField hintComponentField = new TextField("Username");
         Icon icon = VaadinIcon.INFO_CIRCLE_O.create();
-        icon.getStyle().set("width", "16px");
+        icon.getStyle().set("height", "16px");
         hintComponentField.setHelperComponent(
                 new Span(icon, new Text("Sample helper text info")));
         // end-source-example
