@@ -174,10 +174,10 @@ public class TextFieldView extends DemoView {
 
         TextField hintComponentField = new TextField("Username");
         Icon icon = VaadinIcon.INFO_CIRCLE_O.create();
-        hintComponentField.setHelperComponent(new HorizontalLayout(icon,
-                new Span("Sample helper text info")));
-        // end-source-example
         icon.getStyle().set("width", "16px");
+        hintComponentField.setHelperComponent(
+                new Span(icon, new Text("Sample helper text info")));
+        // end-source-example
         hintTextField.setId("helpertext-textfield");
         hintComponentField.setId("helpercomponent-textfield");
         this.addCard("Text field", "Helper text usage", hintTextField,
