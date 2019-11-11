@@ -28,6 +28,7 @@ import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.testbench.NumberFieldElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import com.vaadin.testbench.TestBenchElement;
 
 /**
  * Integration tests for {@link NumberField}.
@@ -224,15 +225,11 @@ public class NumberFieldPageIT extends AbstractComponentIT {
 
     @Test
     public void assertHelperText() {
-        WebElement numberHelperText = findElement(
-                By.id("number-field-helper-text"));
-        Assert.assertEquals("Helper text test",
-                numberHelperText.getAttribute("helperText"));
+        NumberFieldElement numberHelperText = $(NumberFieldElement.class).id("number-field-helper-text");
+        Assert.assertEquals("Helper text test", numberHelperText.getHelperText());
 
-        WebElement numberHelperComponent = findElement(
-                By.id("number-field-helper-component"));
-        WebElement icon = numberHelperComponent
-                .findElement(By.tagName("iron-icon"));
-        Assert.assertEquals("vaadin:info-circle-o", icon.getAttribute("icon"));
+        NumberFieldElement numberHelperComponent = $(NumberFieldElement.class).id("number-field-helper-component");
+        TestBenchElement icon = numberHelperComponent.findElement(By.tagName("iron-icon"));
+        Assert.assertEquals("vaadin:info-circle-o", icon.getPropertyString("icon"));
     }
 }

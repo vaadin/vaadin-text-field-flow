@@ -31,6 +31,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.testbench.TextAreaElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import com.vaadin.testbench.TestBenchElement;
 
 /**
  * Integration tests for {@link TextArea}.
@@ -154,16 +155,12 @@ public class TextAreaPageIT extends AbstractComponentIT {
 
     @Test
     public void assertHelperText() {
-        WebElement textAreaHelperText = findElement(
-                By.id("text-area-helper-text"));
-        Assert.assertEquals("Helper text test",
-                textAreaHelperText.getAttribute("helperText"));
+        TextAreaElement textAreaHelperText = $(TextAreaElement.class).id("text-area-helper-text");
+        Assert.assertEquals("Helper text test", textAreaHelperText.getHelperText());
 
-        WebElement textAreaHelperComponent = findElement(
-                By.id("text-area-helper-component"));
-        WebElement icon = textAreaHelperComponent
-                .findElement(By.tagName("iron-icon"));
-        Assert.assertEquals("vaadin:info-circle-o", icon.getAttribute("icon"));
+        TextAreaElement textAreaHelperComponent = $(TextAreaElement.class).id("text-area-helper-component");
+        TestBenchElement icon = textAreaHelperComponent.findElement(By.tagName("iron-icon"));
+        Assert.assertEquals("vaadin:info-circle-o", icon.getPropertyString("icon"));
     }
 
 }
