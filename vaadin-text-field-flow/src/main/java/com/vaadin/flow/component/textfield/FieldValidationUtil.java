@@ -1,5 +1,5 @@
 /*
- * Copyright 2000-2017 Vaadin Ltd.
+ * Copyright 2000-2019 Vaadin Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -32,6 +32,13 @@ final class FieldValidationUtil {
     }
 
     static void disableClientValidation(Component component) {
+        // if the component was already attached override the validate()
+        overrideClientValidation(component);
+
+        component.addAttachListener(e -> overrideClientValidation(component));
+    }
+
+    private static void overrideClientValidation(Component component) {
         PendingJavaScriptResult javaScriptResult =
                 component.getElement()
                         .executeJs("$0.validate = function () {return this.checkValidity();}",
