@@ -236,7 +236,7 @@ public class EmailField
     /**
      * String used for the helper text.
      *
-     * @return the {@code helper-text} property from the webcomponent
+     * @return the {@code helperText} property from the web component
      */
     public String getHelperText() {
         return getHelperTextString();

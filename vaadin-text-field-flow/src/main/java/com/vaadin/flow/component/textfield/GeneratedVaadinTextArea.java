@@ -505,7 +505,7 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
      * the returned value may not be the same as in client side.
      * </p>
      *
-     * @return the {@code helper-text} property from the webcomponent
+     * @return the {@code helperText} property from the web component
      */
     protected String getHelperTextString() {
         return getElement().getProperty("helperText");

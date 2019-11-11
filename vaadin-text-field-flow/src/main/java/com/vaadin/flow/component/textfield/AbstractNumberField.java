@@ -204,7 +204,7 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
     /**
      * String used for the helper text.
      *
-     * @return the {@code helper-text} property from the webcomponent
+     * @return the {@code helperText} property from the web component
      */
     public String getHelperText() {
         return getHelperTextString();
