@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.function.Consumer;
 
 import com.vaadin.flow.component.AbstractSinglePropertyField;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.EmailField;
@@ -29,6 +30,7 @@ import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.Setter;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.Route;
@@ -44,44 +46,45 @@ public class BinderValidationPage extends Div {
         TextField textField = new TextField();
         addComponent(textField, Bean::getString, Bean::setString,
                 value -> value.length() > 2, field -> field.setMinLength(1));
-        textField.getElement().addPropertyChangeListener("invalid",
-                event -> textField
-                        .setLabel(textField.isInvalid() ? "invalid" : "valid"));
 
-        addComponent(new TextArea(), Bean::getString, Bean::setString,
+        TextArea textArea = new TextArea();
+        addComponent(textArea, Bean::getString, Bean::setString,
                 value -> value.length() > 2, field -> field.setMinLength(1));
 
-        addComponent(new PasswordField(), Bean::getString, Bean::setString,
+        PasswordField passwordField = new PasswordField();
+        addComponent(passwordField, Bean::getString, Bean::setString,
                 value -> value.length() > 2, field -> field.setMinLength(1));
 
-        addComponent(new EmailField(), Bean::getString, Bean::setString,
+        EmailField emailField = new EmailField();
+        addComponent(emailField, Bean::getString, Bean::setString,
                 value -> value.length() > 20, field -> field.setMinLength(1));
 
-        addComponent(new BigDecimalField(), Bean::getBigDecimal,
-                Bean::setBigDecimal,
+        BigDecimalField bigDecimalField = new BigDecimalField();
+        addComponent(bigDecimalField, Bean::getBigDecimal, Bean::setBigDecimal,
                 value -> value != null
                         && value.compareTo(new BigDecimal(2)) > 0,
                 field -> field.setRequiredIndicatorVisible(true));
 
-        // Couldn't reuse addComponent for all fields because of generic type
-        // issues.
         NumberField numberField = new NumberField();
-        add(numberField);
-        numberField.setMin(1);
-        binder.forField(numberField)
-                .withValidator(value -> value != null && value > 2,
-                        BINDER_ERROR_MSG)
-                .bind(Bean::getNumber, Bean::setNumber);
+        addComponent(numberField, Bean::getNumber, Bean::setNumber,
+                value -> value != null && value > 2, field -> field.setMin(1));
 
         IntegerField integerField = new IntegerField();
-        add(integerField);
-        integerField.setMin(1);
-        binder.forField(integerField)
-                .withValidator(value -> value != null && value > 2,
-                        BINDER_ERROR_MSG)
-                .bind(Bean::getInteger, Bean::setInteger);
+        addComponent(integerField, Bean::getInteger, Bean::setInteger,
+                value -> value != null && value > 2, field -> field.setMin(1));
 
         binder.setBean(new Bean());
+    }
+
+    private void setInvalidIndicatorLabel(Component field) {
+        Element element = field.getElement();
+        field.getElement().addPropertyChangeListener("invalid", event -> {
+            String label = field.getElement().getProperty("invalid", false)
+                    ? "invalid"
+                    : "valid";
+            element.setProperty("label", label == null ? "" : label);
+
+        });
     }
 
     private <C extends AbstractSinglePropertyField<C, T>, T> void addComponent(
@@ -89,6 +92,7 @@ public class BinderValidationPage extends Div {
             SerializablePredicate<T> binderValidator,
             Consumer<C> componentConstraintSetter) {
         componentConstraintSetter.accept(field);
+        setInvalidIndicatorLabel(field);
         add(field);
         binder.forField(field).withValidator(binderValidator, BINDER_ERROR_MSG)
                 .bind(getter, setter);

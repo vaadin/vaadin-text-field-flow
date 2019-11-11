@@ -15,6 +15,10 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +32,7 @@ import com.vaadin.flow.component.textfield.testbench.TextAreaElement;
 import com.vaadin.flow.component.textfield.testbench.TextFieldElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import com.vaadin.testbench.HasStringValueProperty;
 import com.vaadin.testbench.TestBenchElement;
 
 /**
@@ -42,87 +47,82 @@ public class BinderValidationPageIT extends AbstractComponentIT {
         open();
     }
 
+    private void setInternalValidBinderInvalidValue(TestBenchElement field) {
+        if (field instanceof EmailFieldElement) {
+            ((HasStringValueProperty) field).setValue("foo@bar.com");
+        } else {
+            ((HasStringValueProperty) field).setValue("1");
+        }
+
+        field.dispatchEvent("change",
+                Collections.singletonMap("bubbles", true));
+        field.dispatchEvent("blur");
+    }
+
+    private List<Class<? extends TestBenchElement>> fieldClasses = Arrays
+            .asList(TextFieldElement.class, TextAreaElement.class,
+                    PasswordFieldElement.class, EmailFieldElement.class,
+                    BigDecimalFieldElement.class, IntegerFieldElement.class,
+                    NumberFieldElement.class);
+
     @Test
-    public void textField_internalValidationPass_binderValidationFail_fieldInvalid() {
-        TextFieldElement field = $(TextFieldElement.class).first();
-        field.setValue("a");
-        assertInvalid(field);
+    public void fields_internalValidationPass_binderValidationFail_fieldInvalid() {
+        fieldClasses.forEach(clazz -> {
+            TestBenchElement field = $(clazz).first();
+            setInternalValidBinderInvalidValue(field);
+            assertInvalid(field);
+        });
     }
 
     @Test
-    public void textField_internalValidationPass_binderValidationFail_validateClient_fieldInvalid() {
-        TextFieldElement field = $(TextFieldElement.class).first();
-        field.setValue("a");
-        field.getCommandExecutor().executeScript(
-                "arguments[0].validate(); arguments[0].immediateInvalid = arguments[0].invalid;",
-                field);
-        assertInvalid(field);
-        // State before server roundtrip (avoid flash of valid state)
-        Assert.assertTrue("Unexpected immediateInvalid state",
-                field.getPropertyBoolean("immediateInvalid"));
+    public void fields_internalValidationPass_binderValidationFail_validateClient_fieldInvalid() {
+        fieldClasses.forEach(clazz -> {
+            TestBenchElement field = $(clazz).first();
+
+            setInternalValidBinderInvalidValue(field);
+
+            field.getCommandExecutor().executeScript(
+                    "arguments[0].validate(); arguments[0].immediateInvalid = arguments[0].invalid;",
+                    field);
+
+            assertInvalid(field);
+            // State before server roundtrip (avoid flash of valid
+            // state)
+            Assert.assertTrue("Unexpected immediateInvalid state",
+                    field.getPropertyBoolean("immediateInvalid"));
+        });
     }
 
     @Test
-    public void textField_internalValidationPass_binderValidationFail_setClientValid_serverFieldInvalid() {
-        TextFieldElement field = $(TextFieldElement.class).first();
-        field.setValue("a");
-        field.getCommandExecutor().executeScript("arguments[0].invalid = false",
-                field);
-        Assert.assertEquals(field.getLabel(), "invalid");
+    public void fields_internalValidationPass_binderValidationFail_setClientValid_serverFieldInvalid() {
+        fieldClasses.forEach(clazz -> {
+            TestBenchElement field = $(clazz).first();
+
+            setInternalValidBinderInvalidValue(field);
+
+            field.getCommandExecutor()
+                    .executeScript("arguments[0].invalid = false", field);
+
+            Assert.assertEquals(field.getPropertyString("label"), "invalid");
+        });
     }
 
     @Test
-    public void textField_internalValidationPass_binderValidationFail_checkValidity() {
-        TextFieldElement field = $(TextFieldElement.class).first();
-        field.setValue("a");
-        field.getCommandExecutor().executeScript(
-                "arguments[0].checkedValidity = arguments[0].checkValidity()",
-                field);
-        // Ensure checkValidity still works (used by preventinvalidinput)
-        Assert.assertTrue("Unexpected checkedValidity state",
-                field.getPropertyBoolean("checkedValidity"));
-    }
+    public void fields_internalValidationPass_binderValidationFail_checkValidity() {
+        fieldClasses.forEach(clazz -> {
+            TestBenchElement field = $(clazz).first();
 
-    @Test
-    public void textArea_internalValidationPass_binderValidationFail_fieldInvalid() {
-        TextAreaElement field = $(TextAreaElement.class).first();
-        field.setValue("a");
-        assertInvalid(field);
-    }
+            setInternalValidBinderInvalidValue(field);
 
-    @Test
-    public void passwordField_internalValidationPass_binderValidationFail_fieldInvalid() {
-        PasswordFieldElement field = $(PasswordFieldElement.class).first();
-        field.setValue("a");
-        assertInvalid(field);
-    }
+            field.getCommandExecutor().executeScript(
+                    "arguments[0].checkedValidity = arguments[0].checkValidity()",
+                    field);
 
-    @Test
-    public void emailField_internalValidationPass_binderValidationFail_fieldInvalid() {
-        EmailFieldElement field = $(EmailFieldElement.class).first();
-        field.setValue("foo@bar.com");
-        assertInvalid(field);
-    }
-
-    @Test
-    public void bigDecimalField_internalValidationPass_binderValidationFail_fieldInvalid() {
-        BigDecimalFieldElement field = $(BigDecimalFieldElement.class).first();
-        field.setValue("1");
-        assertInvalid(field);
-    }
-
-    @Test
-    public void numberField_internalValidationPass_binderValidationFail_fieldInvalid() {
-        NumberFieldElement field = $(NumberFieldElement.class).first();
-        field.setValue("1");
-        assertInvalid(field);
-    }
-
-    @Test
-    public void integerField_internalValidationPass_binderValidationFail_fieldInvalid() {
-        IntegerFieldElement field = $(IntegerFieldElement.class).first();
-        field.setValue("1");
-        assertInvalid(field);
+            // Ensure checkValidity still works (used by
+            // preventinvalidinput)
+            Assert.assertTrue("Unexpected checkedValidity state",
+                    field.getPropertyBoolean("checkedValidity"));
+        });
     }
 
     private void assertInvalid(TestBenchElement field) {
