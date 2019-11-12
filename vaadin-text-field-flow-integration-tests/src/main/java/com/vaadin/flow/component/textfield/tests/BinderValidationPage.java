@@ -78,8 +78,8 @@ public class BinderValidationPage extends Div {
 
     private void setInvalidIndicatorLabel(Component field) {
         Element element = field.getElement();
-        field.getElement().addPropertyChangeListener("invalid", event -> {
-            String label = field.getElement().getProperty("invalid", false)
+        element.addPropertyChangeListener("invalid", event -> {
+            String label = element.getProperty("invalid", false)
                     ? "invalid"
                     : "valid";
             element.setProperty("label", label == null ? "" : label);
