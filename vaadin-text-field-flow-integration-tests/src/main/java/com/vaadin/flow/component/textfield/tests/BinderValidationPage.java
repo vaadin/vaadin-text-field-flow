@@ -93,11 +93,6 @@ public class BinderValidationPage extends Div {
             Consumer<C> componentConstraintSetter) {
         componentConstraintSetter.accept(field);
         setInvalidIndicatorLabel(field);
-        if (field instanceof IntegerField || field instanceof NumberField) {
-            // CheckValidity will return value based on `invalid` state
-            // if there is no validation constraint provided.
-            field.getElement().setProperty("maxlength", "20");
-        }
         add(field);
         binder.forField(field).withValidator(binderValidator, BINDER_ERROR_MSG)
                 .bind(getter, setter);
