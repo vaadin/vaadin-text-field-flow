@@ -145,13 +145,15 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
      */
     private NumberField(Formatter formatter) {
         super(null, null, String.class, formatter::parse, formatter);
+
+        // workaround for https://github.com/vaadin/flow/issues/3496
+        setInvalid(false);
+
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
-        addInvalidChangeListener(e -> {
-            // If invalid is updated from client to false, check it
-            if (e.isFromClient() && !e.isInvalid()) {
-                setInvalid(isInvalid(getValue()));
-            }
-        });
+
+        addValueChangeListener(e -> validate());
+
+        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**
@@ -245,7 +247,7 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
 
     /**
      * The maximum value of the field.
-     * 
+     *
      * @return the {@code max} property from the webcomponent
      */
     public double getMax() {
@@ -260,7 +262,7 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
 
     /**
      * The minimum value of the field.
-     * 
+     *
      * @return the {@code min} property from the webcomponent
      */
     public double getMin() {
@@ -274,7 +276,7 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
 
     /**
      * Specifies the allowed number intervals of the field.
-     * 
+     *
      * @return the {@code step} property from the webcomponent
      */
     public double getStep() {
@@ -488,20 +490,8 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
     }
 
     @Override
-    protected void setModelValue(Double newModelValue, boolean fromClient) {
-        super.setModelValue(newModelValue, fromClient);
-        setInvalid(isInvalid(newModelValue));
-    }
-
-    @Override
     public void setRequiredIndicatorVisible(boolean requiredIndicatorVisible) {
         super.setRequiredIndicatorVisible(requiredIndicatorVisible);
-        if (!isConnectorAttached) {
-            RequiredValidationUtil.attachConnector(this);
-            isConnectorAttached = true;
-        }
-        RequiredValidationUtil.updateClientValidation(requiredIndicatorVisible,
-                this);
         this.required = requiredIndicatorVisible;
     }
 
