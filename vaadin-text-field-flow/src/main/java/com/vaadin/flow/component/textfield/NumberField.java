@@ -16,6 +16,7 @@
 
 package com.vaadin.flow.component.textfield;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.ParseException;
@@ -49,7 +50,12 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
 
     private Double max;
     private Double min;
+    private Double step;
+
     private boolean required;
+
+    private boolean stepSetByUser;
+    private boolean minSetByUser;
 
     /**
      * Constructs an empty {@code NumberField}.
@@ -206,18 +212,43 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
     }
 
     /**
-     * Performs a server-side validation of the given value. This is needed
-     * because it is possible to circumvent the client side validation
+     * Performs server-side validation of the current value. This is needed
+     * because it is possible to circumvent the client-side validation
      * constraints using browser development tools.
      */
-    private boolean isInvalid(Double value) {
+    @Override
+    protected void validate() {
+        Double value = getValue();
+
         final boolean isRequiredButEmpty = required
                 && Objects.equals(getEmptyValue(), value);
         final boolean isGreaterThanMax = value != null && max != null
                 && value > max;
-        final boolean isSmallerThenMin = (value != null && min != null
-                && value < min);
-        return isRequiredButEmpty || isGreaterThanMax || isSmallerThenMin;
+        final boolean isSmallerThanMin = value != null && min != null
+                && value < min;
+
+        setInvalid(isRequiredButEmpty || isGreaterThanMax || isSmallerThanMin);
+        setInvalid(isRequiredButEmpty || isGreaterThanMax || isSmallerThanMin
+                || !isValidByStep(value));
+    }
+
+    private boolean isValidByStep(Double value) {
+
+        if (!stepSetByUser// Don't use step in validation if it's not explicitly
+                // set by user. This follows the web component logic.
+                || value == null || step == 0) {
+            return true;
+        }
+
+        // When min is not defined by user, min should not be considered
+        // in the step validation.
+        double stepBasis = minSetByUser ? getMinDouble() : 0.0;
+
+        // (value - stepBasis) % step == 0
+        return new BigDecimal(String.valueOf(value))
+                .subtract(BigDecimal.valueOf(stepBasis))
+                .remainder(BigDecimal.valueOf(step))
+                .compareTo(BigDecimal.ZERO) == 0;
     }
 
     @Override
@@ -258,6 +289,7 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
     public void setMin(double min) {
         super.setMin(min);
         this.min = min;
+        minSetByUser = true;
     }
 
     /**
@@ -286,6 +318,8 @@ public class NumberField extends GeneratedVaadinNumberField<NumberField, Double>
             throw new IllegalArgumentException("The step cannot be less or equal to zero.");
         }
         super.setStep(step);
+        this.step = step;
+        stepSetByUser = true;
     }
 
     /**

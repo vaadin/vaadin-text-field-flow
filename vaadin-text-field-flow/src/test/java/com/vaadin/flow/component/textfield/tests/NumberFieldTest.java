@@ -15,9 +15,13 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.vaadin.flow.component.textfield.NumberField;
+
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -27,32 +31,90 @@ import static org.junit.Assert.assertNull;
  */
 public class NumberFieldTest extends TextFieldTest {
 
+    private NumberField field;
+
+    @Before
+    public void init() {
+        field = new NumberField();
+    }
+
     @Override
     @Test
     public void setValueNull() {
-        NumberField numberField = new NumberField();
-        assertNull("Value should be null", numberField.getValue());
-        numberField.setValue(null);
+        assertNull("Value should be null", field.getValue());
+        field.setValue(null);
     }
 
     @Override
     @Test
     public void initialValuePropertyValue() {
-        NumberField numberField = new NumberField();
-        assertEquals(numberField.getEmptyValue(),
-                numberField.getElement().getProperty("value"));
+        assertEquals(field.getEmptyValue(),
+                field.getElement().getProperty("value"));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void assertStepIsNotNegative() {
-        NumberField numberField = new NumberField();
-        numberField.setStep(-1);
+        field.setStep(-1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void assertStepGreaterThanZero() {
-        NumberField numberField = new NumberField();
-        numberField.setStep(0);
+        field.setStep(0);
+    }
+
+    @Test
+    public void stepValidation_doesntValidateWhenPropertyNotExplicitlySet() {
+        Assert.assertEquals(0.0, field.getStep(), 0.0);
+
+        field.setValue(0.3);
+        Assert.assertFalse(field.isInvalid());
+
+        field.setMin(0.0);
+        field.setMax(10.0);
+        field.setValue(0.4);
+        Assert.assertFalse(field.isInvalid());
+    }
+
+    @Test
+    public void stepValidation_minNotDefined() {
+        field.setStep(1.5);
+
+        assertValidValues(-6.0, -1.5, 0.0, 1.5, 4.5);
+        assertInvalidValues(-3.5, -1.0, 2.0, 2.5);
+    }
+
+    @Test
+    public void stepValidation_positiveMin_minUsedAsStepBasis() {
+        field.setMin(1.0);
+        field.setStep(1.5);
+
+        assertValidValues(1.0, 2.5, 4.0, 5.5);
+        assertInvalidValues(1.5, 2.0, 3.5, 6.0);
+    }
+
+    @Test
+    public void stepValidation_negativeMin_minUsedAsStepBasis() {
+        field.setMin(-5.0);
+        field.setStep(4.5);
+
+        assertValidValues(-5.0, -0.5, 4.0);
+        assertInvalidValues(-4.5, 0.0, 1.0, 4.5);
+    }
+
+    private void assertValidValues(Double... values) {
+        Arrays.asList(values).forEach(v -> {
+            field.setValue(v);
+            Assert.assertFalse("Expected field to be valid with value " + v,
+                    field.isInvalid());
+        });
+    }
+
+    private void assertInvalidValues(Double... values) {
+        Arrays.asList(values).forEach(v -> {
+            field.setValue(v);
+            Assert.assertTrue("Expected field to be invalid with value " + v,
+                    field.isInvalid());
+        });
     }
 
     @Test

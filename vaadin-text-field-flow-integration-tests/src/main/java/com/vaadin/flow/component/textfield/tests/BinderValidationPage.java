@@ -15,23 +15,18 @@
  */
 package com.vaadin.flow.component.textfield.tests;
 
-import java.math.BigDecimal;
-import java.util.function.Consumer;
-
 import com.vaadin.flow.component.AbstractSinglePropertyField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.NumberField;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.Setter;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.function.ValueProvider;
 import com.vaadin.flow.router.Route;
+
+import java.util.function.Consumer;
 
 @Route("binder-validation")
 public class BinderValidationPage extends Div {
@@ -89,8 +84,6 @@ public class BinderValidationPage extends Div {
     public static class Bean {
         private String string;
         private Double number;
-        private Integer integer;
-        private BigDecimal bigDecimal;
 
         public String getString() {
             return string;
@@ -106,22 +99,6 @@ public class BinderValidationPage extends Div {
 
         public void setNumber(Double number) {
             this.number = number;
-        }
-
-        public Integer getInteger() {
-            return integer;
-        }
-
-        public void setInteger(Integer integer) {
-            this.integer = integer;
-        }
-
-        public BigDecimal getBigDecimal() {
-            return bigDecimal;
-        }
-
-        public void setBigDecimal(BigDecimal bigDecimal) {
-            this.bigDecimal = bigDecimal;
         }
     }
 
