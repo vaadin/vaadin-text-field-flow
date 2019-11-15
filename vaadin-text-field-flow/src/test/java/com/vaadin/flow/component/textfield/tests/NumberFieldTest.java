@@ -43,6 +43,18 @@ public class NumberFieldTest extends TextFieldTest {
                 numberField.getElement().getProperty("value"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void assertStepIsNotNegative() {
+        NumberField numberField = new NumberField();
+        numberField.setStep(-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void assertStepGreaterThanZero() {
+        NumberField numberField = new NumberField();
+        numberField.setStep(0);
+    }
+
     @Test
     public void setValue_valuePropertyFormatted() {
         testValuePropertyFormatting(1.0d, "1");
