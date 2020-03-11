@@ -173,21 +173,23 @@ public class TextFieldView extends DemoView {
         zipCode.setPattern("[A-Za-z]{3}");
         zipCode.setPreventInvalidInput(true);
 
-        Paragraph status=new Paragraph();
+        Paragraph status = new Paragraph();
         TextField username = new TextField("Username");
         username.setPattern("^[a-zA-Z0-9._-]{3,}");
-        username.addValueChangeListener(e->{
-            if(username.isInvalid())
-                status.setText("Username should be, at least, 3 character long " +
-                        "and contain only letters, digits, dashes or dots.");
-            else
-                status.setText("Your username seems valid!");
+        username.addValueChangeListener(e -> {
+                if (username.isInvalid())
+                        status.setText(
+                                "Username should be, at least, 3 character long "
+                                        + "and contain only letters, digits, dashes or dots.");
+                else
+                        status.setText("Your username seems valid!");
         });
         // end-source-example
 
         zipCode.setId("text-field-zip-pattern");
         username.setId("text-field-username-pattern");
-        addCard("Text field", "Pattern usage", zipCode, username,status);
+        addCard("Text field", "Pattern usage", zipCode, username,
+                status);
     }
 
     private void passwordFieldBasic() {
