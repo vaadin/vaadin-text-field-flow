@@ -36,12 +36,12 @@
 
                   :host([dir="rtl"]) [part="value"]::placeholder {
                     direction: rtl;
-                    text-align: right;
+                    text-align: left;
                   }
 
                   :host([dir="rtl"]) [part="input-field"] ::slotted(input)::placeholder {
                     direction: rtl;
-                    text-align: right;
+                    text-align: left;
                   }
 
                   :host([dir="rtl"]) [part="value"]:-ms-input-placeholder,
