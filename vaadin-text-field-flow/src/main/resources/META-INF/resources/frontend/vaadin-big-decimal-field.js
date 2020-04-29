@@ -29,6 +29,25 @@
                   :host {
                     width: 8em;
                   }
+
+                  :host([dir="rtl"]) [part="input-field"] {
+                    direction: ltr;
+                  }
+
+                  :host([dir="rtl"]) [part="value"]::placeholder {
+                    direction: rtl;
+                    text-align: right;
+                  }
+
+                  :host([dir="rtl"]) [part="input-field"] ::slotted(input)::placeholder {
+                    direction: rtl;
+                    text-align: right;
+                  }
+
+                  :host([dir="rtl"]) [part="value"]:-ms-input-placeholder,
+                  :host([dir="rtl"]) [part="input-field"] ::slotted(input):-ms-input-placeholder {
+                    direction: rtl;
+                  }
             </style>`;
         }
         return memoizedTemplate;
