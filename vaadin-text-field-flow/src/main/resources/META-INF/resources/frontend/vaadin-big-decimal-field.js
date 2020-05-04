@@ -62,7 +62,7 @@
 
                   :host([dir="rtl"]) [part="value"],
                   :host([dir="rtl"]) [part="input-field"] ::slotted(input) {
-                    --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 1.25em);
+                    --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 1.25em) !important;
                   }
             </style>`;
         }
