@@ -59,6 +59,11 @@
                   :host([dir="rtl"]:not([has-controls])) [part="input-field"] ::slotted(input):-ms-input-placeholder {
                     text-align: left;
                   }
+
+                  :host([dir="rtl"]) [part="value"],
+                  :host([dir="rtl"]) [part="input-field"] ::slotted(input) {
+                    --_lumo-text-field-overflow-mask-image: linear-gradient(to left, transparent, #000 1.25em);
+                  }
             </style>`;
         }
         return memoizedTemplate;
