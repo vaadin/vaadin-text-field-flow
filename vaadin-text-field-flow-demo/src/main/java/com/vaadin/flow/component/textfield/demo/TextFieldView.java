@@ -72,6 +72,7 @@ public class TextFieldView extends DemoView {
         numberFieldWithValueLimits();
         numberFieldWithStep();
         bigDecimalField();
+        numberFieldWithHelperText();
         textAreaBasic(); // TextArea
         textAreaMaxHeight();
         textAreaMinHeight();
@@ -182,11 +183,11 @@ public class TextFieldView extends DemoView {
         Div div = new Div();
         // begin-source-example
         // source-example-heading: Helper Text and Component
-        TextField helperFieldText = new TextField();
-        helperFieldText.setHelperText("Helper Text");
+        TextField helperFieldText = new TextField("First name");
+        helperFieldText.setHelperText("Enter all your first names");
 
-        TextField helperFieldComponent = new TextField();
-        helperFieldComponent.setHelperComponent(new Span("Helper text displayed in Span"));
+        TextField helperFieldComponent = new TextField("Last Name");
+        helperFieldComponent.setHelperComponent(new Span("Family name"));
 
         add(helperFieldText, helperFieldComponent);
         // end-source-example
@@ -198,7 +199,7 @@ public class TextFieldView extends DemoView {
     private void textFieldHelperTextVariants() {
         Div div = new Div();
         // begin-source-example
-        // source-example-heading: TextField Helper Variant
+        // source-example-heading: Text field Helper Variant
         TextField helperFieldBelow = new TextField();
         helperFieldBelow.setHelperText("Helper Text displayed below the field");
 
@@ -213,7 +214,7 @@ public class TextFieldView extends DemoView {
         div.getStyle().set("display","flex");
         helperFieldBelow.getStyle().set("margin-right","20px");
         div.add(helperFieldBelow, helperFieldAbove);
-        addCard("Text field", "TextField Helper Variant", div);
+        addCard("Text field", "Text field Helper Variant", div);
     }
 
     private void passwordFieldBasic() {
@@ -344,7 +345,7 @@ public class TextFieldView extends DemoView {
                 taxValue = BigDecimal.ZERO;
             } else {
                 taxValue = e.getValue().multiply(new BigDecimal("0.24"))
-                        .setScale(2, RoundingMode.HALF_EVEN);
+                      .setScale(2, RoundingMode.HALF_EVEN);
             }
             tax.setText("VAT 24%: $" + taxValue);
         });
@@ -354,6 +355,27 @@ public class TextFieldView extends DemoView {
         add(bigDecimalField, tax);
         // end-source-example
         addCard("Number field", "Big decimal field", bigDecimalField, tax);
+    }
+
+    private void numberFieldWithHelperText() {
+        Div div = new Div();
+        // begin-source-example
+        // source-example-heading: Number fields with helper text
+        NumberField numberField = new NumberField("Total Salary");
+        numberField
+              .setHelperText("Any valid number can be put in a NumberField");
+
+        IntegerField integerField = new IntegerField("Your age");
+        integerField
+              .setHelperText("Only integers can be put in an IntegerField");
+
+        add(numberField, integerField);
+        // end-source-example
+
+        numberField.setId("number-field-helper-id");
+        integerField.setId("integer-field-helper-id");
+        div.add(numberField, new Text(" "), integerField);
+        addCard("Number field", "Number fields with helper text", div);
     }
 
     private void textAreaBasic() {
@@ -402,14 +424,16 @@ public class TextFieldView extends DemoView {
     private void textAreaHelperText() {
         Div div = new Div();
         // begin-source-example
-        // source-example-heading: TextArea Helper Text and Component
-        TextArea textAreaHelperText = new TextArea();
+        // source-example-heading: Text area Helper Text and Component
+        TextArea textAreaHelperText = new TextArea("Overview");
         textAreaHelperText.setPlaceholder("Write here ...");
-        textAreaHelperText.setHelperText("Helper Text");
+        textAreaHelperText
+              .setHelperText("Short description of your current position");
 
-        TextArea textAreaHelperComponent = new TextArea();
+        TextArea textAreaHelperComponent = new TextArea("Feedback");
         textAreaHelperComponent.setPlaceholder("Write here ...");
-        textAreaHelperComponent.setHelperComponent(new Span("Helper Text"));
+        textAreaHelperComponent.setHelperComponent(new Span(
+              "Here you can share what you've liked and what can be improved in the next lesson"));
 
         add(textAreaHelperText, textAreaHelperComponent);
         // end-source-example
@@ -417,7 +441,7 @@ public class TextFieldView extends DemoView {
         textAreaHelperText.setId("text-area-with-helper-text");
         textAreaHelperText.getStyle().set("margin-right","20px");
         div.add(textAreaHelperText, textAreaHelperComponent);
-        addCard("Text Area", "TextArea Helper Text and Component", div);
+        addCard("Text Area", "Text area Helper Text and Component", div);
     }
 
     private void textAreaHelperTextVariant() {
