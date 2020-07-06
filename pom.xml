@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>vaadin-text-field-flow-parent</artifactId>
-    <version>3.2-SNAPSHOT</version>
+    <version>4.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Vaadin TextField Flow Parent</name>
 
