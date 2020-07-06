@@ -35,6 +35,7 @@ import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.component.textfield.TextAreaVariant;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.component.textfield.demo.entity.Person;
@@ -60,6 +61,8 @@ public class TextFieldView extends DemoView {
         textFieldAutoselect();
         textFieldClearButton();
         textFieldFocusShortcut();
+        textFieldHelperText();
+        textFieldHelperTextVariants();
         passwordFieldBasic(); // PasswordField
         passwordFieldHideRevealButton();
         emailFieldBasic(); // EmailField
@@ -72,6 +75,8 @@ public class TextFieldView extends DemoView {
         textAreaBasic(); // TextArea
         textAreaMaxHeight();
         textAreaMinHeight();
+        textAreaHelperText();
+        textAreaHelperTextVariant();
         prefixAndSuffix(); // Prefix and suffix
         prefixAndSuffixSearch();
         validationMinMaxLength(); // Validation
@@ -171,6 +176,44 @@ public class TextFieldView extends DemoView {
 
         textField.setId("shortcut-field");
         this.addCard("Text field", "Focus shortcut usage", textField);
+    }
+
+    private void textFieldHelperText() {
+        Div div = new Div();
+        // begin-source-example
+        // source-example-heading: Helper Text and Component
+        TextField helperFieldText = new TextField();
+        helperFieldText.setHelperText("Helper Text");
+
+        TextField helperFieldComponent = new TextField();
+        helperFieldComponent.setHelperComponent(new Span("Helper text displayed in Span"));
+
+        add(helperFieldText, helperFieldComponent);
+        // end-source-example
+
+        div.add(helperFieldText, new Text("  "), helperFieldComponent);
+        addCard("Text field", "Helper Text and Component", div);
+    }
+
+    private void textFieldHelperTextVariants() {
+        Div div = new Div();
+        // begin-source-example
+        // source-example-heading: TextField Helper Variant
+        TextField helperFieldBelow = new TextField();
+        helperFieldBelow.setHelperText("Helper Text displayed below the field");
+
+        TextField helperFieldAbove = new TextField();
+        helperFieldAbove.setHelperText("Helper Text displayed above the field");
+        helperFieldAbove
+              .addThemeVariants(TextFieldVariant.LUMO_HELPER_ABOVE_FIELD);
+
+        add(helperFieldBelow, helperFieldAbove);
+        // end-source-example
+
+        div.getStyle().set("display","flex");
+        helperFieldBelow.getStyle().set("margin-right","20px");
+        div.add(helperFieldBelow, helperFieldAbove);
+        addCard("Text field", "TextField Helper Variant", div);
     }
 
     private void passwordFieldBasic() {
@@ -354,6 +397,50 @@ public class TextFieldView extends DemoView {
         textArea.getStyle().set("padding", "0");
         textArea.setId("text-area-with-min-height");
         addCard("Text Area", "Minimum height", textArea);
+    }
+
+    private void textAreaHelperText() {
+        Div div = new Div();
+        // begin-source-example
+        // source-example-heading: TextArea Helper Text and Component
+        TextArea textAreaHelperText = new TextArea();
+        textAreaHelperText.setPlaceholder("Write here ...");
+        textAreaHelperText.setHelperText("Helper Text");
+
+        TextArea textAreaHelperComponent = new TextArea();
+        textAreaHelperComponent.setPlaceholder("Write here ...");
+        textAreaHelperComponent.setHelperComponent(new Span("Helper Text"));
+
+        add(textAreaHelperText, textAreaHelperComponent);
+        // end-source-example
+
+        textAreaHelperText.setId("text-area-with-helper-text");
+        textAreaHelperText.getStyle().set("margin-right","20px");
+        div.add(textAreaHelperText, textAreaHelperComponent);
+        addCard("Text Area", "TextArea Helper Text and Component", div);
+    }
+
+    private void textAreaHelperTextVariant() {
+        Div div = new Div();
+        // begin-source-example
+        // source-example-heading: TextArea Helper Variant
+        TextArea textAreaBelow = new TextArea("Helper Text below the field");
+        textAreaBelow.setPlaceholder("Write here ...");
+        textAreaBelow.setHelperText("Helper Text");
+
+        TextArea textAreaAbove = new TextArea("Helper Text above the field");
+        textAreaAbove.setPlaceholder("Write here ...");
+        textAreaAbove.setHelperText("Helper Text");
+        textAreaAbove.addThemeVariants(TextAreaVariant.LUMO_HELPER_ABOVE_FIELD);
+
+        add(textAreaBelow, textAreaAbove);
+        // end-source-example
+
+        div.getStyle().set("display","flex");
+        textAreaBelow.getStyle().set("margin-right","20px");
+        div.add(textAreaBelow, textAreaAbove);
+
+        addCard("Text Area", "TextArea Helper Variant", div);
     }
 
     private void prefixAndSuffix() {
