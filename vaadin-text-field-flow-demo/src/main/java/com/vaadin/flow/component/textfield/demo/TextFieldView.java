@@ -424,47 +424,48 @@ public class TextFieldView extends DemoView {
     private void textAreaHelperText() {
         Div div = new Div();
         // begin-source-example
-        // source-example-heading: Text area Helper Text and Component
+        // source-example-heading: Helper text and helper component
         TextArea textAreaHelperText = new TextArea("Overview");
         textAreaHelperText.setPlaceholder("Write here ...");
         textAreaHelperText
-              .setHelperText("Short description of your current position");
+              .setHelperText("Short description of your current role");
 
         TextArea textAreaHelperComponent = new TextArea("Feedback");
         textAreaHelperComponent.setPlaceholder("Write here ...");
         textAreaHelperComponent.setHelperComponent(new Span(
-              "Here you can share what you've liked and what can be improved in the next lesson"));
+              "Here you can share what you've liked and "
+                    + "what can be improved in the next lesson"));
 
         add(textAreaHelperText, textAreaHelperComponent);
         // end-source-example
 
         textAreaHelperText.setId("text-area-with-helper-text");
-        textAreaHelperText.getStyle().set("margin-right","20px");
+        textAreaHelperText.getStyle().set("margin-right", "20px");
         div.add(textAreaHelperText, textAreaHelperComponent);
-        addCard("Text Area", "Text area Helper Text and Component", div);
+        addCard("Text Area", "Helper text and helper component", div);
     }
 
     private void textAreaHelperTextVariant() {
         Div div = new Div();
         // begin-source-example
-        // source-example-heading: TextArea Helper Variant
-        TextArea textAreaBelow = new TextArea("Helper Text below the field");
+        // source-example-heading: Helper Variant
+        TextArea textAreaBelow = new TextArea();
         textAreaBelow.setPlaceholder("Write here ...");
-        textAreaBelow.setHelperText("Helper Text");
+        textAreaBelow.setHelperText("Helper Text is below the field");
 
-        TextArea textAreaAbove = new TextArea("Helper Text above the field");
+        TextArea textAreaAbove = new TextArea();
         textAreaAbove.setPlaceholder("Write here ...");
-        textAreaAbove.setHelperText("Helper Text");
+        textAreaAbove.setHelperText("Helper Text is above the field");
         textAreaAbove.addThemeVariants(TextAreaVariant.LUMO_HELPER_ABOVE_FIELD);
 
         add(textAreaBelow, textAreaAbove);
         // end-source-example
 
-        div.getStyle().set("display","flex");
-        textAreaBelow.getStyle().set("margin-right","20px");
+        div.getStyle().set("display", "flex");
+        textAreaBelow.getStyle().set("margin-right", "20px");
         div.add(textAreaBelow, textAreaAbove);
 
-        addCard("Text Area", "TextArea Helper Variant", div);
+        addCard("Text Area", "Helper Variant", div);
     }
 
     private void prefixAndSuffix() {
