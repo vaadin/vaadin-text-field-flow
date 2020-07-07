@@ -62,7 +62,6 @@ public class TextFieldView extends DemoView {
         textFieldClearButton();
         textFieldFocusShortcut();
         textFieldHelperText();
-        textFieldHelperTextVariants();
         passwordFieldBasic(); // PasswordField
         passwordFieldHideRevealButton();
         emailFieldBasic(); // EmailField
@@ -77,7 +76,6 @@ public class TextFieldView extends DemoView {
         textAreaMaxHeight();
         textAreaMinHeight();
         textAreaHelperText();
-        textAreaHelperTextVariant();
         prefixAndSuffix(); // Prefix and suffix
         prefixAndSuffixSearch();
         validationMinMaxLength(); // Validation
@@ -85,6 +83,7 @@ public class TextFieldView extends DemoView {
         customValidation();
         themeVariantsTextAlign(); // Theme Variants
         themeVariantsSmallSize();
+        helperTextVariants();
         styling(); // Styling
     }
 
@@ -194,27 +193,6 @@ public class TextFieldView extends DemoView {
 
         div.add(helperFieldText, new Text("  "), helperFieldComponent);
         addCard("Text field", "Helper Text and Component", div);
-    }
-
-    private void textFieldHelperTextVariants() {
-        Div div = new Div();
-        // begin-source-example
-        // source-example-heading: Text field Helper Variant
-        TextField helperFieldBelow = new TextField();
-        helperFieldBelow.setHelperText("Helper Text displayed below the field");
-
-        TextField helperFieldAbove = new TextField();
-        helperFieldAbove.setHelperText("Helper Text displayed above the field");
-        helperFieldAbove
-              .addThemeVariants(TextFieldVariant.LUMO_HELPER_ABOVE_FIELD);
-
-        add(helperFieldBelow, helperFieldAbove);
-        // end-source-example
-
-        div.getStyle().set("display","flex");
-        helperFieldBelow.getStyle().set("margin-right","20px");
-        div.add(helperFieldBelow, helperFieldAbove);
-        addCard("Text field", "Text field Helper Variant", div);
     }
 
     private void passwordFieldBasic() {
@@ -445,29 +423,6 @@ public class TextFieldView extends DemoView {
         addCard("Text Area", "Helper text and helper component", div);
     }
 
-    private void textAreaHelperTextVariant() {
-        Div div = new Div();
-        // begin-source-example
-        // source-example-heading: Helper Variant
-        TextArea textAreaBelow = new TextArea();
-        textAreaBelow.setPlaceholder("Write here ...");
-        textAreaBelow.setHelperText("Helper Text is below the field");
-
-        TextArea textAreaAbove = new TextArea();
-        textAreaAbove.setPlaceholder("Write here ...");
-        textAreaAbove.setHelperText("Helper Text is above the field");
-        textAreaAbove.addThemeVariants(TextAreaVariant.LUMO_HELPER_ABOVE_FIELD);
-
-        add(textAreaBelow, textAreaAbove);
-        // end-source-example
-
-        div.getStyle().set("display", "flex");
-        textAreaBelow.getStyle().set("margin-right", "20px");
-        div.add(textAreaBelow, textAreaAbove);
-
-        addCard("Text Area", "Helper Variant", div);
-    }
-
     private void prefixAndSuffix() {
         Div div = new Div();
         // begin-source-example
@@ -634,6 +589,30 @@ public class TextFieldView extends DemoView {
         add(textField);
         // end-source-example
         addCard("Theme Variants", "Small size", textField);
+    }
+
+    private void helperTextVariants() {
+        Div div = new Div();
+        // begin-source-example
+        // source-example-heading: Helper Variant
+
+        TextField helperFieldAbove = new TextField();
+        helperFieldAbove.setHelperText("Helper Text displayed above the field");
+        helperFieldAbove
+              .addThemeVariants(TextFieldVariant.LUMO_HELPER_ABOVE_FIELD);
+
+        TextArea textAreaAbove = new TextArea();
+        textAreaAbove.setPlaceholder("Write here ...");
+        textAreaAbove.setHelperText("Helper Text is above the field");
+        textAreaAbove.addThemeVariants(TextAreaVariant.LUMO_HELPER_ABOVE_FIELD);
+
+        add(helperFieldAbove, textAreaAbove);
+        // end-source-example
+
+        div.getStyle().set("display", "flex");
+        helperFieldAbove.getStyle().set("margin-right", "20px");
+        div.add(helperFieldAbove, textAreaAbove);
+        addCard("Theme Variants", "Helper Variant", div);
     }
 
     private void styling() {
