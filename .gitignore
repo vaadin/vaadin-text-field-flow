@@ -16,5 +16,8 @@ reference-screenshots
 
 # The following files are generated/updated by flow-maven-plugin
 package*.json
-webpack*.js
+pnpm-lock.yaml
+webpack.*.js
+tsconfig.json
+types.d.ts
 node_modules/
