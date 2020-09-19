@@ -15,6 +15,11 @@
  */
 package com.vaadin.flow.component.textfield;
 
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.annotation.Generated;
+
 import com.vaadin.flow.component.AbstractSinglePropertyField;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEvent;
@@ -24,7 +29,6 @@ import com.vaadin.flow.component.Focusable;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.HasTheme;
 import com.vaadin.flow.component.NotSupported;
-import com.vaadin.flow.component.Synchronize;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
@@ -32,10 +36,6 @@ import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.function.SerializableBiFunction;
 import com.vaadin.flow.function.SerializableFunction;
 import com.vaadin.flow.shared.Registration;
-
-import javax.annotation.Generated;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <p>
@@ -954,8 +954,8 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
             SerializableFunction<T, P> modelToPresentation) {
         super("value", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (initialValue != null) {
-            setModelValue(initialValue, false);
+        if (getElement().getPropertyRaw("value") == null
+                && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
@@ -974,8 +974,8 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
     public GeneratedVaadinTextArea(T initialValue, T defaultValue,
             boolean acceptNullValues) {
         super("value", defaultValue, acceptNullValues);
-        if (initialValue != null) {
-            setModelValue(initialValue, false);
+        if (getElement().getPropertyRaw("value") == null
+                && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
@@ -1005,8 +1005,8 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
             SerializableBiFunction<R, T, P> modelToPresentation) {
         super("value", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (initialValue != null) {
-            setModelValue(initialValue, false);
+        if (getElement().getPropertyRaw("value") == null
+                && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
