@@ -973,9 +973,30 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
      */
     public GeneratedVaadinTextArea(T initialValue, T defaultValue,
             boolean acceptNullValues) {
+        this(initialValue, defaultValue, acceptNullValues, false);
+    }
+
+    /**
+     * Constructs a new GeneratedVaadinTextArea component with the given
+     * arguments.
+     *
+     * @param initialValue
+     *            the initial value to set to the value
+     * @param defaultValue
+     *            the default value to use if the value isn't defined
+     * @param acceptNullValues
+     *            whether <code>null</code> is accepted as a model value
+     * @param isInitialValueOptional
+     *            if {@code isInitialValueOptional} is {@code true} then the
+     *            initial value is used only if element has no {@code "value"}
+     *            property value, otherwise element {@code "value"} property is
+     *            ignored and the initial value is set
+     */
+    public GeneratedVaadinTextArea(T initialValue, T defaultValue,
+            boolean acceptNullValues, boolean isInitialValueOptional) {
         super("value", defaultValue, acceptNullValues);
-        if (getElement().getPropertyRaw("value") == null
-                && initialValue != null) {
+        if ((getElement().getProperty("value") == null
+                || !isInitialValueOptional) && initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
@@ -1005,8 +1026,7 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
             SerializableBiFunction<R, T, P> modelToPresentation) {
         super("value", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (getElement().getPropertyRaw("value") == null
-                && initialValue != null) {
+        if (initialValue != null) {
             setPresentationValue(initialValue);
         }
     }

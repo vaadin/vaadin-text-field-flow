@@ -45,7 +45,24 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      * Constructs an empty {@code TextArea}.
      */
     public TextArea() {
-        super("", "", false);
+        this(true);
+    }
+
+    /**
+     * Constructs an empty {@code TextArea}.
+     * <p>
+     * If {@code isInitialValueOptional} is {@code true} then the initial value
+     * is used only if element has no {@code "value"} property value, otherwise
+     * element {@code "value"} property is ignored and the initial value is set.
+     * 
+     * @param isInitialValueOptional
+     *            if {@code isInitialValueOptional} is {@code true} then the
+     *            initial value is used only if element has no {@code "value"}
+     *            property value, otherwise element {@code "value"} property is
+     *            ignored and the initial value is set
+     */
+    private TextArea(boolean isInitialValueOptional) {
+        super("", "", false, isInitialValueOptional);
 
         // workaround for https://github.com/vaadin/flow/issues/3496
         setInvalid(false);
@@ -53,8 +70,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
         setValueChangeMode(ValueChangeMode.ON_CHANGE);
 
         addValueChangeListener(e -> validate());
-
-        FieldValidationUtil.disableClientValidation(this);
     }
 
     /**
@@ -98,6 +113,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      */
     public TextArea(String label, String initialValue, String placeholder) {
         this(label);
+        setLabel(label);
         setValue(initialValue);
         setPlaceholder(placeholder);
     }
@@ -192,8 +208,8 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     }
 
     private void applyChangeTimeout() {
-        ValueChangeMode.applyChangeTimeout(getValueChangeMode(), getValueChangeTimeout(),
-                getSynchronizationRegistration());
+        ValueChangeMode.applyChangeTimeout(getValueChangeMode(),
+                getValueChangeTimeout(), getSynchronizationRegistration());
     }
 
     @Override
@@ -245,8 +261,8 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     }
 
     /**
-     * Specifies if the field value gets automatically selected when
-     * the field gains focus.
+     * Specifies if the field value gets automatically selected when the field
+     * gains focus.
      *
      * @return <code>true</code> if autoselect is active, <code>false</code>
      *         otherwise
@@ -260,8 +276,8 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      * selected when the field gains focus, <code>false</code> otherwise.
      *
      * @param autoselect
-     *            <code>true</code> to set auto select on,
-     *            <code>false</code> otherwise
+     *            <code>true</code> to set auto select on, <code>false</code>
+     *            otherwise
      */
     @Override
     public void setAutoselect(boolean autoselect) {
@@ -269,8 +285,7 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
     }
 
     /**
-     * Gets the visibility state of the button which clears the text
-     * area.
+     * Gets the visibility state of the button which clears the text area.
      *
      * @return <code>true</code> if the button is visible, <code>false</code>
      *         otherwise
