@@ -76,21 +76,21 @@ public class BinderValidationPageIT extends AbstractComponentIT {
 
     @Test
     public void fields_internalValidationPass_binderValidationFail_validateClient_fieldInvalid() {
+        fieldClasses.forEach(clazz -> {
+            TestBenchElement field = $(clazz).first();
 
-        TestBenchElement field = $(TextAreaElement.class).first();
+            setInternalValidBinderInvalidValue(field);
 
-        setInternalValidBinderInvalidValue(field);
+            field.getCommandExecutor().executeScript(
+                    "arguments[0].validate(); arguments[0].immediateInvalid = arguments[0].invalid;",
+                    field);
 
-        field.getCommandExecutor().executeScript(
-                "arguments[0].validate(); arguments[0].immediateInvalid = arguments[0].invalid;",
-                field);
-
-        // System.out.println("xxxxxxxxxx " + clazz);
-        assertInvalid(field);
-        // State before server roundtrip (avoid flash of valid
-        // state)
-        Assert.assertTrue("Unexpected immediateInvalid state",
-                field.getPropertyBoolean("immediateInvalid"));
+            assertInvalid(field);
+            // State before server roundtrip (avoid flash of valid
+            // state)
+            Assert.assertTrue("Unexpected immediateInvalid state",
+                    field.getPropertyBoolean("immediateInvalid"));
+        });
     }
 
     @Test

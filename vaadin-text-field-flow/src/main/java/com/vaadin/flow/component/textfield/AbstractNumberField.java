@@ -67,10 +67,6 @@ public abstract class AbstractNumberField<C extends AbstractNumberField<C, T>, T
      * If {@code isInitialValueOptional} is {@code true} then the initial value
      * is used only if element has no {@code "value"} property value, otherwise
      * element {@code "value"} property is ignored and the initial value is set.
-     * <p>
-     * If {@code isInitialValueOptional} is {@code true} then the initial value
-     * is used only if element has no {@code "value"} property value, otherwise
-     * element {@code "value"} property is ignored and the initial value is set.
      * 
      * @param parser
      *            function to parse the client-side value string into
