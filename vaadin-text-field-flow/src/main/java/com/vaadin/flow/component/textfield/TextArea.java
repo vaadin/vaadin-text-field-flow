@@ -115,7 +115,6 @@ public class TextArea extends GeneratedVaadinTextArea<TextArea, String>
      */
     public TextArea(String label, String initialValue, String placeholder) {
         this(label);
-        setLabel(label);
         setValue(initialValue);
         setPlaceholder(placeholder);
     }

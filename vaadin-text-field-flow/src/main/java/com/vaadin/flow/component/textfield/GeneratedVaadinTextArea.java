@@ -954,8 +954,7 @@ public abstract class GeneratedVaadinTextArea<R extends GeneratedVaadinTextArea<
             SerializableFunction<T, P> modelToPresentation) {
         super("value", defaultValue, elementPropertyType, presentationToModel,
                 modelToPresentation);
-        if (getElement().getPropertyRaw("value") == null
-                && initialValue != null) {
+        if (initialValue != null) {
             setPresentationValue(initialValue);
         }
     }
