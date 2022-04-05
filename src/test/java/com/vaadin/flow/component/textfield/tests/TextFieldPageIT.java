@@ -26,6 +26,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
 
+import com.vaadin.testbench.TestBenchElement;
+
 /**
  * Integration tests for {@link TextField}.
  */
@@ -73,9 +75,9 @@ public class TextFieldPageIT extends AbstractComponentIT {
 
     @Test
     public void assertValueWithoutListener() throws InterruptedException {
-        WebElement field = findElement(By.id("value-change"));
+        TestBenchElement field = $(TestBenchElement.class).id("value-change");
 
-        WebElement input = getInShadowRoot(field, By.cssSelector("input"));
+        WebElement input = field.$("input").first();
         input.sendKeys("foo");
         blur();
 
